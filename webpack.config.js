@@ -1,6 +1,7 @@
 const CompressionPlugin = require('compression-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ContextReplacementPlugin = require('webpack/lib/ContextReplacementPlugin')
 const path = require('path')
 const webpack = require('webpack')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
@@ -79,7 +80,9 @@ const plugins = [
         test: /\.js$|\.css$|\.html$/,
         threshold: 10240, // only if file size > 10.24 kb
         minRatio: 0.8
-      }))
+      }),
+      new ContextReplacementPlugin(/moment[\/\\]locale$/, /et/)
+    )
     : null
 ].filter(p => p)
 
