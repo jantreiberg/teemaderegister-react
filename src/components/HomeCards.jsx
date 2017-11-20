@@ -64,7 +64,7 @@ const HomeCards = props => {
               {names.et}
             </h2>
             <p>
-              {abbreviation} | {languageList} | <b>Suletud</b>
+              {abbreviation} | {languageList} { closed && <span>| <b>Suletud</b> </span> }
             </p>
           </Card>
         </Link>
