@@ -3,6 +3,7 @@ export const CURRICULUM_PATH = '/curriculum/:slug'
 export const LOGIN_PATH = '/login'
 export const SEARCH_PATH = '/search'
 export const SUPERVISOR_PATH = '/supervisor/:slug'
+export const USER_SETTINGS_PATH = '/profile'
 
 export const INITIAL_ROUTE = {
   keys: {},
