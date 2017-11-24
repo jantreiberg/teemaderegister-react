@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   error: {}
 }
 
+// Three dots take the existing states.
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case types.LOGIN_START:
