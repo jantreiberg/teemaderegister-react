@@ -3,7 +3,11 @@ import PropTypes from 'prop-types'
 import queryString from 'query-string'
 import { Redirect } from 'react-router-dom'
 import { getToken } from '../utils/jwt'
+
 import Breadcrumbs from './Breadcrumbs'
+import TableWrap from '../components/TableWrap'
+import getTabs from '../utils/getTabs'
+
 import { Row, Col, Form, Icon, Input, Button, message, Tooltip } from 'antd'
 const FormItem = Form.Item
 
