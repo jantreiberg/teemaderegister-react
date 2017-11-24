@@ -1,5 +1,5 @@
 import * as types from '../constants/ActionTypes'
-import Api from '../utils/Api'
+import Api from '../utils/api'
 import { loadedTableContentCount } from './TableContentActions'
 
 import { SEARCH_COUNTS_URL } from '../constants/ApiConstants'

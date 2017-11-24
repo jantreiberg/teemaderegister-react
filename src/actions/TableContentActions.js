@@ -1,5 +1,5 @@
 import * as types from '../constants/ActionTypes'
-import Api from '../utils/Api'
+import Api from '../utils/api'
 
 import {
   SUPERVISORS_URL,

@@ -1,4 +1,4 @@
-import Api from '../utils/Api'
+import Api from '../utils/api'
 import * as types from '../constants/ActionTypes'
 import { clearToken, setToken } from '../utils/jwt'
 

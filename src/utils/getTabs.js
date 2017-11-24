@@ -1,4 +1,4 @@
-import { removeEmpty } from './Helpers'
+import { removeEmpty } from './helpers'
 
 export default ({ topics, supervisors }) => {
   const tabs = {
