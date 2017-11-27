@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import Breadcrumbs from './Breadcrumbs'
 import TableWrap from '../components/TableWrap'
 import getTabs from '../utils/getTabs'
+import { setTitle } from '../utils/helpers'
 
 const { bool, func, object, shape } = PropTypes
 
@@ -26,6 +27,8 @@ class Search extends React.Component {
     // Reset all state params
     this.props.initTableContent()
     this.props.initSearch()
+
+    setTitle('Search')
   }
 
   getCrumbs () {

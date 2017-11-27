@@ -5,6 +5,7 @@ import Breadcrumbs from './Breadcrumbs'
 import TableWrap from '../components/TableWrap'
 import getTabs from '../utils/getTabs'
 import CurriculumMeta from './CurriculumMeta'
+import { setTitle } from '../utils/helpers'
 
 const { bool, func, object, shape } = PropTypes
 
@@ -27,6 +28,12 @@ const propTypes = {
 }
 
 class Curriculum extends React.Component {
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.curriculum.meta.names) {
+      setTitle(nextProps.curriculum.meta.names.et)
+    }
+  }
+
   componentDidMount () {
     this.props.getCurriculum()
   }
