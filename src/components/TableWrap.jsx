@@ -64,6 +64,11 @@ class TableWrap extends React.Component {
     const tabObj = this.tabs[tab]
 
     sub = sub && tabObj.subs[sub] ? sub : tabObj.sub
+    // Select defended sub for closed curriculums
+    sub = (props.curriculum && props.curriculum.meta.closed)
+      ? 'defended'
+      : sub
+
     const subObj = tabObj.subs[sub]
     columnKey = columnKey || subObj.columnKey
 
