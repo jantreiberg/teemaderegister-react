@@ -23,12 +23,14 @@ const propTypes = {
 }
 
 class Search extends React.Component {
+  componentDidMount () {
+    setTitle('Search')
+  }
+
   componentWillUnmount () {
     // Reset all state params
     this.props.initTableContent()
     this.props.initSearch()
-
-    setTitle('Search')
   }
 
   getCrumbs () {
