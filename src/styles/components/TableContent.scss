@@ -9,6 +9,10 @@
     &--pdf {
       display: inline;
     }
+    &--copy {
+      padding-left: 5px;
+      cursor: pointer;
+    }
   }
   
   /* antd overwrites */

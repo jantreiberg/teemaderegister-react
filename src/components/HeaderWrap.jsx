@@ -91,7 +91,7 @@ class HeaderWrap extends Component {
                 <Search
                   className='search__input'
                   size='large'
-                  placeholder='Search title or supervisor'
+                  placeholder='Search by title, author or supervisor'
                   onSearch={this.handleSearch}
                 />
               )}

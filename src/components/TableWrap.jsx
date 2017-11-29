@@ -64,6 +64,11 @@ class TableWrap extends React.Component {
     const tabObj = this.tabs[tab]
 
     sub = sub && tabObj.subs[sub] ? sub : tabObj.sub
+    // Select defended sub for closed curriculums
+    sub = (props.curriculum && props.curriculum.meta.closed)
+      ? 'defended'
+      : sub
+
     const subObj = tabObj.subs[sub]
     columnKey = columnKey || subObj.columnKey
 
@@ -181,16 +186,18 @@ class TableWrap extends React.Component {
     } = this.props
 
     return (
-      <TabsWrap
-        activeSub={sub}
-        activeTab={tab}
-        curriculum={curriculum}
-        handleTableChange={this.handleTableChange}
-        tabUpdated={this.tabUpdated}
-        supervisor={supervisor}
-        tableContent={tableContent}
-        tabs={tabs}
-      />
+      <div className='tableWrap'>
+        <TabsWrap
+          activeSub={sub}
+          activeTab={tab}
+          curriculum={curriculum}
+          handleTableChange={this.handleTableChange}
+          tabUpdated={this.tabUpdated}
+          supervisor={supervisor}
+          tableContent={tableContent}
+          tabs={tabs}
+        />
+      </div>
     )
   }
 }

@@ -11,5 +11,5 @@ services:
       - "443:443"
     volumes:
       - ./nginx.production.conf:/etc/nginx/nginx.conf:ro
-      - ./dist:/var/www/react-weather-fe/dist
+      - ./dist:/var/www/teemaderegister-react/dist
       - /etc/letsencrypt:/etc/letsencrypt
