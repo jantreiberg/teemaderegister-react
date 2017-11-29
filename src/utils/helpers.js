@@ -3,6 +3,6 @@ export const removeEmpty = obj => {
   return obj
 }
 
-export const setTitle = title => {
+export const setDocTitle = title => {
   document.title = title + ' | Teemaderegister'
 }

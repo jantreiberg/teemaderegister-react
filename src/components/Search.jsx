@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Breadcrumbs from './Breadcrumbs'
 import TableWrap from '../components/TableWrap'
 import getTabs from '../utils/getTabs'
-import { setTitle } from '../utils/helpers'
+import { setDocTitle } from '../utils/helpers'
 
 const { bool, func, object, shape } = PropTypes
 
@@ -24,7 +24,7 @@ const propTypes = {
 
 class Search extends React.Component {
   componentDidMount () {
-    setTitle('Search')
+    setDocTitle('Search')
   }
 
   componentWillUnmount () {

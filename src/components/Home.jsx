@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { setTitle } from '../utils/helpers'
+import { setDocTitle } from '../utils/helpers'
 
 import HomeCollection from './HomeCollection'
 
@@ -18,7 +18,7 @@ class Home extends React.Component {
   componentDidMount () {
     this.props.getCurriculums()
 
-    setTitle('Home')
+    setDocTitle('Home')
   }
 
   render () {

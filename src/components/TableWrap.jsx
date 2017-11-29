@@ -2,7 +2,7 @@ import React from 'react'
 import { PropTypes } from 'prop-types'
 import queryString from 'query-string'
 
-import { removeEmpty } from '../utils/Helpers'
+import { removeEmpty } from '../utils/helpers'
 import setUrl from '../utils/setUrl'
 import TabsWrap from './TabsWrap'
 

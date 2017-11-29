@@ -1,5 +1,5 @@
 import React from 'react'
-import { setTitle } from '../utils/helpers'
+import { setDocTitle } from '../utils/helpers'
 
 const NotFound = () => {
   return (
@@ -7,6 +7,6 @@ const NotFound = () => {
   )
 }
 
-setTitle('Not Found')
+setDocTitle('Not Found')
 
 export default NotFound
