@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
+import queryString from 'query-string'
 
 import { message, Badge, Tooltip, Icon } from 'antd'
 
@@ -175,14 +176,14 @@ const supervisors = () => ({
   }
 })
 
-const title = ({ columnKey, order }) => ({
+const title = ({ columnKey, order, sub }) => ({
   title: 'Title',
   dataIndex: 'title',
   key: 'title',
   sorter: true,
   sortOrder: columnKey === 'title' && order,
   render: (title, row) => {
-    const url = window.location.host + '/search?q=' + row.slug + '&sub=' + columnKey
+    const url = window.location.host + '/search?' + queryString.stringify({ q: row.slug, sub })
     const content = (
       <span>
         {title}
