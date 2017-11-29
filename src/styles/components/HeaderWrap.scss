@@ -1,4 +1,6 @@
 .headerWrap {
+  padding: 0;
+
   &__wrapper {
     max-width: 980px;
     margin: 0 auto;
@@ -12,7 +14,6 @@
     }
 
     .content {
-
       .search {
         float: left;
         width: 60%;
