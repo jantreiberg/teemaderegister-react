@@ -72,7 +72,7 @@ class TableWrap extends React.Component {
     const subObj = tabObj.subs[sub]
     columnKey = columnKey || subObj.columnKey
 
-    // Set titles depending on page, search title updated on component will update
+    // Set titles depending on page, search title updated on componentWillUpdate
     this.curriculumTitle = this.props.curriculum && this.props.curriculum.meta.names.en
     this.supervisorTitle = this.props.supervisor &&
       this.props.supervisor.data.profile.firstName + ' ' + this.props.supervisor.data.profile.lastName
