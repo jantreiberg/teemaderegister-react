@@ -7,12 +7,14 @@ import login from './LoginReducers'
 import search from './SearchReducer'
 import supervisor from './SupervisorReducers'
 import tableContent from './TableContentReducers'
+import password from './PasswordReducers'
 
 const rootReducer = combineReducers({
   auth,
   curriculum,
   home,
   login,
+  password,
   search,
   supervisor,
   tableContent
