@@ -5,7 +5,8 @@ import { Redirect } from 'react-router-dom'
 import { getToken } from '../utils/jwt'
 import Breadcrumbs from './Breadcrumbs'
 import { Row, Col, Form, Icon, Input, Button, message, Tooltip } from 'antd'
-import { setDocTitle } from '../utils/helpers'
+import { setDocTitle } from '../utils/Helpers'
+
 const FormItem = Form.Item
 
 const { bool, func, object, shape, string } = PropTypes
@@ -42,7 +43,6 @@ class Login extends React.Component {
     if (nextProps.login.loading !== this.state.loading) {
       this.setState({ loading: nextProps.login.loading })
       if (nextProps.login.hasError) {
-        console.log(nextProps.login.error)
         message.error(nextProps.login.error.message)
       }
     }

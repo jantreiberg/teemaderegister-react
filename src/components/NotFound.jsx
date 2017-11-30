@@ -1,5 +1,5 @@
 import React from 'react'
-import { setDocTitle } from '../utils/helpers'
+import { setDocTitle } from '../utils/Helpers'
 
 const NotFound = () => {
   setDocTitle('Not Found')

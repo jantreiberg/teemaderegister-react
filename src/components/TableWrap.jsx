@@ -2,7 +2,7 @@ import React from 'react'
 import { PropTypes } from 'prop-types'
 import queryString from 'query-string'
 
-import { removeEmpty, setDocTitle } from '../utils/helpers'
+import { removeEmpty, setDocTitle, capitalizeFirstLetter } from '../utils/Helpers'
 import setUrl from '../utils/setUrl'
 import TabsWrap from './TabsWrap'
 
@@ -72,6 +72,7 @@ class TableWrap extends React.Component {
     const subObj = tabObj.subs[sub]
     columnKey = columnKey || subObj.columnKey
 
+    // Set titles depending on page, search title updated on component will update
     this.curriculumTitle = this.props.curriculum && this.props.curriculum.meta.names.en
     this.supervisorTitle = this.props.supervisor &&
       this.props.supervisor.data.profile.firstName + ' ' + this.props.supervisor.data.profile.lastName
@@ -97,7 +98,6 @@ class TableWrap extends React.Component {
 
   componentDidMount () {
     this.makeQuery()
-
     this.setPageTitle()
   }
 
@@ -128,12 +128,6 @@ class TableWrap extends React.Component {
     }
   }
 
-  setPageTitle () {
-    const searchTitle = this.props.search && this.state.q + ' - Search '
-    const pageTitle = (searchTitle || this.curriculumTitle || this.supervisorTitle) + ' ' + this.state.tab
-    setDocTitle(pageTitle)
-  }
-
   makeQuery (showLoading, q) {
     // dont do query if no count
     const { tab, sub } = this.state
@@ -143,11 +137,17 @@ class TableWrap extends React.Component {
       // create object to only clear active tab data
       const obj = {}
       obj[tab] = true
-      console.log(sub)
       return this.props.clearTableContent(query)
     }
 
     this.props.getTableContent(query, showLoading || false)
+  }
+
+  setPageTitle () {
+    const searchTitle = this.props.search && `${this.state.q} - Search`
+    const title = searchTitle || this.curriculumTitle || this.supervisorTitle
+    const pageTitle = `${title} ${capitalizeFirstLetter(this.state.tab)}`
+    setDocTitle(pageTitle)
   }
 
   tabUpdated ([tab, sub]) {
