@@ -5,7 +5,6 @@ import Breadcrumbs from './Breadcrumbs'
 import SupervisorMeta from './SupervisorMeta'
 import TableWrap from '../components/TableWrap'
 import getTabs from '../utils/getTabs'
-import { setDocTitle } from '../utils/helpers'
 
 const { bool, func, object, shape, string } = PropTypes
 
@@ -50,11 +49,6 @@ class Supervisor extends React.Component {
     if (isNewSlug) {
       this.init()
       this.props.getSupervisor(nextProps.match.params.slug)
-    }
-
-    if (nextProps.supervisor.data && nextProps.supervisor.data.profile) {
-      setDocTitle(nextProps.supervisor.data.profile.firstName + ' ' +
-      nextProps.supervisor.data.profile.lastName)
     }
   }
 

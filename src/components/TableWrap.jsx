@@ -2,7 +2,7 @@ import React from 'react'
 import { PropTypes } from 'prop-types'
 import queryString from 'query-string'
 
-import { removeEmpty } from '../utils/helpers'
+import { removeEmpty, setDocTitle } from '../utils/helpers'
 import setUrl from '../utils/setUrl'
 import TabsWrap from './TabsWrap'
 
@@ -72,6 +72,10 @@ class TableWrap extends React.Component {
     const subObj = tabObj.subs[sub]
     columnKey = columnKey || subObj.columnKey
 
+    this.curriculumTitle = this.props.curriculum && this.props.curriculum.meta.names.en
+    this.supervisorTitle = this.props.supervisor &&
+      this.props.supervisor.data.profile.firstName + ' ' + this.props.supervisor.data.profile.lastName
+
     // FIX default ascend if not in url but there is columnKey
     this.defaultOrder = 'ascend'
     order = order || subObj.order
@@ -93,6 +97,8 @@ class TableWrap extends React.Component {
 
   componentDidMount () {
     this.makeQuery()
+
+    this.setPageTitle()
   }
 
   componentWillUpdate (nextProps) {
@@ -102,6 +108,7 @@ class TableWrap extends React.Component {
       this.tabs = nextProps.tabs // update tabs count
       this.setState({ q: nextProps.search.q }, () => {
         this.makeQuery({ showLoading: true }, { q: nextProps.search.q })
+        this.setPageTitle()
       })
     }
   }
@@ -119,6 +126,12 @@ class TableWrap extends React.Component {
       types: undefined,
       curriculums: undefined
     }
+  }
+
+  setPageTitle () {
+    const searchTitle = this.props.search && this.state.q + ' - Search '
+    const pageTitle = (searchTitle || this.curriculumTitle || this.supervisorTitle) + ' ' + this.state.tab
+    setDocTitle(pageTitle)
   }
 
   makeQuery (showLoading, q) {
@@ -144,6 +157,7 @@ class TableWrap extends React.Component {
     this.setState(newState, () => {
       this.writeURL()
       this.makeQuery(showLoading)
+      this.setPageTitle()
     })
   }
 
