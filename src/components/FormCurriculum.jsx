@@ -20,7 +20,7 @@ const propTypes = {
     getFieldInstance: func.isRequired,
     validateFields: func.isRequired
   }).isRequired,
-  /* initCurriculum: func.isRequired, */
+  initCurriculum: func.isRequired,
   triggerAddCurriculum: func.isRequired
 
 }
@@ -85,6 +85,10 @@ class AddCurriculum extends React.Component {
       data: [],
       fetching: false
     }) */
+  }
+
+  componentWillUnmount () {
+    this.props.initCurriculum()
   }
 
   checkboxChanged (values) {

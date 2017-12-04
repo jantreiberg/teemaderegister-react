@@ -17,8 +17,10 @@ export default (state = INITIAL_STATE, action) => {
     }
 
     case types.ADD_CURRICULUM_START:
+    const { meta } = action
       return {
         ...state,
+        meta,
         loading: true
       }
 

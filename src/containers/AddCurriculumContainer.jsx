@@ -7,4 +7,4 @@ const AddCurriculumContainer = props => <FormCurriculum {...props} />
 
 const mapStateToProps = state => ({})
 
-export default connect(mapStateToProps, { triggerAddCurriculum })(AddCurriculumContainer)
+export default connect(mapStateToProps, { triggerAddCurriculum,initCurriculum })(AddCurriculumContainer)
