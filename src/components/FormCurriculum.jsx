@@ -4,13 +4,13 @@ import queryString from 'query-string'
 import { Redirect } from 'react-router-dom'
 import { getToken } from '../utils/jwt'
 import Breadcrumbs from './Breadcrumbs'
-import { Row, Col, Form, Icon, Input, Button, message, Tooltip, Select, Spin, Checkbox  } from 'antd'
+import { Row, Col, Form, Icon, Input, Button, message, Tooltip, Select, Spin, Checkbox } from 'antd'
 import debounce from 'lodash.debounce'
 
 const Option = Select.Option
 const FormItem = Form.Item
-const CheckboxGroup = Checkbox.Group;
-const plainOptions = ['ET', 'EN'];
+const CheckboxGroup = Checkbox.Group
+const plainOptions = ['ET', 'EN']
 
 const { bool, func, object, shape, string } = PropTypes
 
@@ -20,9 +20,9 @@ const propTypes = {
     getFieldInstance: func.isRequired,
     validateFields: func.isRequired
   }).isRequired,
- /* initCurriculum: func.isRequired,*/
+  /* initCurriculum: func.isRequired, */
   triggerAddCurriculum: func.isRequired
-  
+
 }
 
 function handleChange (value) {
@@ -36,8 +36,9 @@ function handleBlur () {
 function handleFocus () {
   console.log('focus')
 }
-function onChange(e) {
-  console.log(`checked = ${e.target.checked}`);
+
+function onChange (e) {
+  console.log(`checked = ${e.target.checked}`)
 }
 
 class AddCurriculum extends React.Component {
@@ -45,55 +46,59 @@ class AddCurriculum extends React.Component {
     super(props)
     this.lastFetchId = 0
     this.checkboxValues = []
-    this.fetchUser = debounce(this.fetchUser, 800)
+    this.fetchUser = debounce(this.fetchUser.bind(this), 800)
     this.submit = this.submit.bind(this)
     this.checkboxChanged = this.checkboxChanged.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+
+    this.state = {
+      data: [],
+      value: [],
+      fetching: false
+    }
   }
-  state = {
-    data: [],
-    value: [],
-    fetching: false,
-  }
-  fetchUser = (value) => {
-    console.log('fetching user', value);
-    this.lastFetchId += 1;
-    const fetchId = this.lastFetchId;
-    this.setState({ fetching: true });
+
+  fetchUser (value) {
+    console.log('fetching user', value)
+    this.lastFetchId += 1
+    const fetchId = this.lastFetchId
+    this.setState({ fetching: true })
     fetch('http://localhost:8080/api/supervisors?q=' + value)
       .then(response => response.json())
       .then((body) => {
         if (fetchId !== this.lastFetchId) { // for fetch callback order
-          return;
+          return
         }
         const data = body.supervisors.map(user => ({
           text: user.supervisor,
           value: user._id,
-          fetching: false,
-        }));
-        this.setState({ data });
-      });
-  }
-  handleChange = (value) => {
-    console.log('select', value)
-    this.setState({
-      value,
-      data: [],
-      fetching: false,
-    });
+          fetching: false
+        }))
+        this.setState({ data })
+      })
   }
 
-  checkboxChanged(values){
+  handleChange (value) {
+    console.log('select', value)
+    /* this.setState({
+      value: value.key,
+      data: [],
+      fetching: false
+    }) */
+  }
+
+  checkboxChanged (values) {
     this.checkboxValues = values
   }
 
   submit (e) {
     e.preventDefault()
-   
-  
+
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log(values)
         values.languages = this.checkboxValues
+        values.representative = values.representative.key
         console.log(this.checkboxValues)
         this.setState({ loading: true })
         // show user loading
@@ -104,16 +109,15 @@ class AddCurriculum extends React.Component {
     })
   }
 
-
   render () {
     const {
-      form: { getFieldDecorator,validateFields }
+      form: { getFieldDecorator, validateFields }
     } = this.props
 
     const crumbs = [{ url: this.props.location.pathname, name: 'Lisa õppekava' }]
-    const { fetching, data, value } = this.state;
+    const { fetching, data, value } = this.state
 
-    const { loading } = this.state;
+    const { loading } = this.state
 
     return (
       <div className='addCurriculum'>
@@ -123,106 +127,98 @@ class AddCurriculum extends React.Component {
             Lisa õppekava
           </h2>
           <FormItem>
-          {getFieldDecorator('abbreviation', {
-                  rules: [
-                    { required: true, message: 'Please input your abbreviation!' }
-                  ]
-                })
-            (<Input id='abbreviation' placeholder='Abbreviation' />)}
+            {getFieldDecorator('abbreviation', {
+              rules: [
+                { required: true, message: 'Please input your abbreviation!' }
+              ]
+            })(<Input id='abbreviation' placeholder='Abbreviation' />)}
           </FormItem>
           <FormItem>
-          {getFieldDecorator('type', {
-                  rules: [
-                    { required: true, message: 'Please select type!' }
-                  ]
-                })
-            (
-            <Select
-              showSearch
-              style={{ width: 200 }}
-              placeholder="Type"
-              optionFilterProp="children"
-              onChange={handleChange}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-            >
-              <Option value="BA">BA</Option>
-              <Option value="MA">MA</Option>
-              <Option value="PHD">PHD</Option>
-            </Select>)}
-          </FormItem> 
-          <FormItem>
-          {getFieldDecorator('representative', {
-                  rules: [
-                    { required: true, message: 'Please select represantive!' }
-                  ]
-                })
-            (
-            <Select
-              mode="combobox"
-            //  labelInValue
-             /* value={value}*/
-              placeholder="Representative"
-              notFoundContent={fetching ? <Spin size="small" /> : null}
-              filterOption={false}
-              onSearch={this.fetchUser}
-              onChange={this.handleChange}
-              style={{ width: '100%' }}
-            >
-              {data.map(d => <Option value={d.value} key={d.value}>{d.text}</Option>)}
-            </Select>)}
+            {getFieldDecorator('type', {
+              rules: [
+                { required: true, message: 'Please select type!' }
+              ]
+            })(
+              <Select
+                showSearch
+                style={{ width: 200 }}
+                placeholder="Type"
+                optionFilterProp="children"
+                onChange={handleChange}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+              >
+                <Option value="BA">BA</Option>
+                <Option value="MA">MA</Option>
+                <Option value="PHD">PHD</Option>
+              </Select>)}
           </FormItem>
           <FormItem>
-          {getFieldDecorator('faculty', {
-                  rules: [
-                    { required: true, message: 'Please input faculty!' }
-                  ]
-                })
-            (
-            <Input placeholder='Faculty' />)}
+            {getFieldDecorator('representative', {
+              rules: [
+                { required: true, message: 'Please select represantive!' }
+              ]
+            })(
+              <Select
+                showSearch
+                labelInValue
+                placeholder="Representative"
+                notFoundContent={fetching ? <Spin size="small" /> : null}
+                filterOption={false}
+                onSearch={this.fetchUser}
+                onChange={this.handleChange}
+                style={{ width: '100%' }}
+              >
+                {data.map(d => <Option key={d.value}>{d.text}</Option>)}
+              </Select>)}
           </FormItem>
-      
           <FormItem>
-          {getFieldDecorator('languages', {
-                  rules: [
-                    { required: true, message: 'Please select language!' }
-                  ]
-                })
-            (
+            {getFieldDecorator('faculty', {
+              rules: [
+                { required: true, message: 'Please input faculty!' }
+              ]
+            })(
+              <Input placeholder='Faculty' />)}
+          </FormItem>
 
-            <div>
-            <CheckboxGroup options={plainOptions} onChange={this.checkboxChanged} />
-            </div>
+          <FormItem>
+            {getFieldDecorator('languages', {
+              rules: [
+                { required: true, message: 'Please select language!' }
+              ]
+            })(
+
+              <div>
+                <CheckboxGroup options={plainOptions} onChange={this.checkboxChanged} />
+              </div>
             )}
           </FormItem>
           <FormItem>
-          {getFieldDecorator('nameEt', {
-                  rules: [
-                    { required: true, message: 'Please input name!' }
-                  ] 
-                })
-            (
-            <Input placeholder='Name ET' /> )} 
+            {getFieldDecorator('nameEt', {
+              rules: [
+                { required: true, message: 'Please input name!' }
+              ]
+            })(
+              <Input placeholder='Name ET' />)}
           </FormItem>
           <FormItem>     {getFieldDecorator('nameEn', {
-                  rules: [
-                    { required: true, message: 'Please input name!' }
-                  ]
-                })
-            (
-            <Input placeholder='Name EN' /> )}
+            rules: [
+              { required: true, message: 'Please input name!' }
+            ]
+          })(
+            <Input placeholder='Name EN' />)}
           </FormItem>
           <FormItem>
-                <Button
-                  type='primary'
-                  htmlType='submit'
-                  className='login__button'
-                  loading={loading}
-                >
+            <Button
+              type='primary'
+              htmlType='submit'
+              className='login__button'
+              loading={loading}
+            >
                   Add Curriculum
-                </Button>
-           </FormItem>     
+            </Button>
+          </FormItem>
         </Form>
       </div>
     )
