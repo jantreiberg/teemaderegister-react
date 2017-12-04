@@ -14,15 +14,21 @@ const propTypes = {
   form: shape({
     getFieldDecorator: func.isRequired,
     getFieldInstance: func.isRequired,
-    validateFields: func.isRequired
+    validateFields: func.isRequired,
+    loading: bool.isRequired,
   }).isRequired,
+  getProfile: func.isRequired
 }
 
 class UserSettings extends React.Component {
   constructor (props) {
     super(props)
     this.submit = this.submit.bind(this)
-    }
+  }
+
+  componentDidMount () {
+    this.props.getProfile()
+  }
   
   submit(e) {
     e.preventDefault()
@@ -43,7 +49,7 @@ class UserSettings extends React.Component {
       callback()
     }
   }
-
+  /*
   state = {
     previewVisible: false,
     previewImage: '',
@@ -60,29 +66,32 @@ class UserSettings extends React.Component {
   }
 
   handleChange = ({ fileList }) => this.setState({ fileList })
-
+  */
   render () {
     
     const crumbs = [{ url: this.props.location.pathname, name: 'Profile' }]
     
-    const { previewVisible, previewImage, fileList } = this.state;
-    const uploadButton = (
+    /*const { previewVisible, previewImage, fileList } = this.state;*/
+    /*const uploadButton = (
       <div>
         <Icon type="plus" />
         <div className="ant-upload-text">Upload</div>
       </div>
-    );
+    );*/
 
     const {
-      form: { getFieldDecorator }
+      form: { getFieldDecorator, loading, firstName, email, lastName }
     } = this.props
 
+    console.log(firstName)
+
     return (
-      <div className='settings'>
-        <Breadcrumbs crumbs={crumbs} />
-        <Row gutter={8}>
+        <div className='settings'>
+          <Breadcrumbs crumbs={crumbs} />
+          <Row gutter={8}>
           <Col span={8} />
           <Col xs={24} sm={8}>
+          {!loading &&
             <Form onSubmit={this.submit} className='login__form'>
               <h2 style={{ marginBottom: '20' }} className='text-align-center'>
                 Your Details
@@ -91,8 +100,9 @@ class UserSettings extends React.Component {
               {getFieldDecorator ('firstName', {
                 rules: [
                   { required: true, message: 'Please enter your first name' }
-                ]
-              })(<Input type='text' name='firstName' placeholder='First Name' />)}
+                ],
+                defaultValue: firstName
+              })(<Input type='text' name='firstName' placeholder='First Name'  />)}
               </FormItem>
               <FormItem>
               {getFieldDecorator ('lastName', {
@@ -136,29 +146,6 @@ class UserSettings extends React.Component {
               })(<Input type='password' placeholder='New Password' />)}
               </FormItem>
               <FormItem>
-                <h2 style={{ marginBottom: '20' }} className='text-align-center'>
-                  Change/Upload Picture
-                </h2>
-              {getFieldDecorator ('profile_image', {
-                rules: [
-                  { required: false }
-                ]
-              })(       
-                <div className="clearfix">
-                <Upload
-                  listType="picture-card"
-                  fileList={fileList}
-                  onPreview={this.handlePreview}
-                  onChange={this.handleChange}
-                >
-                  {fileList.length == 1 ? null : uploadButton}
-                </Upload>
-                <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-                  <img alt="example" style={{ width: '100%', height:'100%' }} src={previewImage} />
-                </Modal>
-              </div>) }
-              </FormItem>
-              <FormItem>
                 <Button 
                   type='primary'
                   htmlType='submit'
@@ -167,7 +154,7 @@ class UserSettings extends React.Component {
                 Save Changes
                 </Button>
               </FormItem>
-            </Form>
+            </Form>}
           </Col>
           <Col span={8} />
         </Row>

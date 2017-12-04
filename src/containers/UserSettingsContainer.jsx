@@ -1,12 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { initLogin, triggerLogin } from '../actions/LoginActions'
+import { getProfile } from '../actions/UserSettingsActions'
 import UserSettings from '../components/UserSettings'
 
 const UserSettingsContainer = props => <UserSettings {...props} />
 
 const mapStateToProps = state => ({
-  login: state.login
+  profile: profile.state
 })
 
-export default connect(mapStateToProps, { initLogin, triggerLogin })(UserSettingsContainer)
+export default connect(mapStateToProps, { getProfile })(UserSettingsContainer)
