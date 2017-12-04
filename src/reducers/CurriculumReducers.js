@@ -16,6 +16,21 @@ export default (state = INITIAL_STATE, action) => {
       }
     }
 
+    case types.ADD_CURRICULUM_START:
+      return {
+        ...state,
+        loading: true
+      }
+
+    case types.CURRICULUM_ADD: {
+      const { meta } = action
+      return {
+        ...state,
+        meta,
+        loading: false
+      }
+    }
+
     case types.CURRICULUM_INIT:
       return INITIAL_STATE
 

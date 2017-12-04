@@ -14,16 +14,16 @@ export const initCurriculum = () => dispatch => {
 
 
 export const triggerAddCurriculum = (values) => dispatch => {
-  dispatch({ type: types.CURRICULUM_ADD })
+  dispatch({ type: types.ADD_CURRICULUM_START })
 
   return Api('POST', CURRICULUMS_URL, { data: values })
     .then(data => {
-      dispatch({ type: types.CURRICULUMS_LOADED })
-      //getCurriculums()
-     //  dispatch()
+      dispatch({ type: types.CURRICULUM_ADD })
+      getCurriculums()
+      // dispatch()
     }).catch(err => {
       const error = err.data
-      dispatch({ type: types.CURRICULUMS_LOADED, error })
+      dispatch({ type: types.CURRICULUM_ADD, error })
       console.log(err)
     })
 }

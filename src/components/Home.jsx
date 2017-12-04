@@ -28,7 +28,7 @@ class Home extends React.Component {
     return (
       <div className='home'>
         <div className='home__intro'>
-          <h1>Tere tulemast DTI uue teemaderegistri lehele!!!!</h1>
+          <h1>Tere tulemast DTI uue teemaderegistri lehele!</h1>
         </div>
         <div>
           <Link to='/add_curriculum'><Button>Lisa õppekava</Button></Link>

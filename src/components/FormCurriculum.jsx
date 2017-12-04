@@ -20,11 +20,10 @@ const propTypes = {
     getFieldInstance: func.isRequired,
     validateFields: func.isRequired
   }).isRequired,
-  initCurriculum: func.isRequired,
+ /* initCurriculum: func.isRequired,*/
   triggerAddCurriculum: func.isRequired
   
 }
-
 
 function handleChange (value) {
   console.log(`selected ${value}`)
@@ -171,7 +170,7 @@ class AddCurriculum extends React.Component {
               onChange={this.handleChange}
               style={{ width: '100%' }}
             >
-              {data.map(d => <Option value={d.value}>{d.text}</Option>)}
+              {data.map(d => <Option value={d.value} key={d.value}>{d.text}</Option>)}
             </Select>)}
           </FormItem>
           <FormItem>
@@ -201,7 +200,7 @@ class AddCurriculum extends React.Component {
           {getFieldDecorator('nameEt', {
                   rules: [
                     { required: true, message: 'Please input name!' }
-                  ]
+                  ] 
                 })
             (
             <Input placeholder='Name ET' /> )} 
