@@ -3,6 +3,10 @@ import PropTypes from 'prop-types'
 
 import HomeCollection from './HomeCollection'
 
+import { Button } from 'antd'
+
+import { Link } from 'react-router-dom'
+
 const { array, bool, func, shape } = PropTypes
 
 const propTypes = {
@@ -25,6 +29,9 @@ class Home extends React.Component {
       <div className='home'>
         <div className='home__intro'>
           <h1>Tere tulemast DTI uue teemaderegistri lehele!!!!</h1>
+        </div>
+        <div>
+          <Link to='/add_curriculum'><Button>Lisa õppekava</Button></Link>
         </div>
         {!loading && <HomeCollection curriculums={curriculums} />}
       </div>

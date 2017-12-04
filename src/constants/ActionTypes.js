@@ -6,6 +6,7 @@ export const AUTH_INIT = 'AUTH_INIT'
 // curriculum
 export const CURRICULUM_LOADED = 'CURRICULUM_LOADED'
 export const CURRICULUM_INIT = 'CURRICULUM_INIT'
+export const CURRICULUM_ADD = 'CURRICULUM_ADD'
 
 // home
 export const CURRICULUMS_LOADED = 'CURRICULUMS_LOADED'
