@@ -136,6 +136,13 @@ class Login extends React.Component {
                 </p>
               </FormItem>
             </Form>
+               <a href = "/api/auth/google"> <Button
+                type='default'
+                htmlType='submit'
+                className='login__button'
+                >
+                Google Sign-in
+                </Button></a>
           </Col>
           <Col span={8} />
         </Row>
