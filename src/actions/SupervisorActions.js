@@ -25,6 +25,6 @@ export const getSupervisor = slug => dispatch => {
       dispatch({ type: types.SUPERVISOR_LOADED, supervisor, counts })
     })
     .catch(err => {
-      console.log(err)
+      dispatch({ type: types.SUPERVISOR_LOADFAIL, err })
     })
 }

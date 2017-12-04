@@ -48,7 +48,7 @@ class Curriculum extends React.Component {
     const {
       clearTableContent,
       curriculum,
-      curriculum: { meta, loading },
+      curriculum: {meta, loading, err, hasError},
       getTableContent,
       supervisors,
       tableContent,
@@ -57,7 +57,34 @@ class Curriculum extends React.Component {
 
     return (
       <div className='curriculum'>
-        {!loading &&
+        {hasError &&
+          <div style={{
+            textAlign: 'center',
+            marginTop: '25%',
+            marginBottom: '25%',
+            marginLeft: 'auto',
+            marginRight: 'Auto',
+            fontFamily: 'Helvetica Neue For Number'
+          }}>
+            <h1 style={{
+              textAlign: 'center',
+              fontWeight: 'Bold',
+              color: '#5e5e5e'
+            }}>
+              {err.data.message}
+            </h1>
+            <h3 style={{
+              textAlign: 'center',
+              fontWeight: 'Bold',
+              color: '#5e5e5e',
+              fontFamily: 'Helvetica Neue For Number'
+            }}>
+              Please check the address or contact the administrator
+            </h3>
+          </div>
+        }
+
+        {!loading && !hasError &&
           <div>
             <Breadcrumbs crumbs={this.getCrumbs(meta.names.et)} />
             <CurriculumMeta meta={meta} />

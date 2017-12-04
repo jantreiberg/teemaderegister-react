@@ -3,7 +3,9 @@ import * as types from '../constants/ActionTypes'
 const INITIAL_STATE = {
   data: {},
   count: {},
-  loading: true
+  loading: true,
+  hasError: false,
+  err: {}
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -14,12 +16,23 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         data: supervisor,
         count: counts,
-        loading: false
+        loading: false,
+        hasError: false
       }
     }
 
     case types.SUPERVISOR_INIT:
       return INITIAL_STATE
+
+    case types.SUPERVISOR_LOADFAIL: {
+      const { err } = action
+      return {
+        ...state,
+        err,
+        loading: false,
+        hasError: true
+      }
+    }
 
     default:
       return {

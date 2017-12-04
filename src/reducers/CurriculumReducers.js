@@ -2,7 +2,9 @@ import * as types from '../constants/ActionTypes'
 
 const INITIAL_STATE = {
   meta: {},
-  loading: true
+  loading: true,
+  hasError: false,
+  err: {}
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -12,12 +14,23 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         meta,
-        loading: false
+        loading: false,
+        hasError: false
       }
     }
 
     case types.CURRICULUM_INIT:
       return INITIAL_STATE
+
+    case types.CURRICULUM_LOADFAIL: {
+      const { err } = action
+      return {
+        ...state,
+        err,
+        loading: false,
+        hasError: true
+      }
+    }
 
     default:
       return {
