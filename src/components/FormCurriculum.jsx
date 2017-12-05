@@ -54,7 +54,8 @@ class AddCurriculum extends React.Component {
     this.state = {
       data: [],
       value: [],
-      fetching: false
+      fetching: false,
+      redirectToNewPage: false
     }
   }
 
@@ -97,7 +98,6 @@ class AddCurriculum extends React.Component {
 
   submit (e) {
     e.preventDefault()
-
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log(values)
@@ -106,8 +106,12 @@ class AddCurriculum extends React.Component {
         console.log(this.checkboxValues)
         this.setState({ loading: true })
         // show user loading
+        
         window.setTimeout(() => {
           this.props.triggerAddCurriculum(values)
+          window.setTimeout(() => {              
+            this.setState({ redirectToNewPage: true })
+          }, 1000)
         }, 1500)
       }
     })
@@ -122,6 +126,15 @@ class AddCurriculum extends React.Component {
     const { fetching, data, value } = this.state
 
     const { loading } = this.state
+
+    // The part that makes the redirect happen
+    if (this.state.redirectToNewPage) {
+      return (
+      <Redirect to="/"/>
+      )
+    }
+
+
 
     return (
       <div className='addCurriculum'>
