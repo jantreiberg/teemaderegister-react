@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Breadcrumbs from './Breadcrumbs'
 import { Row, Col, Form, Icon, Input, Button, message } from 'antd'
+import { setDocTitle } from '../utils/Helpers'
 const FormItem = Form.Item
 
 const { func, object, shape, bool, string } = PropTypes
@@ -50,6 +51,8 @@ class AccountForgot extends React.Component {
 
   componentWillMount () {
     this.props.initPasswordReset()
+
+    setDocTitle('Request password reset')
   }
 
   componentDidMount () {
