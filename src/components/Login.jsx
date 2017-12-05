@@ -5,7 +5,8 @@ import { Redirect, Link } from 'react-router-dom'
 import { getToken } from '../utils/jwt'
 import Breadcrumbs from './Breadcrumbs'
 import { Row, Col, Form, Icon, Input, Button, message, Tooltip } from 'antd'
-import { setDocTitle } from '../utils/helpers'
+import { setDocTitle } from '../utils/Helpers'
+
 const FormItem = Form.Item
 
 const { bool, func, object, shape, string } = PropTypes
