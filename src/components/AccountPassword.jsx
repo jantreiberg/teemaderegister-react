@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Breadcrumbs from './Breadcrumbs'
 import { Row, Col, Form, Icon, Input, Button, message } from 'antd'
+import { setDocTitle } from '../utils/Helpers'
 const FormItem = Form.Item
 
 const { func, object, shape, bool, string } = PropTypes
@@ -52,6 +53,10 @@ class AccountPassword extends React.Component {
         message.error(error.message, 10)
       }
     }
+  }
+
+  componentWillMount () {
+    setDocTitle('Reset password')
   }
 
   componentDidMount () {
