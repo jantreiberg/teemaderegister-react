@@ -10,6 +10,8 @@ import {
   SEARCH_PATH,
   SUPERVISOR_PATH,
   USER_SETTINGS_PATH
+  ACCOUNT_FORGOT,
+  ACCOUNT_PASSWORD
 } from './constants/RouterConstants'
 
 import CurriculumContainer from './containers/CurriculumContainer'
@@ -20,6 +22,8 @@ import NotFound from './components/NotFound'
 import RouteWrapContainer from './containers/RouteWrapContainer'
 import SupervisorContainer from './containers/SupervisorContainer'
 import SearchContainer from './containers/SearchContainer'
+import AccountForgotContainer from './containers/AccountForgotContainer'
+import AccountPasswordContainer from './containers/AccountPasswordContainer'
 import UserSettingsContainer from './containers/UserSettingsContainer'
 
 import store from './store/configureStore'
@@ -58,6 +62,10 @@ render(
                   component={RouteWrapContainer(SupervisorContainer)} />
                 <Route path={USER_SETTINGS_PATH}
                   component={RouteWrapContainer(UserSettingsContainer)} />
+                <Route path={ACCOUNT_FORGOT}
+                  component={RouteWrapContainer(AccountForgotContainer)} />
+                <Route path={ACCOUNT_PASSWORD}
+                  component={RouteWrapContainer(AccountPasswordContainer)} />
                 <Route
                   component={RouteWrapContainer(NotFound)} />
               </Switch>
