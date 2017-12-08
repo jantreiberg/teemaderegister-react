@@ -29,12 +29,24 @@
   }
 
   .ant-table-thead {
+    &-small{
+      min-width: 70px;
+    }
+    &-medium{
+      min-width: 85px;
+    }
+    &-large{
+      min-width: 100px;
+    }
     tr {
       th {
         background: #f7f7f7;
 
         .ant-table-column-sort {
           background: #eee;
+        }
+        .ant-table-column-sorter {
+          display: inline-block !important;
         }
       }
     }

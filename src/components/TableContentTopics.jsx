@@ -22,7 +22,7 @@ const typesMap = {
 
 const accepted = ({ columnKey, order }) => ({
   title: 'Added',
-  className: 'text-align--right',
+  className: 'text-align--right ant-table-thead-medium',
   dataIndex: 'accepted',
   key: 'accepted',
   render: renderDate,
@@ -43,7 +43,7 @@ const author = ({ columnKey, order }) => ({
 })
 
 const curriculums = ({ curriculums }) => ({
-  className: 'text-align--center',
+  className: 'text-align--center ant-table-thead-small',
   filters: [{ text: 'Sobib teistele õppekavadele', value: 'others' }],
   filterMultiple: false,
   title: (
@@ -68,7 +68,7 @@ const curriculums = ({ curriculums }) => ({
 
 const defended = ({ columnKey, order }) => ({
   title: 'Defended',
-  className: 'text-align--right',
+  className: 'text-align--right ant-table-thead-large',
   dataIndex: 'defended',
   key: 'defended',
   render: renderDate,
@@ -147,7 +147,7 @@ const registered = ({ columnKey, order }) => ({
   title: 'Registered',
   dataIndex: 'registered',
   key: 'registered',
-  className: 'text-align--right',
+  className: 'text-align--right ant-table-thead-large',
   render: renderDate,
   sorter: true,
   sortOrder: columnKey === 'registered' && order
@@ -189,7 +189,7 @@ const title = ({ columnKey, order, sub }) => ({
         {title}
         <CopyToClipboard text={url} onCopy={() => message.success('Link copied to clipboard')}>
           <Tooltip title='Copy link to clipboard'>
-            <Icon className='link--copy' type="share-alt" />
+            <Icon className='link--copy' type='share-alt' />
           </Tooltip>
         </CopyToClipboard>
       </span>
@@ -199,7 +199,7 @@ const title = ({ columnKey, order, sub }) => ({
 })
 
 const types = ({ columnKey, order, sub, types }) => ({
-  className: 'text-align--center',
+  className: 'text-align--center ant-table-thead-small',
   filterMultiple: false,
   filters: [
     {
