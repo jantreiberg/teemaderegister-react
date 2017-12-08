@@ -1,6 +1,12 @@
 import axios from 'axios'
 import { getToken } from './jwt'
 import nprogress from 'nprogress'
+nprogress.configure({
+  speed: 100,
+  trickleSpeed: 100 
+})
+let timeout = null
+let isStarted = false
 
 const makeConfig = (method, url, query) => {
   let config = {
@@ -29,12 +35,13 @@ const makeConfig = (method, url, query) => {
 
 export default (method, url, query) => {
   const config = makeConfig(method, url, query)
-  nprogress.start()
+
+  if (!isStarted) nprogressHandler.start()
 
   return axios
     .request(config)
     .then(response => {
-      nprogress.done()
+      nprogressHandler.delay()
 
       return Promise.resolve(response.data)
     })
@@ -43,7 +50,30 @@ export default (method, url, query) => {
         // dispatch same as logout
         console.log('not authorized')
       }
-      nprogress.done()
+
+      nprogressHandler.delay()
+
       return Promise.reject(err.response)
     })
+}
+
+const nprogressHandler = {
+  start: () => {
+    isStarted = true
+    nprogress.start()
+  },
+  end: () => {
+    isStarted = false
+    timeout = null
+    nprogress.done()
+  },
+  delay: () => {
+    if (timeout && isStarted) {
+      nprogress.inc()
+      clearTimeout(timeout)
+    }
+
+    timeout = nprogressHandler.timer()
+  },
+  timer: () => setTimeout(nprogressHandler.end, 500)
 }
