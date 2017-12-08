@@ -1,19 +1,72 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
+import Api from '../utils/api'
 
-import Breadcrumbs from './Breadcrumbs'
-import TableWrap from '../components/TableWrap'
-import getTabs from '../utils/getTabs'
-import { Row, Col, Form, Icon, Input, Button, message, Tooltip, Select } from 'antd'
+// import Breadcrumbs from './Breadcrumbs'
+// import TableWrap from '../components/TableWrap'
+// import getTabs from '../utils/getTabs'
+import { Form, Input, Button, Select, AutoComplete } from 'antd'
+
 const FormItem = Form.Item
 
-const { array, bool, func, shape } = PropTypes
-
-
+// const th = (props)
 
 class TopicAdd extends React.Component {
+  constructor (props) {
+    super(props)
+    // const data = ['Tere', 'tetris', 'erts']
+    this.state = {
+      curriculums: [],
+      topics: []
+    }
+    this.handleSelectChange = this.handleSelectChange.bind(this)
+  }
+
+  componentDidMount () {
+    console.log('laetud')
+    Api('GET', 'api/curriculums', {})
+      .then(results => {
+      // console.log(results)
+        const { curriculums } = results
+        this.setState({
+          curriculums
+        })
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  }
+
+  handleSelectChange (value) {
+    Api('GET', 'api/topics?curriculumId=' + value + '&tab=topics&sub=available&order=ascend&all=true', {})
+      .then(results => {
+        console.log(results)
+        const topics = results.topics.map(topic => { return topic.title })
+        console.log(topics)
+        this.setState({
+          topics
+        })
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  }
 
   render () {
+    const curriculumsByType = (this.state.curriculums)
+    const topics = (this.state.topics)
+    // console.log(curriculumsByType)
+
+    const selectOptions = curriculumsByType.map(
+      types => {
+        let options = types.collection.map(curriculum => {
+          return (
+            <Select.Option value={curriculum._id} key={curriculum._id}>{curriculum.names['et']} {types.type}</Select.Option>
+          )
+        })
+        return options
+      }
+    )
 
     const {
       form: { getFieldDecorator },
@@ -23,61 +76,65 @@ class TopicAdd extends React.Component {
     return (
       <div className='topicadd'>
         <h1>Lõputöö teema registreerimise vorm</h1>
-        
+
         <Form onSubmit={this.submit}>
-              <h2 className='text-align-center'>
-                Sign in to <span className='emphisize'>Te</span>
-              </h2>
-              <FormItem>
-                <Select>
-                  <Option value='1'>1</Option>
-                </Select>
-              </FormItem>
-              <FormItem>
-                {getFieldDecorator('email', {
-                  rules: [
-                    { required: true, message: 'Please input your email!' },
-                    { type: 'email', message: 'Please enter correct email' }
-                  ]
-                })(<Input prefix={<Icon type='user' />} placeholder='Email' />)}
-              </FormItem>
-              <FormItem>
-                {getFieldDecorator('password', {
-                  rules: [
-                    { required: true, message: 'Please input your Password!' }
-                  ]
-                })(
-                  <Input
-                    prefix={<Icon type='lock' />}
-                    type='password'
-                    placeholder='Password'
-                  />
-                )}
-              </FormItem>
-              <FormItem>
-                <Button
-                  type='primary'
-                  htmlType='submit'
-                  className='login__button'
-                  loading={false}
-                >
+
+          <FormItem label="Topic" labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
+            <AutoComplete dataSource={topics} filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1} />
+          </FormItem>
+
+          <FormItem label="Nimi" labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
+            {getFieldDecorator('name', {
+              rules: [{ required: true, message: 'Insert your name!' }]
+            })(<Input placeholder='Name'/>)}
+          </FormItem>
+
+          <FormItem label="Õppekava" labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
+            {getFieldDecorator('curriculum', {
+              rules: [{ required: true, message: 'Choose curriculum!' }]
+            })(
+              <Select placeholder="Choose curriculum" onChange={this.handleSelectChange}>
+                {selectOptions}
+              </Select>
+            )}
+          </FormItem>
+
+          <FormItem label="Sisseastumise aasta" labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
+            {getFieldDecorator('enrollmentYear', {
+              rules: [{ required: true, message: 'Insert your year of enrollment!' }]
+            })(<Input placeholder='Year of enrollment'/>)}
+          </FormItem>
+
+          <FormItem label="Teema eesti keeles" labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
+            {getFieldDecorator('topicInEstonian', {
+              rules: [{ required: false, message: 'Insert your chosen topic!' }]
+            })(<Input placeholder='Topic In Estonian'/>)}
+          </FormItem>
+
+          <FormItem label="Teema inglise keeles" labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
+            {getFieldDecorator('topicInEnglish', {
+              rules: [{ required: false, message: 'Insert your chosen topic!' }]
+            })(<Input placeholder='Topic In English'/>)}
+          </FormItem>
+
+          <FormItem label="TLU email" labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
+            {getFieldDecorator('email', {
+              rules: [
+                { required: true, message: 'Please input your Tallinn University email!' },
+                { type: 'email', message: 'Please enter correct email' }
+              ]
+            })(<Input placeholder='Email' />)}
+          </FormItem>
+
+          <FormItem>
+            <Button type='primary' htmlType='submit' className='login__button' loading={false}>
                   Log in
-                </Button>
-                <p>
-                  <Tooltip
-                    placement='topLeft'
-                    title='If you do not have account please contact your school administrator'
-                  >
-                    <span>do not have account?</span>
-                  </Tooltip>
-                </p>
-              </FormItem>
-            </Form>
+            </Button>
+          </FormItem>
+        </Form>
       </div>
     )
   }
-
 }
-
 
 export default Form.create()(TopicAdd)
