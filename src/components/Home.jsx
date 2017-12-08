@@ -30,9 +30,6 @@ class Home extends React.Component {
         <div className='home__intro'>
           <h1>Tere tulemast DTI uue teemaderegistri lehele!</h1>
         </div>
-        {(isAuthenticated && user.roles.indexOf("admin") != -1) && <div>
-          <Link to='/add_curriculum'><Button>Lisa õppekava</Button></Link>
-        </div>}
         {!loading && <HomeCollection curriculums={curriculums} />}
       </div>
     )
