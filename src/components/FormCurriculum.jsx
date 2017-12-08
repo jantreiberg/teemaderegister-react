@@ -139,7 +139,10 @@ class AddCurriculum extends React.Component {
     return (
       <div className='addCurriculum'>
         <Breadcrumbs crumbs={crumbs} />
-        <Form onSubmit={this.submit} className='login__form'>
+        <Row gutter={8}>
+          <Col span={8} />
+          <Col xs={24} sm={8}>
+        <Form onSubmit={this.submit} className='form--narrow'>
           <h2 className='text-align-center'>
             Lisa õppekava
           </h2>
@@ -237,6 +240,9 @@ class AddCurriculum extends React.Component {
             </Button>
           </FormItem>
         </Form>
+        </Col>
+          <Col span={8} />
+        </Row>
       </div>
     )
   }

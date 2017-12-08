@@ -8,8 +8,7 @@ import {
   LOGIN_PATH,
   CURRICULUM_PATH,
   SEARCH_PATH,
-  SUPERVISOR_PATH,
-  ADDCURRICULUM_PATH
+  ADDCURRICULUM_PATH,
   SUPERVISOR_PATH,
   ACCOUNT_FORGOT,
   ACCOUNT_PASSWORD
@@ -62,7 +61,7 @@ render(
                 <Route path={SUPERVISOR_PATH}
                   component={RouteWrapContainer(SupervisorContainer)} />
                 <Route path={ADDCURRICULUM_PATH}
-                  component={RouteWrapContainer(AddCurriculumContainer)} />
+                  component={RouteWrapContainer(AddCurriculumContainer, { restrict: true })} />
                 <Route path={ACCOUNT_FORGOT}
                   component={RouteWrapContainer(AccountForgotContainer)} />
                 <Route path={ACCOUNT_PASSWORD}
