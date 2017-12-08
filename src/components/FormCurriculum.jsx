@@ -81,11 +81,6 @@ class AddCurriculum extends React.Component {
 
   handleChange (value) {
     console.log('select', value)
-    /* this.setState({
-      value: value.key,
-      data: [],
-      fetching: false
-    }) */
   }
 
   componentWillUnmount () {
@@ -133,8 +128,6 @@ class AddCurriculum extends React.Component {
       <Redirect to="/"/>
       )
     }
-
-
 
     return (
       <div className='addCurriculum'>
@@ -201,14 +194,12 @@ class AddCurriculum extends React.Component {
             })(
               <Input placeholder='Faculty' />)}
           </FormItem>
-
           <FormItem>
             {getFieldDecorator('languages', {
               rules: [
                 { required: true, message: 'Please select language!' }
               ]
             })(
-
               <div>
                 <CheckboxGroup options={plainOptions} onChange={this.checkboxChanged} />
               </div>
