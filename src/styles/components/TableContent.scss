@@ -1,6 +1,6 @@
 .tableContent {
   margin-top: 15px;
-  
+
   .link {
     &--curriculum {
       width: auto;
@@ -14,8 +14,12 @@
       cursor: pointer;
     }
   }
-  
+
   /* antd overwrites */
+  .ant-table-body {
+    overflow-x: scroll; 
+  }
+ 
   .no-desc {
     .ant-table-row-expand-icon {
       display: none;
