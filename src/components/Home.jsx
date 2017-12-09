@@ -5,18 +5,16 @@ import {Button} from 'antd'
 import {Link} from 'react-router-dom'
 
 import HomeCollection from './HomeCollection'
-import UserSettings from './UserSettings'
-
 const { array, bool, func, shape } = PropTypes
 
 const propTypes = {
+  auth: shape({
+    isAuthenticated: bool.isRequired
+  }).isRequired,
   getCurriculums: func.isRequired,
   home: shape({
     curriculums: array.isRequired,
     loading: bool.isRequired
-  }).isRequired,
-  auth: shape({
-    isAuthenticated: bool.isRequired
   }).isRequired
 }
 
