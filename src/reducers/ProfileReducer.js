@@ -2,18 +2,12 @@ import * as types from '../constants/ActionTypes'
 
 const INITIAL_STATE = {
   loading: true,
-  user: [],
-  error: null
+  user: {},
+  error: {}
 }
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case types.USER_SETTINGS_LOAD_START:
-      return {
-        ...state,
-        loading: true
-      }
-
     case types.USER_SETTINGS_LOADED:
       const { user } = action
       return {

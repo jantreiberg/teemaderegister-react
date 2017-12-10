@@ -102,6 +102,7 @@ class HeaderWrap extends Component {
               </div>}
             {isAuthenticated &&
             <div className='login'>
+              <Link to='/profile'><Button ghost icon='cogwheel' title='Settings' /></Link>
               <Button onClick={this.props.logout} ghost icon='logout' title='logout' />
             </div>}
           </div>

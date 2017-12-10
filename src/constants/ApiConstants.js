@@ -12,4 +12,5 @@ export const SUPERVISORS_URL = `${API}/supervisors`
 export const TOPICS_URL = `${API}/topics`
 export const USER_ME_URL = `${API}/users/me`
 export const USER_PROFILE_URL = `${API}/users/profile`
-export const USER_UPDATE_URL = `${API}/users/update`
+export const USER_UPDATE_URL = `${API}/update-profile`
+export const USER_PASSWORD_UPDATE_URL = `${API}/update-password`

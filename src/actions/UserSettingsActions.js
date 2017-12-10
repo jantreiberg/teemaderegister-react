@@ -10,7 +10,6 @@ export const initProfile = () => dispatch => {
 export const getProfile = () => dispatch => {
   return Api('GET', USER_PROFILE_URL)
     .then(data => {
-      console.log(data)
       dispatch({
         type: types.USER_SETTINGS_LOADED,
         user: data.user
@@ -22,11 +21,13 @@ export const getProfile = () => dispatch => {
 }
 
 export const saveData = creds => dispatch => {
+  dispatch({ type: types.USER_SETTINGS_SAVE_START })
+
   return Api('POST', USER_UPDATE_URL, { data: creds })
     .then(data => {
-      console.log('Success')
-      console.log(data)
+      dispatch({ type: types.USER_SETTINGS_SAVE_END, message: data.message })
     }).catch(err => {
-      console.log(err)
+      const error = err.data
+      dispatch({ type: types.USER_SETTINGS_SAVE_ERROR, error })
     })
 }

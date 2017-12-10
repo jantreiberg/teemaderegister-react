@@ -2,10 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Breadcrumbs from './Breadcrumbs'
 import { Row, Col, Form, Input, Button } from 'antd'
+import { Link } from 'react-router-dom'
 
 const FormItem = Form.Item
 
-const { func, object, shape, string } = PropTypes
+const { func, object, shape } = PropTypes
 
 const propTypes = {
   form: shape({
@@ -14,9 +15,12 @@ const propTypes = {
     validateFields: func.isRequired
   }).isRequired,
   getProfile: func.isRequired,
-  location: string,
-  profile: object.isRequired,
-  user: object.isRequired
+  initProfile: func.isRequired,
+  location: object.isRequired,
+  profile: shape({
+    user: object.isRequired
+  }).isRequired,
+  saveData: func.isRequired
 }
 
 class UserSettings extends React.Component {
@@ -29,54 +33,21 @@ class UserSettings extends React.Component {
     this.props.getProfile()
   }
 
+  componentWillUnmount () {
+    this.props.initProfile()
+  }
+
   submit (e) {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Values recieved: ', values)
+        this.props.saveData(values)
       }
     })
   }
 
-  // Function for checking the equality of passwords
-  // Must have a callback
-  checkPassword (rule, value, callback) {
-    const form = this.props.form
-    if (value && value !== form.getFieldValue('newPassword')) {
-      callback(new Error('Passwords must match'))
-    } else {
-      callback()
-    }
-  }
-  /*
-  state = {
-    previewVisible: false,
-    previewImage: '',
-    fileList: [],
-  };
-
-  handleCancel = () => this.setState({ previewVisible: false })
-
-  handlePreview = (file) => {
-    this.setState({
-      previewImage: file.url || file.thumbUrl,
-      previewVisible: true,
-    });
-  }
-
-  handleChange = ({ fileList }) => this.setState({ fileList })
-  */
-
   render () {
     const crumbs = [{ url: this.props.location.pathname, name: 'Profile' }]
-
-    /* const { previewVisible, previewImage, fileList } = this.state; */
-    /* const uploadButton = (
-      <div>
-        <Icon type="plus" />
-        <div className="ant-upload-text">Upload</div>
-      </div>
-    ); */
 
     const {
       form: { getFieldDecorator },
@@ -89,8 +60,6 @@ class UserSettings extends React.Component {
         }
       }
     } = this.props
-
-    console.log(firstName)
 
     return (
       <div className='settings'>
@@ -133,7 +102,8 @@ class UserSettings extends React.Component {
                   <Button
                     type='primary'
                     htmlType='submit'
-                    className='login__button'
+                    className='button--fullWidth'
+                    loading={loading}
                   >
                 Save Changes
                   </Button>
@@ -142,6 +112,21 @@ class UserSettings extends React.Component {
             </Col>
             <Col span={8} />
           </Row>
+          <div>
+            <Row gutter={8}>
+              <Col span={8} />
+              <Col xs={24} sm={8}>
+                <h2 style={{ marginBottom: '20' }} className='text-align-center'>
+                Password Settings
+                </h2>
+                <Link to='/passwordsettings'><Button
+                  type='danger'
+                  className='button--fullWidth'
+                >Change Password</Button></Link>
+              </Col>
+              <Col span={8} />
+            </Row>
+          </div>
         </div>}
       </div>
     )
