@@ -30,7 +30,7 @@ export const getCurriculum = slug => dispatch => {
       dispatch(loadedTableContentCount({ topics, supervisors }))
       dispatch({ type: types.CURRICULUM_LOADED, meta })
     })
-    .catch(err => {
-      dispatch({ type: types.CURRICULUM_LOADFAIL, err })
+    .catch(error => {
+      dispatch({ type: types.CURRICULUM_LOADED, error })
     })
 }

@@ -4,33 +4,24 @@ const INITIAL_STATE = {
   meta: {},
   loading: true,
   hasError: false,
-  err: {}
+  error: {}
 }
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case types.CURRICULUM_LOADED: {
-      const { meta } = action
+      const { meta, error } = action
       return {
         ...state,
-        meta,
+        meta: meta || {},
         loading: false,
-        hasError: false
+        hasError: !!error,
+        error: error || {}
       }
     }
 
     case types.CURRICULUM_INIT:
       return INITIAL_STATE
-
-    case types.CURRICULUM_LOADFAIL: {
-      const { err } = action
-      return {
-        ...state,
-        err,
-        loading: false,
-        hasError: true
-      }
-    }
 
     default:
       return {

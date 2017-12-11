@@ -5,34 +5,25 @@ const INITIAL_STATE = {
   count: {},
   loading: true,
   hasError: false,
-  err: {}
+  error: {}
 }
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case types.SUPERVISOR_LOADED: {
-      const { supervisor, counts } = action
+      const { supervisor, counts, error } = action
       return {
         ...state,
-        data: supervisor,
-        count: counts,
+        data: supervisor || {},
+        count: counts || {},
         loading: false,
-        hasError: false
+        hasError: !!error,
+        error: error || {}
       }
     }
 
     case types.SUPERVISOR_INIT:
       return INITIAL_STATE
-
-    case types.SUPERVISOR_LOADFAIL: {
-      const { err } = action
-      return {
-        ...state,
-        err,
-        loading: false,
-        hasError: true
-      }
-    }
 
     default:
       return {

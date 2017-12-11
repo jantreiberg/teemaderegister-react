@@ -81,8 +81,8 @@ class Supervisor extends React.Component {
       supervisor: {
         loading,
         data,
-        err,
         hasError,
+        error,
         data: {
           _id,
           profile
@@ -93,34 +93,17 @@ class Supervisor extends React.Component {
       topics
     } = this.props
 
-    console.log(err)
     return (
       <div className='supervisor'>
 
         {hasError &&
-        <div style={{
-          textAlign: 'center',
-          marginTop: '25%',
-          marginBottom: '25%',
-          marginLeft: 'auto',
-          marginRight: 'Auto',
-          fontFamily: 'Helvetica Neue For Number'
-        }}>
-          <h1 style={{
-            textAlign: 'center',
-            fontWeight: 'Bold',
-            color: '#5e5e5e'
-          }}>
-            {err.data.message}
+        <div className='errorMsg'>
+          <h1>
+            {error.data.message}
           </h1>
-          <h3 style={{
-            textAlign: 'center',
-            fontWeight: 'Bold',
-            color: '#5e5e5e',
-            fontFamily: 'Helvetica Neue For Number'
-          }}>
-              Please check the address or contact the administrator
-            </h3>
+          <h3>
+              Please try the search bar or contact the administrator
+          </h3>
         </div>
         }
 
