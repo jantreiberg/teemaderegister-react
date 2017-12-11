@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import {Link} from 'react-router-dom'
 import Breadcrumbs from './Breadcrumbs'
 import TableWrap from '../components/TableWrap'
 import getTabs from '../utils/getTabs'
@@ -63,7 +63,7 @@ class Curriculum extends React.Component {
               {error.data.message}
             </h1>
             <h3>
-              Please choose a curriculum from the home page <link to={'/'} />
+              Please choose a curriculum from the <Link to='/'><button>main page</button> </Link> instead.
             </h3>
           </div>
         }
