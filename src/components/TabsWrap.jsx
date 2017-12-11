@@ -45,12 +45,17 @@ class TabsWrap extends Component {
   }
 
   createSubTabs (subs) {
-    const { activeSub } = this.props
+    const { activeSub, curriculum } = this.props
 
     subs = Object.keys(subs).map(key => {
       const { title, count } = subs[key]
+
       return (
-        <Radio.Button value={key} key={key}>
+        <Radio.Button
+          disabled={curriculum && curriculum.meta.closed && title !== 'Defended'}
+          value={key}
+          key={key}
+        >
           {this.createSubTitle(title, count)}
         </Radio.Button>
       )
