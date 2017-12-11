@@ -9,9 +9,17 @@
     &--pdf {
       display: inline;
     }
+  }
+
+  .icon {
+    &--download {
+      font-size: 16px
+    }
     &--copy {
       padding-left: 5px;
       cursor: pointer;
+      font-size: 16px;
+      color: #3c7269;
     }
   }
 
@@ -49,12 +57,7 @@
     tr {
       th,
       td {
-        word-break: normal; 
-        a { 
-          height: 100%; 
-          width: 100%; 
-          display: inline-block; 
-        } 
+        word-break: normal;
       }
     }
   }
