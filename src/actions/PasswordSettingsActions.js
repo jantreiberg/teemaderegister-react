@@ -2,7 +2,7 @@ import Api from './../utils/Api'
 import * as types from '../constants/ActionTypes'
 import { USER_PASSWORD_UPDATE_URL } from './../constants/ApiConstants'
 
-export const initPasswordSettings = () => dispatch => dispatch({ type: types.PASSWORD_SETTINGS_LOADED })
+export const initPasswordSettings = () => dispatch => dispatch({ type: types.PASSWORD_CHANGE_INIT })
 
 export const changeUserPassword = creds => dispatch => {
   dispatch({ type: types.PASSWORD_CHANGE_START })
@@ -12,6 +12,6 @@ export const changeUserPassword = creds => dispatch => {
       dispatch({ type: types.PASSWORD_CHANGE_END })
     }).catch(err => {
       const error = err.data
-      dispatch({ type: types.PassWORD_CHANGE_ERROR, error })
+      dispatch({ type: types.PASSWORD_CHANGE_END, error })
     })
 }

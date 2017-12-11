@@ -26,10 +26,6 @@ class ChangePassword extends React.Component {
     this.checkPassword = this.checkPassword.bind(this)
   }
 
-  componentDidMount () {
-    this.props.initPasswordSettings()
-  }
-
   componentWillUnmount () {
     this.props.initPasswordSettings()
   }
@@ -106,7 +102,7 @@ class ChangePassword extends React.Component {
                   </Button>
                 </FormItem>
                 <FormItem>
-                  <Link to='/profile'>
+                  <Link to='/settings/account'>
                     <Button
                       type='default'
                       className='button--fullWidth'

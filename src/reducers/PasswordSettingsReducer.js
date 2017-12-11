@@ -1,17 +1,13 @@
 import * as types from '../constants/ActionTypes'
 
 const INITIAL_STATE = {
-  loading: true
+  loading: false,
+  error: {},
+  hasError: false
 }
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case types.PASSWORD_SETTINGS_LOADED:
-      return {
-        ...state,
-        loading: false
-      }
-
     case types.PASSWORD_CHANGE_START :
       return {
         ...state,
@@ -21,10 +17,12 @@ export default (state = INITIAL_STATE, action) => {
     case types.PASSWORD_CHANGE_END:
       return {
         ...state,
-        loading: false
+        loading: false,
+        hasError: !!action.error,
+        error: action.error || {}
       }
 
-    case types.PASSWORD_SETTINGS_INIT:
+    case types.PASSWORD_CHANGE_INIT:
       return INITIAL_STATE
 
     default:

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 const FormItem = Form.Item
 
-const { func, object, shape } = PropTypes
+const { func, object, shape, bool, string } = PropTypes
 
 const propTypes = {
   form: shape({
@@ -18,7 +18,12 @@ const propTypes = {
   initProfile: func.isRequired,
   location: object.isRequired,
   profile: shape({
-    user: object.isRequired
+    loading: bool.isRequired,
+    user: shape({
+      firstName: string,
+      lastName: string,
+      email: string
+    }).isRequired
   }).isRequired,
   saveData: func.isRequired
 }
@@ -62,7 +67,7 @@ class UserSettings extends React.Component {
     } = this.props
 
     return (
-      <div className='settings'>
+      <div className='usersettings'>
         {!loading &&
         <div>
           <Breadcrumbs crumbs={crumbs} />
@@ -119,8 +124,8 @@ class UserSettings extends React.Component {
                 <h2 style={{ marginBottom: '20' }} className='text-align-center'>
                 Password Settings
                 </h2>
-                <Link to='/passwordsettings'><Button
-                  type='danger'
+                <Link to='/settings/password'><Button
+                  type='primary'
                   className='button--fullWidth'
                 >Change Password</Button></Link>
               </Col>
