@@ -1,4 +1,4 @@
-FROM node:8
+FROM node:8.9-alpine
 
 RUN mkdir -p /var/www/teemaderegister-react
 
