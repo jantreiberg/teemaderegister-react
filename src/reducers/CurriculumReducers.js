@@ -2,7 +2,8 @@ import * as types from '../constants/ActionTypes'
 
 const INITIAL_STATE = {
   meta: {},
-  loading: true
+  loading: true,
+  message:'',
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -21,7 +22,9 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         meta,
-        loading: true
+        loading: true,
+        message:"Curriculum was not added!",
+        messageFlag:false
       }
 
     case types.CURRICULUM_ADD: {
@@ -29,7 +32,9 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         meta,
-        loading: false
+        loading: false,
+        message:"Curriculum added successfully",
+        messageFlag:true
       }
     }
 

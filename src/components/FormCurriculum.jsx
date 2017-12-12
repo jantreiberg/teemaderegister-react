@@ -7,6 +7,11 @@ import Breadcrumbs from './Breadcrumbs'
 import { Row, Col, Form, Icon, Input, Button, message, Tooltip, Select, Spin, Checkbox } from 'antd'
 import debounce from 'lodash.debounce'
 
+import Api from '../utils/Api'
+import { SUPERVISORS_URL } from '../constants/ApiConstants'
+
+
+
 const Option = Select.Option
 const FormItem = Form.Item
 const CheckboxGroup = Checkbox.Group
@@ -23,14 +28,6 @@ const propTypes = {
   initCurriculum: func.isRequired,
   triggerAddCurriculum: func.isRequired
 
-}
-
-function handleChange (value) {
-  console.log(`selected ${value}`)
-}
-
-function handleBlur () {
-  console.log('blur')
 }
 
 function handleFocus () {
@@ -60,12 +57,12 @@ class AddCurriculum extends React.Component {
   }
 
   fetchUser (value) {
-    console.log('fetching user', value)
+    if(value !== '')
+  {
     this.lastFetchId += 1
     const fetchId = this.lastFetchId
     this.setState({ fetching: true })
-    fetch('http://localhost:8080/api/supervisors?q=' + value)
-      .then(response => response.json())
+    Api('GET',SUPERVISORS_URL, {params:{q:value}} )
       .then((body) => {
         if (fetchId !== this.lastFetchId) { // for fetch callback order
           return
@@ -77,6 +74,7 @@ class AddCurriculum extends React.Component {
         }))
         this.setState({ data })
       })
+    }
   }
 
   handleChange (value) {
@@ -95,19 +93,22 @@ class AddCurriculum extends React.Component {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log(values)
         values.languages = this.checkboxValues
         values.representative = values.representative.key
-        console.log(this.checkboxValues)
         this.setState({ loading: true })
         // show user loading
-        
-        window.setTimeout(() => {
           this.props.triggerAddCurriculum(values)
-          window.setTimeout(() => {              
-            this.setState({ redirectToNewPage: true })
+          window.setTimeout(() => {
+          
+          this.setState({ loading: false })
+
+          if (!this.props.curriculum.messageFlag && this.props.curriculum.message !== "") {
+            message.error(this.props.curriculum.message)
+            }
+            else if(this.props.curriculum.messageFlag && this.props.curriculum.message ){
+              message.success(this.props.curriculum.message)
+            }
           }, 1000)
-        }, 1500)
       }
     })
   }
@@ -157,9 +158,7 @@ class AddCurriculum extends React.Component {
                 style={{ width: 200 }}
                 placeholder="Type"
                 optionFilterProp="children"
-                onChange={handleChange}
                 onFocus={handleFocus}
-                onBlur={handleBlur}
                 filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
               >
                 <Option value="BA">BA</Option>

@@ -14,7 +14,7 @@ export const initCurriculum = () => dispatch => {
 
 
 export const triggerAddCurriculum = (values) => dispatch => {
-  dispatch({ type: types.ADD_CURRICULUM_START })
+  dispatch({ type: types.CURRICULUM_INIT })
 
   return Api('POST', CURRICULUMS_URL, { data: values })
     .then(data => {
@@ -23,7 +23,7 @@ export const triggerAddCurriculum = (values) => dispatch => {
       // dispatch()
     }).catch(err => {
       const error = err.data
-      dispatch({ type: types.CURRICULUM_ADD, error })
+      dispatch({ type: types.ADD_CURRICULUM_START, error })
       console.log(err)
     })
 }

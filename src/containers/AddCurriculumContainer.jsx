@@ -5,6 +5,8 @@ import FormCurriculum from '../components/FormCurriculum'
 
 const AddCurriculumContainer = props => <FormCurriculum {...props} />
 
-const mapStateToProps = state => ({})
+const mapStateToProps = state => ({
+    curriculum:state.curriculum
+})
 
 export default connect(mapStateToProps, { triggerAddCurriculum,initCurriculum })(AddCurriculumContainer)

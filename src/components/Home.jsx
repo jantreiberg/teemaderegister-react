@@ -10,6 +10,9 @@ import { Link } from 'react-router-dom'
 const { array, bool, func, shape } = PropTypes
 
 const propTypes = {
+  auth: shape({
+    isAuthenticated: bool.isRequired
+  }).isRequired,
   getCurriculums: func.isRequired,
   home: shape({
     curriculums: array.isRequired,
@@ -30,6 +33,10 @@ class Home extends React.Component {
         <div className='home__intro'>
           <h1>Tere tulemast DTI uue teemaderegistri lehele!</h1>
         </div>
+        {(isAuthenticated && user.roles.indexOf("admin") != -1) &&
+        <div>
+          <Link to='/add_curriculum'><Button icon="plus">Lisa õppekava</Button></Link>
+        </div>}
         {!loading && <HomeCollection curriculums={curriculums} />}
       </div>
     )

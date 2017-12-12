@@ -104,10 +104,7 @@ class HeaderWrap extends Component {
             <div className='login'>
               <Button onClick={this.props.logout} ghost icon='logout' title='logout' />
             </div>}
-            {(isAuthenticated && user.roles.indexOf("admin") != -1) &&
-            <div className='login addCurriculum'>
-              <Link to='/add_curriculum'><Button ghost icon='plus-circle-o' title='Add curriculum'></Button></Link>
-            </div>}
+
           </div>
         </div>
       </Header>
