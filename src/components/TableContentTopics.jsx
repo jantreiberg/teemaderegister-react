@@ -132,10 +132,12 @@ const file = ({ columnKey, order }) => ({
   key: 'file',
   sortOrder: columnKey === 'file' && order,
   render: file => {
-    let content = (
+    const content = (
       <span>
-        <a className='link--pdf' href={file} target='_blank'>
-          <Icon type='file-pdf' className='icon-15' />
+        <a href={file}>
+          <Tooltip title='Download .pdf'>
+            <Icon type='download' className='icon--download' />
+          </Tooltip>
         </a>
       </span>
     )
@@ -183,17 +185,23 @@ const title = ({ columnKey, order, sub }) => ({
   sorter: true,
   sortOrder: columnKey === 'title' && order,
   render: (title, row) => {
-    const url = window.location.host + '/search?' + queryString.stringify({ q: row.slug, sub })
+    const fileUrl = row.file
+    const fileInViewerUrl = <a href={'https://docs.google.com/gview?url=' + fileUrl} target='_blank'>{title}</a>
+    const topicTitle = sub === 'defended'
+      ? fileInViewerUrl
+      : title
+    const shareUrl = window.location.host + '/search?' + queryString.stringify({ q: row.slug, sub })
     const content = (
       <span>
-        {title}
-        <CopyToClipboard text={url} onCopy={() => message.success('Link copied to clipboard')}>
+        {topicTitle}
+        <CopyToClipboard text={shareUrl} onCopy={() => message.success('Link copied to clipboard')}>
           <Tooltip title='Copy link to clipboard'>
-            <Icon className='link--copy' type="share-alt" />
+            <Icon type='copy' className='icon--copy' />
           </Tooltip>
         </CopyToClipboard>
       </span>
     )
+
     return content
   }
 })
