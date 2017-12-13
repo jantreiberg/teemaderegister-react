@@ -185,15 +185,19 @@ const title = ({ columnKey, order, sub }) => ({
   sorter: true,
   sortOrder: columnKey === 'title' && order,
   render: (title, row) => {
-    const fileUrl = row.file
+    const { starred, file: fileUrl, slug } = row
     const fileInViewerUrl = <a href={'https://docs.google.com/gview?url=' + fileUrl} target='_blank'>{title}</a>
     const topicTitle = sub === 'defended'
       ? fileInViewerUrl
       : title
-    const shareUrl = window.location.host + '/search?' + queryString.stringify({ q: row.slug, sub })
+    const shareUrl = window.location.host + '/search?' + queryString.stringify({ q: slug, sub })
     const content = (
       <span>
         {topicTitle}
+        {starred &&
+          <Tooltip title='Esiletõstetud töö'>
+            {` `}<Icon style={{color: 'gold'}} type='star' />
+          </Tooltip>}
         <CopyToClipboard text={shareUrl} onCopy={() => message.success('Link copied to clipboard')}>
           <Tooltip title='Copy link to clipboard'>
             <Icon type='copy' className='icon--copy' />
