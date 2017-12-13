@@ -26,17 +26,17 @@ class Home extends React.Component {
   }
 
   render () {
-    const { home: { loading, curriculums }, auth:{user,isAuthenticated} } = this.props
-
+    const { home: { loading, curriculums }, auth: { user, isAuthenticated } } = this.props
+    const showAddCurriculumLink = isAuthenticated && user.roles.includes('admin')
     return (
       <div className='home'>
         <div className='home__intro'>
           <h1>Tere tulemast DTI uue teemaderegistri lehele!</h1>
         </div>
-        {(isAuthenticated && user.roles.indexOf("admin") != -1) &&
-        <div>
-          <Link to='/add_curriculum'><Button icon="plus">Lisa õppekava</Button></Link>
-        </div>}
+        {showAddCurriculumLink &&
+          <Link to='/curriculum/add'>
+            <Button icon="plus">Lisa õppekava</Button>
+          </Link>}
         {!loading && <HomeCollection curriculums={curriculums} />}
       </div>
     )

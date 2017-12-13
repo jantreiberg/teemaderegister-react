@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import Curriculum from '../components/Curriculum'
-import { getCurriculum, initCurriculum,triggerAddCurriculum } from '../actions/CurriculumActions'
+import { getCurriculum, initCurriculum } from '../actions/CurriculumActions'
 import {
   clearTableContent,
   getTableContent,
@@ -26,8 +26,7 @@ const mapDispatchToProps = (dispatch, props) =>
       getCurriculum: () => getCurriculum(props.match.params.slug),
       getTableContent,
       initCurriculum,
-      initTableContent,
-      triggerAddCurriculum
+      initTableContent
     },
     dispatch
   )

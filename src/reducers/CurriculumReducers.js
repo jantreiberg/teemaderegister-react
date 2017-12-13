@@ -3,7 +3,12 @@ import * as types from '../constants/ActionTypes'
 const INITIAL_STATE = {
   meta: {},
   loading: true,
-  message:'',
+  form: {
+    loading: false,
+    curriculum: {},
+    hasError: false,
+    error: {}
+  }
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -17,24 +22,26 @@ export default (state = INITIAL_STATE, action) => {
       }
     }
 
-    case types.ADD_CURRICULUM_START:
-      const { meta } = action
+    case types.CURRICULUM_ADD_START:
       return {
         ...state,
-        meta,
-        loading: true,
-        message:"Curriculum was not added!",
-        messageFlag:false
+        form: {
+          ...state.form,
+          loading: true
+        }
       }
 
-    case types.CURRICULUM_ADD: {
-      const { meta } = action
+    case types.CURRICULUM_ADD_END: {
+      const { curriculum, error } = action
       return {
         ...state,
-        meta,
-        loading: false,
-        message:"Curriculum added successfully",
-        messageFlag:true
+        form: {
+          loading: false,
+          curriculum: curriculum || {},
+          hasError: !!error,
+          error: error || {}
+        }
+
       }
     }
 

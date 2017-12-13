@@ -6,9 +6,9 @@ import { Route, Switch, BrowserRouter, browserHistory } from 'react-router-dom'
 import {
   INDEX_PATH,
   LOGIN_PATH,
+  CURRICULUM_ADD_PATH,
   CURRICULUM_PATH,
   SEARCH_PATH,
-  ADDCURRICULUM_PATH,
   SUPERVISOR_PATH,
   ACCOUNT_FORGOT,
   ACCOUNT_PASSWORD
@@ -24,7 +24,7 @@ import SupervisorContainer from './containers/SupervisorContainer'
 import SearchContainer from './containers/SearchContainer'
 import AccountForgotContainer from './containers/AccountForgotContainer'
 import AccountPasswordContainer from './containers/AccountPasswordContainer'
-import AddCurriculumContainer from './containers/AddCurriculumContainer'
+import CurriculumAddContainer from './containers/CurriculumAddContainer'
 
 import store from './store/configureStore'
 
@@ -56,12 +56,12 @@ render(
                   component={RouteWrapContainer(LoginContainer)} />
                 <Route path={SEARCH_PATH}
                   component={RouteWrapContainer(SearchContainer)} />
+                <Route path={CURRICULUM_ADD_PATH}
+                  component={RouteWrapContainer(CurriculumAddContainer, { restrict: true })} />
                 <Route path={CURRICULUM_PATH}
                   component={RouteWrapContainer(CurriculumContainer)} />
                 <Route path={SUPERVISOR_PATH}
                   component={RouteWrapContainer(SupervisorContainer)} />
-                <Route path={ADDCURRICULUM_PATH}
-                  component={RouteWrapContainer(AddCurriculumContainer, { restrict: true })} />
                 <Route path={ACCOUNT_FORGOT}
                   component={RouteWrapContainer(AccountForgotContainer)} />
                 <Route path={ACCOUNT_PASSWORD}

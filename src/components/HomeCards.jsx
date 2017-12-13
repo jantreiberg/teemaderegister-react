@@ -53,7 +53,7 @@ const HomeCards = props => {
 
     items[place].push(
       <Col key={i} sm={12} md={8}>
-        <Link to={'/curriculum/' + slugs.et}>
+        <Link to={'/curriculum/s/' + slugs.et}>
           <Card
             key={_id}
             className='homeCards__card'

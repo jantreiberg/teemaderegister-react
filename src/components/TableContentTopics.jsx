@@ -84,7 +84,7 @@ const detailCurriculums = () => ({
   render: curriculums => {
     if (curriculums.length === 0) return null
     return curriculums.map((c, i) => {
-      const url = '/curriculum/' + c.slugs.et
+      const url = '/curriculum/s/' + c.slugs.et
       const abbr = c.abbreviation
       const content =
         i < curriculums.length - 1 && curriculums.length > 1

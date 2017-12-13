@@ -75,7 +75,7 @@ class HeaderWrap extends Component {
 
   render () {
     const {
-      auth: {user, isAuthenticated },
+      auth: { isAuthenticated },
       form: { getFieldDecorator }
     } = this.props
 
