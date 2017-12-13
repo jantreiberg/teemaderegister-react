@@ -31,7 +31,6 @@ class RouteWrap extends React.Component {
 
   componentDidMount () {
     this.props.checkUser()
-    this.analytics(this.props.location.pathname)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -42,13 +41,8 @@ class RouteWrap extends React.Component {
     }
   }
 
-  analytics (route) {
-    // console.log(route)
-  }
-
   render () {
     const { allowPageLoad } = this.state
-
     const {
       auth: { isAuthenticated },
       location: { pathname },
