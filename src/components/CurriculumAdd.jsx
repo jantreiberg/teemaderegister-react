@@ -4,6 +4,8 @@ import { Redirect } from 'react-router-dom'
 import Breadcrumbs from './Breadcrumbs'
 import { Row, Col, Form, Input, Button, message, Select, Spin, Checkbox } from 'antd'
 import debounce from 'lodash.debounce'
+import { setDocTitle } from '../utils/Helpers'
+
 
 import Api from '../utils/Api'
 import { SUPERVISOR_CURRICULUMFORM_URL } from '../constants/ApiConstants'
@@ -73,6 +75,10 @@ class AddCurriculum extends React.Component {
     this.props.initCurriculum()
   }
 
+  componentDidMount () {
+    setDocTitle('Add Curriculum')
+  }
+
   checkboxChanged (values) {
     this.checkboxValues = values
   }
@@ -125,7 +131,7 @@ class AddCurriculum extends React.Component {
     }
 
     return (
-      <div className='addCurriculum'>
+      <div className='curriculumAdd'>
         <Breadcrumbs crumbs={crumbs} />
         <Row gutter={8}>
           <Col span={8} />
@@ -146,7 +152,6 @@ class AddCurriculum extends React.Component {
                   ]
                 })(
                   <Select
-                    style={{ width: 200 }}
                     placeholder="Type"
                   >
                     <Option value="BA">BA</Option>
@@ -209,7 +214,7 @@ class AddCurriculum extends React.Component {
                 <Button
                   type='primary'
                   htmlType='submit'
-                  className='login__button'
+                  className='button--fullWidth'
                   loading={loading}
                 >
                   Add Curriculum
