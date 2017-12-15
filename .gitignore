@@ -11,3 +11,6 @@
 .DS_Store
 
 npm-debug.log*
+.idea
+
+config.json

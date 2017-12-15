@@ -2,7 +2,11 @@ import React from 'react'
 import { PropTypes } from 'prop-types'
 import queryString from 'query-string'
 
+<<<<<<< HEAD
 import { removeEmpty } from '../utils/helpers'
+=======
+import { removeEmpty, setDocTitle, capitalizeFirstLetter } from '../utils/Helpers'
+>>>>>>> origin/master
 import setUrl from '../utils/setUrl'
 import TabsWrap from './TabsWrap'
 
@@ -64,8 +68,18 @@ class TableWrap extends React.Component {
     const tabObj = this.tabs[tab]
 
     sub = sub && tabObj.subs[sub] ? sub : tabObj.sub
+    // Select defended sub for closed curriculums
+    sub = (props.curriculum && props.curriculum.meta.closed)
+      ? 'defended'
+      : sub
+
     const subObj = tabObj.subs[sub]
     columnKey = columnKey || subObj.columnKey
+
+    // Set titles depending on page, search title updated on componentWillUpdate
+    this.curriculumTitle = this.props.curriculum && this.props.curriculum.meta.names.en
+    this.supervisorTitle = this.props.supervisor &&
+      this.props.supervisor.data.profile.firstName + ' ' + this.props.supervisor.data.profile.lastName
 
     // FIX default ascend if not in url but there is columnKey
     this.defaultOrder = 'ascend'
@@ -88,6 +102,7 @@ class TableWrap extends React.Component {
 
   componentDidMount () {
     this.makeQuery()
+    this.setPageTitle()
   }
 
   componentWillUpdate (nextProps) {
@@ -97,6 +112,7 @@ class TableWrap extends React.Component {
       this.tabs = nextProps.tabs // update tabs count
       this.setState({ q: nextProps.search.q }, () => {
         this.makeQuery({ showLoading: true }, { q: nextProps.search.q })
+        this.setPageTitle()
       })
     }
   }
@@ -125,11 +141,21 @@ class TableWrap extends React.Component {
       // create object to only clear active tab data
       const obj = {}
       obj[tab] = true
-      console.log(sub)
       return this.props.clearTableContent(query)
     }
 
     this.props.getTableContent(query, showLoading || false)
+  }
+
+  setPageTitle () {
+    const searchTitle = this.props.search && (
+      this.state.q
+        ? `${this.state.q} - Search`
+        : 'Search'
+    )
+    const title = searchTitle || this.curriculumTitle || this.supervisorTitle
+    const pageTitle = `${title} ${capitalizeFirstLetter(this.state.tab)}`
+    setDocTitle(pageTitle)
   }
 
   tabUpdated ([tab, sub]) {
@@ -139,6 +165,7 @@ class TableWrap extends React.Component {
     this.setState(newState, () => {
       this.writeURL()
       this.makeQuery(showLoading)
+      this.setPageTitle()
     })
   }
 
@@ -181,16 +208,18 @@ class TableWrap extends React.Component {
     } = this.props
 
     return (
-      <TabsWrap
-        activeSub={sub}
-        activeTab={tab}
-        curriculum={curriculum}
-        handleTableChange={this.handleTableChange}
-        tabUpdated={this.tabUpdated}
-        supervisor={supervisor}
-        tableContent={tableContent}
-        tabs={tabs}
-      />
+      <div className='tableWrap'>
+        <TabsWrap
+          activeSub={sub}
+          activeTab={tab}
+          curriculum={curriculum}
+          handleTableChange={this.handleTableChange}
+          tabUpdated={this.tabUpdated}
+          supervisor={supervisor}
+          tableContent={tableContent}
+          tabs={tabs}
+        />
+      </div>
     )
   }
 }

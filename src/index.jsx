@@ -9,7 +9,12 @@ import {
   CURRICULUM_PATH,
   SEARCH_PATH,
   SUPERVISOR_PATH,
+<<<<<<< HEAD
   TOPICADD_PATH
+=======
+  ACCOUNT_FORGOT,
+  ACCOUNT_PASSWORD
+>>>>>>> origin/master
 } from './constants/RouterConstants'
 
 import CurriculumContainer from './containers/CurriculumContainer'
@@ -20,9 +25,15 @@ import NotFound from './components/NotFound'
 import RouteWrapContainer from './containers/RouteWrapContainer'
 import SupervisorContainer from './containers/SupervisorContainer'
 import SearchContainer from './containers/SearchContainer'
+<<<<<<< HEAD
 import TopicContainer from './containers/TopicContainer'
+=======
+import AccountForgotContainer from './containers/AccountForgotContainer'
+import AccountPasswordContainer from './containers/AccountPasswordContainer'
+>>>>>>> origin/master
 
 import store from './store/configureStore'
+import { initAnalytics } from './utils/Analytics'
 
 import './styles/main.scss'
 
@@ -36,6 +47,8 @@ import { Layout, LocaleProvider } from 'antd'
 import etEE from 'antd/lib/locale-provider/et_EE'
 
 const { Content, Footer } = Layout
+
+initAnalytics()
 
 render(
   <Provider store={store}>
@@ -56,8 +69,15 @@ render(
                   component={RouteWrapContainer(CurriculumContainer)} />
                 <Route path={SUPERVISOR_PATH}
                   component={RouteWrapContainer(SupervisorContainer)} />
+<<<<<<< HEAD
                 <Route path={TOPICADD_PATH}
                   component={RouteWrapContainer(TopicContainer)} />
+=======
+                <Route path={ACCOUNT_FORGOT}
+                  component={RouteWrapContainer(AccountForgotContainer)} />
+                <Route path={ACCOUNT_PASSWORD}
+                  component={RouteWrapContainer(AccountPasswordContainer)} />
+>>>>>>> origin/master
                 <Route
                   component={RouteWrapContainer(NotFound)} />
               </Switch>

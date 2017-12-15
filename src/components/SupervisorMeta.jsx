@@ -147,7 +147,6 @@ class SupervisorMeta extends PureComponent {
                   </linearGradient>
                 </defs>
                 <Tooltip
-                  className='card--chart__tooltip'
                   content={this.renderTooltip}
                   cursor={false}
                   active

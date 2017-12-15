@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import queryString from 'query-string'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import { getToken } from '../utils/jwt'
 
 import Breadcrumbs from './Breadcrumbs'
@@ -9,6 +9,8 @@ import TableWrap from '../components/TableWrap'
 import getTabs from '../utils/getTabs'
 
 import { Row, Col, Form, Icon, Input, Button, message, Tooltip } from 'antd'
+import { setDocTitle } from '../utils/Helpers'
+
 const FormItem = Form.Item
 
 const { bool, func, object, shape, string } = PropTypes
@@ -45,7 +47,6 @@ class Login extends React.Component {
     if (nextProps.login.loading !== this.state.loading) {
       this.setState({ loading: nextProps.login.loading })
       if (nextProps.login.hasError) {
-        console.log(nextProps.login.error)
         message.error(nextProps.login.error.message)
       }
     }
@@ -54,6 +55,8 @@ class Login extends React.Component {
   componentDidMount () {
     const emailInput = this.props.form.getFieldInstance('email').refs.input
     emailInput.focus()
+
+    setDocTitle('Login')
   }
 
   componentWillUnmount () {
@@ -96,7 +99,7 @@ class Login extends React.Component {
         <Row gutter={8}>
           <Col span={8} />
           <Col xs={24} sm={8}>
-            <Form onSubmit={this.submit} className='login__form'>
+            <Form onSubmit={this.submit} className='form--narrow'>
               <h2 className='text-align-center'>
                 Sign in to <span className='emphisize'>Te</span>
               </h2>
@@ -108,7 +111,7 @@ class Login extends React.Component {
                   ]
                 })(<Input prefix={<Icon type='user' />} placeholder='Email' />)}
               </FormItem>
-              <FormItem>
+              <FormItem className='login__password'>
                 {getFieldDecorator('password', {
                   rules: [
                     { required: true, message: 'Please input your Password!' }
@@ -120,12 +123,13 @@ class Login extends React.Component {
                     placeholder='Password'
                   />
                 )}
+                <p className='login__forgot' ><Link to='/account/forgot'>Forgot password?</Link></p>
               </FormItem>
               <FormItem>
                 <Button
                   type='primary'
                   htmlType='submit'
-                  className='login__button'
+                  className='button--fullWidth'
                   loading={loading}
                 >
                   Log in
