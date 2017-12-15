@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
+import queryString from 'query-string'
 
 import { message, Badge, Tooltip, Icon } from 'antd'
 
@@ -131,10 +132,12 @@ const file = ({ columnKey, order }) => ({
   key: 'file',
   sortOrder: columnKey === 'file' && order,
   render: file => {
-    let content = (
+    const content = (
       <span>
-        <a className='link--pdf' href={file} target='_blank'>
-          <Icon type='file-pdf' className='icon-15' />
+        <a href={file}>
+          <Tooltip title='Download .pdf'>
+            <Icon type='download' className='icon--download' />
+          </Tooltip>
         </a>
       </span>
     )
@@ -175,24 +178,34 @@ const supervisors = () => ({
   }
 })
 
-const title = ({ columnKey, order }) => ({
+const title = ({ columnKey, order, sub }) => ({
   title: 'Title',
   dataIndex: 'title',
   key: 'title',
   sorter: true,
   sortOrder: columnKey === 'title' && order,
   render: (title, row) => {
-    const url = window.location.host + '/search?q=' + row.slug + '&sub=' + columnKey
+    const { starred, file: fileUrl, slug } = row
+    const fileInViewerUrl = <a href={'https://docs.google.com/gview?url=' + fileUrl} target='_blank'>{title}</a>
+    const topicTitle = sub === 'defended'
+      ? fileInViewerUrl
+      : title
+    const shareUrl = window.location.host + '/search?' + queryString.stringify({ q: slug, sub })
     const content = (
       <span>
-        {title}
-        <CopyToClipboard text={url} onCopy={() => message.success('Link copied to clipboard')}>
+        {topicTitle}
+        {starred &&
+          <Tooltip title='Esiletõstetud töö'>
+            {` `}<Icon style={{color: 'gold'}} type='star' />
+          </Tooltip>}
+        <CopyToClipboard text={shareUrl} onCopy={() => message.success('Link copied to clipboard')}>
           <Tooltip title='Copy link to clipboard'>
-            <Icon className='link--copy' type="share-alt" />
+            <Icon type='copy' className='icon--copy' />
           </Tooltip>
         </CopyToClipboard>
       </span>
     )
+
     return content
   }
 })

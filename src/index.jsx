@@ -9,7 +9,9 @@ import {
   CURRICULUM_PATH,
   SEARCH_PATH,
   SUPERVISOR_PATH,
-  CONTRIBUTORS_PATH
+  CONTRIBUTORS_PATH,
+  ACCOUNT_FORGOT,
+  ACCOUNT_PASSWORD
 } from './constants/RouterConstants'
 
 import CurriculumContainer from './containers/CurriculumContainer'
@@ -21,8 +23,11 @@ import RouteWrapContainer from './containers/RouteWrapContainer'
 import SupervisorContainer from './containers/SupervisorContainer'
 import SearchContainer from './containers/SearchContainer'
 import ContributorsContainer from './containers/ContributorsContainer'
+import AccountForgotContainer from './containers/AccountForgotContainer'
+import AccountPasswordContainer from './containers/AccountPasswordContainer'
 
 import store from './store/configureStore'
+import { initAnalytics } from './utils/Analytics'
 
 import './styles/main.scss'
 
@@ -36,6 +41,8 @@ import { Layout, LocaleProvider } from 'antd'
 import etEE from 'antd/lib/locale-provider/et_EE'
 
 const { Content, Footer } = Layout
+
+initAnalytics()
 
 render(
   <Provider store={store}>
@@ -58,6 +65,10 @@ render(
                   component={RouteWrapContainer(SupervisorContainer)} />
                 <Route path={CONTRIBUTORS_PATH}
                   component={RouteWrapContainer(ContributorsContainer)} />
+                <Route path={ACCOUNT_FORGOT}
+                  component={RouteWrapContainer(AccountForgotContainer)} />
+                <Route path={ACCOUNT_PASSWORD}
+                  component={RouteWrapContainer(AccountPasswordContainer)} />
                 <Route
                   component={RouteWrapContainer(NotFound)} />
               </Switch>

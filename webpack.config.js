@@ -157,7 +157,9 @@ module.exports = {
     app: [SRC_DIR + '/index.jsx']
   },
   plugins: plugins,
-  // externals: { jquery: "jQuery" }, jquery is external and available at the global variable jQuery
+  externals: {
+    config: JSON.stringify(require('./config.json'))
+  },
   module: {
     rules
   },
