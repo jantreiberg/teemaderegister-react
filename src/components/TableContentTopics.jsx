@@ -30,7 +30,7 @@ const accepted = ({ columnKey, order }) => ({
   sortOrder: columnKey === 'accepted' && order
 })
 
-const author = ({ columnKey, order }) => ({
+const author = ({ columnKey, order, search }) => ({
   title: 'Author',
   dataIndex: 'author',
   key: 'author',
@@ -38,7 +38,20 @@ const author = ({ columnKey, order }) => ({
   sorter: true,
   render: author => {
     if (!author) return '-'
-    return author.firstName + ' ' + author.lastName
+
+    const fullName = author.firstName + ' ' + author.lastName
+
+    if (search) {
+      const reg = new RegExp(search, 'gi')
+      const match = fullName.match(reg)
+
+      const authorHighlight = fullName.split(reg).map((text, i) => (
+        i > 0 ? [<span key={i} className="highlight">{match[0]}</span>, text] : text
+      ))
+      return authorHighlight
+    }
+
+    return fullName
   }
 })
 
@@ -185,18 +198,22 @@ const title = ({ columnKey, order, sub, search }) => ({
   sorter: true,
   sortOrder: columnKey === 'title' && order,
   render: (title, row) => {
-    const reg = new RegExp(search.q, 'gi')
-    const match = title.match(reg)
+    let finalTitle = title
 
-    const titleHighlight = title.split(reg).map((text, i) => (
-      i > 0 ? [<span key={i} className="highlight">{match[0]}</span>, text] : text
-    ))
+    if (search) {
+      const reg = new RegExp(search, 'gi')
+      const match = title.match(reg)
+
+      finalTitle = title.split(reg).map((text, i) => (
+        i > 0 ? [<span key={i} className="highlight">{match[0]}</span>, text] : text
+      ))
+    }
 
     const { starred, file: fileUrl, slug } = row
-    const fileInViewerUrl = <a href={'https://docs.google.com/gview?url=' + fileUrl} target='_blank'>{titleHighlight}</a>
+    const fileInViewerUrl = <a href={'https://docs.google.com/gview?url=' + fileUrl} target='_blank'>{finalTitle}</a>
     const topicTitle = sub === 'defended'
       ? fileInViewerUrl
-      : titleHighlight
+      : finalTitle
     const shareUrl = window.location.host + '/search?' + queryString.stringify({ q: slug, sub })
 
     const content = (

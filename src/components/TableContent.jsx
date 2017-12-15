@@ -37,14 +37,13 @@ class TableContent extends React.Component {
       supervisor,
       tableContent,
       tableContent: { loading },
-      tableKey,
-      search
+      tableKey
     } = this.props
 
     const {
       data,
       count,
-      query: { sub, page, columnKey, order, types, curriculums }
+      query: { sub, page, columnKey, order, types, curriculums, q }
     } = tableContent[tableKey]
 
     const { meta: { names, type } } = curriculum || { meta: {} }
@@ -80,7 +79,7 @@ class TableContent extends React.Component {
           curriculums,
 
           // search highliht
-          search
+          search: q
         })}
         dataSource={data}
         expandedRowRender={

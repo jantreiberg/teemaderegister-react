@@ -55,8 +55,8 @@ const supervisor = ({ columnKey, order, search }) => ({
   sorter: true,
   render: (supervisor, item) => {
     const url = '/supervisor/' + item.slug
-    const reg = new RegExp(search.q, 'gi')
 
+    const reg = new RegExp(search, 'gi')
     const match = supervisor.match(reg)
 
     const content = (
