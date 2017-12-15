@@ -9,3 +9,4 @@ export const SUPERVISOR_SLUG_URL = `${API}/supervisors/:slug`
 export const SUPERVISORS_URL = `${API}/supervisors`
 export const TOPICS_URL = `${API}/topics`
 export const USER_ME_URL = `${API}/users/me`
+export const CONTRIBUTORS_URL = `${API}/contributors`

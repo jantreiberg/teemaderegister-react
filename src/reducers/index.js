@@ -7,6 +7,7 @@ import login from './LoginReducers'
 import search from './SearchReducer'
 import supervisor from './SupervisorReducers'
 import tableContent from './TableContentReducers'
+import contributors from './ContributorsReducers'
 
 const rootReducer = combineReducers({
   auth,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   login,
   search,
   supervisor,
-  tableContent
+  tableContent,
+  contributors
 })
 
 export default rootReducer

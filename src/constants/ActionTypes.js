@@ -31,3 +31,7 @@ export const TABLE_START = 'TABLE_START'
 export const TABLE_CLEAR = 'TABLE_CLEAR'
 export const TABLE_LOADED = 'TABLE_LOADED'
 export const TABLE_INIT = 'TABLE_INIT'
+
+// contributors
+export const CONTRIBUTORS_LOADED = 'CONTRIBUTORS_LOADED'
+export const CONTRIBUTORS_INIT = 'CONTRIBUTORS_INIT'
