@@ -2,11 +2,7 @@ import React from 'react'
 import { PropTypes } from 'prop-types'
 import queryString from 'query-string'
 
-<<<<<<< HEAD
-import { removeEmpty } from '../utils/helpers'
-=======
 import { removeEmpty, setDocTitle, capitalizeFirstLetter } from '../utils/Helpers'
->>>>>>> origin/master
 import setUrl from '../utils/setUrl'
 import TabsWrap from './TabsWrap'
 

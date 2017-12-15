@@ -3,12 +3,9 @@ export const CURRICULUM_PATH = '/curriculum/:slug'
 export const LOGIN_PATH = '/login'
 export const SEARCH_PATH = '/search'
 export const SUPERVISOR_PATH = '/supervisor/:slug'
-<<<<<<< HEAD
 export const TOPICADD_PATH = '/topicadd'
-=======
 export const ACCOUNT_FORGOT = '/account/forgot'
 export const ACCOUNT_PASSWORD = '/account/password/:token'
->>>>>>> origin/master
 
 export const INITIAL_ROUTE = {
   keys: {},

@@ -69,15 +69,12 @@ render(
                   component={RouteWrapContainer(CurriculumContainer)} />
                 <Route path={SUPERVISOR_PATH}
                   component={RouteWrapContainer(SupervisorContainer)} />
-<<<<<<< HEAD
                 <Route path={TOPICADD_PATH}
                   component={RouteWrapContainer(TopicContainer)} />
-=======
                 <Route path={ACCOUNT_FORGOT}
                   component={RouteWrapContainer(AccountForgotContainer)} />
                 <Route path={ACCOUNT_PASSWORD}
                   component={RouteWrapContainer(AccountPasswordContainer)} />
->>>>>>> origin/master
                 <Route
                   component={RouteWrapContainer(NotFound)} />
               </Switch>
