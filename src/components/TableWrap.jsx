@@ -144,7 +144,11 @@ class TableWrap extends React.Component {
   }
 
   setPageTitle () {
-    const searchTitle = this.props.search && `${this.state.q} - Search`
+    const searchTitle = this.props.search && (
+      this.state.q
+        ? `${this.state.q} - Search`
+        : 'Search'
+    )
     const title = searchTitle || this.curriculumTitle || this.supervisorTitle
     const pageTitle = `${title} ${capitalizeFirstLetter(this.state.tab)}`
     setDocTitle(pageTitle)

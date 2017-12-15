@@ -1,6 +1,6 @@
 .tableContent {
   margin-top: 15px;
-  
+
   .link {
     &--curriculum {
       width: auto;
@@ -9,9 +9,17 @@
     &--pdf {
       display: inline;
     }
+  }
+
+  .icon {
+    &--download {
+      font-size: 16px
+    }
     &--copy {
       padding-left: 5px;
       cursor: pointer;
+      font-size: 16px;
+      color: #3c7269;
     }
   }
 
@@ -20,6 +28,10 @@
   }
   
   /* antd overwrites */
+  .ant-table-body {
+    overflow-x: scroll; 
+  }
+ 
   .no-desc {
     .ant-table-row-expand-icon {
       display: none;
@@ -49,12 +61,7 @@
     tr {
       th,
       td {
-        word-break: normal; 
-        a { 
-          height: 100%; 
-          width: 100%; 
-          display: inline-block; 
-        } 
+        word-break: normal;
       }
     }
   }

@@ -25,6 +25,7 @@ import AccountForgotContainer from './containers/AccountForgotContainer'
 import AccountPasswordContainer from './containers/AccountPasswordContainer'
 
 import store from './store/configureStore'
+import { initAnalytics } from './utils/Analytics'
 
 import './styles/main.scss'
 
@@ -38,6 +39,8 @@ import { Layout, LocaleProvider } from 'antd'
 import etEE from 'antd/lib/locale-provider/et_EE'
 
 const { Content, Footer } = Layout
+
+initAnalytics()
 
 render(
   <Provider store={store}>

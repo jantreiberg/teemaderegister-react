@@ -132,10 +132,12 @@ const file = ({ columnKey, order }) => ({
   key: 'file',
   sortOrder: columnKey === 'file' && order,
   render: file => {
-    let content = (
+    const content = (
       <span>
-        <a className='link--pdf' href={file} target='_blank'>
-          <Icon type='file-pdf' className='icon-15' />
+        <a href={file}>
+          <Tooltip title='Download .pdf'>
+            <Icon type='download' className='icon--download' />
+          </Tooltip>
         </a>
       </span>
     )
@@ -184,22 +186,34 @@ const title = ({ columnKey, order, sub, search }) => ({
   sortOrder: columnKey === 'title' && order,
   render: (title, row) => {
     const reg = new RegExp(search.q, 'gi')
-    const url = window.location.host + '/search?' + queryString.stringify({ q: row.slug, sub })
-
     const match = title.match(reg)
+
+    const titleHighlight = title.split(reg).map((text, i) => (
+      i > 0 ? [<span key={i} className="highlight">{match[0]}</span>, text] : text
+    ))
+
+    const { starred, file: fileUrl, slug } = row
+    const fileInViewerUrl = <a href={'https://docs.google.com/gview?url=' + fileUrl} target='_blank'>{titleHighlight}</a>
+    const topicTitle = sub === 'defended'
+      ? fileInViewerUrl
+      : titleHighlight
+    const shareUrl = window.location.host + '/search?' + queryString.stringify({ q: slug, sub })
 
     const content = (
       <span>
-        {title.split(reg).map((text, i) => (
-          i > 0 ? [<span key={i} className="highlight">{match[0]}</span>, text] : text
-        ))}
-        <CopyToClipboard text={url} onCopy={() => message.success('Link copied to clipboard')}>
+        {topicTitle}
+        {starred &&
+          <Tooltip title='Esiletõstetud töö'>
+            {` `}<Icon style={{color: 'gold'}} type='star' />
+          </Tooltip>}
+        <CopyToClipboard text={shareUrl} onCopy={() => message.success('Link copied to clipboard')}>
           <Tooltip title='Copy link to clipboard'>
-            <Icon className='link--copy' type="share-alt" />
+            <Icon type='copy' className='icon--copy' />
           </Tooltip>
         </CopyToClipboard>
       </span>
     )
+
     return content
   }
 })
