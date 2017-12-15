@@ -9,12 +9,9 @@ import {
   CURRICULUM_PATH,
   SEARCH_PATH,
   SUPERVISOR_PATH,
-<<<<<<< HEAD
-  TOPICADD_PATH
-=======
+  TOPICADD_PATH,
   ACCOUNT_FORGOT,
   ACCOUNT_PASSWORD
->>>>>>> origin/master
 } from './constants/RouterConstants'
 
 import CurriculumContainer from './containers/CurriculumContainer'
@@ -25,12 +22,9 @@ import NotFound from './components/NotFound'
 import RouteWrapContainer from './containers/RouteWrapContainer'
 import SupervisorContainer from './containers/SupervisorContainer'
 import SearchContainer from './containers/SearchContainer'
-<<<<<<< HEAD
 import TopicContainer from './containers/TopicContainer'
-=======
 import AccountForgotContainer from './containers/AccountForgotContainer'
 import AccountPasswordContainer from './containers/AccountPasswordContainer'
->>>>>>> origin/master
 
 import store from './store/configureStore'
 import { initAnalytics } from './utils/Analytics'
