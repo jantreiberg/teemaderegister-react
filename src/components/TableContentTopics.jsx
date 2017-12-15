@@ -176,17 +176,23 @@ const supervisors = () => ({
   }
 })
 
-const title = ({ columnKey, order, sub }) => ({
+const title = ({ columnKey, order, sub, search }) => ({
   title: 'Title',
   dataIndex: 'title',
   key: 'title',
   sorter: true,
   sortOrder: columnKey === 'title' && order,
   render: (title, row) => {
+    const reg = new RegExp(search.q, 'gi')
     const url = window.location.host + '/search?' + queryString.stringify({ q: row.slug, sub })
+
+    const match = title.match(reg)
+
     const content = (
       <span>
-        {title}
+        {title.split(reg).map((text, i) => (
+          i > 0 ? [<span key={i} className="highlight">{match[0]}</span>, text] : text
+        ))}
         <CopyToClipboard text={url} onCopy={() => message.success('Link copied to clipboard')}>
           <Tooltip title='Copy link to clipboard'>
             <Icon className='link--copy' type="share-alt" />
@@ -234,7 +240,7 @@ const types = ({ columnKey, order, sub, types }) => ({
 
 const renderDate = date => moment(date).format('DD.MM.YY')
 
-const getColumnNames = ({ sub, names, type, supervisor }) => {
+const getColumnNames = ({ sub, names, type, supervisor, search }) => {
   let columns = ['title'] // default
 
   const isInformaticsBa = names && names.et === 'Informaatika' && type === 'BA'

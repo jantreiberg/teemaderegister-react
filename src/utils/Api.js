@@ -3,7 +3,7 @@ import { getToken } from './jwt'
 import nprogress from 'nprogress'
 nprogress.configure({
   speed: 100,
-  trickleSpeed: 100 
+  trickleSpeed: 100
 })
 let timeout = null
 let isStarted = false

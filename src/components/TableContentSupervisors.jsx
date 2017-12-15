@@ -47,7 +47,7 @@ const registered = ({ columnKey, order }) => ({
   sorter: true
 })
 
-const supervisor = ({ columnKey, order }) => ({
+const supervisor = ({ columnKey, order, search }) => ({
   title: 'Supervisor',
   dataIndex: 'supervisor',
   key: 'supervisor',
@@ -55,9 +55,15 @@ const supervisor = ({ columnKey, order }) => ({
   sorter: true,
   render: (supervisor, item) => {
     const url = '/supervisor/' + item.slug
+    const reg = new RegExp(search.q, 'gi')
+
+    const match = supervisor.match(reg)
+
     const content = (
       <Link key={item._id} to={url}>
-        {supervisor}
+        {supervisor.split(reg).map((text, i) => (
+          i > 0 ? [<span key={i} className="highlight">{match[0]}</span>, text] : text
+        ))}
       </Link>
     )
     return content

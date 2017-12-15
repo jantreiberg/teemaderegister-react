@@ -11,6 +11,7 @@ const propTypes = {
   activeTab: string,
   curriculum: object,
   handleTableChange: func.isRequired,
+  search: object,
   supervisor: object,
   tabUpdated: func.isRequired,
   tableContent: object.isRequired,
@@ -25,7 +26,7 @@ class TabsWrap extends Component {
     this.tabClicked = this.tabClicked.bind(this)
   }
 
-  createTabPanes (curriculum, handleTableChange, supervisor, tableContent, tabs) {
+  createTabPanes (curriculum, handleTableChange, supervisor, tableContent, tabs, search) {
     return Object.keys(tabs).map(key => {
       const { title, icon, count, subs } = tabs[key]
 
@@ -38,6 +39,7 @@ class TabsWrap extends Component {
             supervisor={supervisor}
             tableContent={tableContent}
             tableKey={key}
+            search={search}
           />
         </Tabs.TabPane>
       )
@@ -110,7 +112,8 @@ class TabsWrap extends Component {
       supervisor,
       tableContent,
       tabs,
-      activeTab
+      activeTab,
+      search
     } = this.props
 
     return (
@@ -125,7 +128,8 @@ class TabsWrap extends Component {
           handleTableChange,
           supervisor,
           tableContent,
-          tabs
+          tabs,
+          search
         )}
       </Tabs>
     )

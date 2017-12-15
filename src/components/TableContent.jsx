@@ -10,6 +10,7 @@ const { bool, func, object, shape, string } = PropTypes
 const propTypes = {
   curriculum: object,
   handleTableChange: func.isRequired,
+  search: object,
   supervisor: object,
   tableContent: shape({
     loading: bool.isRequired,
@@ -36,7 +37,8 @@ class TableContent extends React.Component {
       supervisor,
       tableContent,
       tableContent: { loading },
-      tableKey
+      tableKey,
+      search
     } = this.props
 
     const {
@@ -75,7 +77,10 @@ class TableContent extends React.Component {
 
           // filters
           types,
-          curriculums
+          curriculums,
+
+          // search highliht
+          search
         })}
         dataSource={data}
         expandedRowRender={
@@ -87,6 +92,7 @@ class TableContent extends React.Component {
         onChange={handleTableChange}
         pagination={pagination}
         rowKey={r => r._id}
+        search={this.search}
         size='small'
       />
     )
