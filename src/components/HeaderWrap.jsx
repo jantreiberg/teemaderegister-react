@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { Link } from 'react-router-dom'
 import queryString from 'query-string'
+import { NavLink } from 'react-router-dom'
 
 import setUrl from '../utils/setUrl'
 import { Form, Input, Layout, Button } from 'antd'
@@ -82,9 +83,9 @@ class HeaderWrap extends Component {
     return (
       <Header className='headerWrap'>
         <div className='headerWrap__wrapper'>
-          <Link to='/'>
+          <NavLink exact to='/' activeClassName="disabled">
             <div className='logo'>Te</div>
-          </Link>
+          </NavLink>
           <div className='content'>
             <Form className='search'>
               {getFieldDecorator('searchField')(
@@ -98,7 +99,9 @@ class HeaderWrap extends Component {
             </Form>
             {!isAuthenticated &&
               <div className='login'>
-                <Link to='/login'>Sign in</Link>
+                <NavLink to='/login' activeClassName="disabled">
+                Sign in
+                </NavLink>
               </div>}
             {isAuthenticated &&
             <div className='login'>
