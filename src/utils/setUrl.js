@@ -1,4 +1,4 @@
-import { removeEmpty } from './helpers'
+import { removeEmpty } from './Helpers'
 import queryString from 'query-string'
 
 export default (action, location, params, defaults) => {
