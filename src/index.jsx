@@ -75,8 +75,7 @@ render(
             </div>
           </Content>
           <Footer className='layout__footer'>
-            TLU ©{new Date().getFullYear()} | Made by Romil Rõbtšenkov
-            <a href={'/contributors/'}> | Contributors</a>
+            TLU ©{new Date().getFullYear()} | Made by <a href={'/contributors/'}> Contributors</a>
           </Footer>
         </Layout>
       </LocaleProvider>
