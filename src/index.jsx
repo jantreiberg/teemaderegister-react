@@ -68,7 +68,7 @@ render(
             </div>
           </Content>
           <Footer className='layout__footer'>
-            TLU ©{new Date().getFullYear()} | Made by Romil Rõbtšenkov
+            TLU ©{new Date().getFullYear()} | Made by Romil Rõbtšenkov | Code licensed under MIT License
           </Footer>
         </Layout>
       </LocaleProvider>
