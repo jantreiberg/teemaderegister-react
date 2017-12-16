@@ -47,9 +47,11 @@ class TopicAdd extends React.Component {
         console.log(results)
         const { topics } = results
         const topicIds = results.topics.map(topic => { return topic._id })
+        const topicNames = results.topics.map(topic => { return topic.title })
         this.setState({
           topics,
-          topicIds
+          topicIds,
+          topicNames
         })
       })
       .catch(error => {
@@ -66,21 +68,58 @@ class TopicAdd extends React.Component {
 
   handleTopicChange (value) {
     if (value) {
-      if (this.state.topicIds.indexOf(value) === -1) {
-        this.props.form.setFields({topicInEstonian: {value: null}, topicInEnglish: {value: null}})
+      console.log(value)
+      console.log(this.state.topics)
+      if (this.state.topicNames.indexOf(value) === -1 && this.state.topicIds.indexOf(value) === -1) {
+        this.props.form.setFields({
+          topicInEstonian: {value: null},
+          topicInEnglish: {value: null},
+          mainSupervisor: {value: null}
+        })
         console.log('Uus teema')
       } else {
         console.log(value)
         console.log(this.props.form.setFields)
         console.log(this.state.topics[this.state.topicIds.indexOf(value)])
-        this.props.form.setFields({
-          topicInEstonian: {
-            value: this.state.topics[this.state.topicIds.indexOf(value)].title
-          },
-          topicInEnglish: {
-            value: this.state.topics[this.state.topicIds.indexOf(value)].titleEng
+        if (this.state.topicNames.indexOf(value) === -1) {
+          this.props.form.setFields({
+            topicInEstonian: {
+              value: this.state.topics[this.state.topicIds.indexOf(value)].title
+            },
+            topicInEnglish: {
+              value: this.state.topics[this.state.topicIds.indexOf(value)].titleEng
+            }
+          })
+          for (let i = 0; i < this.state.topics[this.state.topicIds.indexOf(value)].supervisors.length; i++) {
+            if (this.state.topics[this.state.topicIds.indexOf(value)].supervisors[i].type === 'Main') {
+              console.log(this.state.topics[this.state.topicIds.indexOf(value)].supervisors[i].supervisor)
+              this.props.form.setFields({
+                mainSupervisor: {
+                  value: (this.state.topics[this.state.topicIds.indexOf(value)].supervisors[i].supervisor.profile.firstName + ' ' + this.state.topics[this.state.topicIds.indexOf(value)].supervisors[i].supervisor.profile.lastName)
+                }
+              })
+            }
           }
-        })
+        } else {
+          this.props.form.setFields({
+            topicInEstonian: {
+              value: this.state.topics[this.state.topicNames.indexOf(value)].title
+            },
+            topicInEnglish: {
+              value: this.state.topics[this.state.topicNames.indexOf(value)].titleEng
+            }
+          })
+          for (let i = 0; i < this.state.topics[this.state.topicNames.indexOf(value)].supervisors.length; i++) {
+            if (this.state.topics[this.state.topicNames.indexOf(value)].supervisors[i].type === 'Main') {
+              console.log(this.state.topics[this.state.topicNames.indexOf(value)].supervisors[i].supervisor)
+              this.props.form.setFields({
+                mainSupervisor: {
+                  value: (this.state.topics[this.state.topicNames.indexOf(value)].supervisors[i].supervisor.profile.firstName + ' ' + this.state.topics[this.state.topicNames.indexOf(value)].supervisors[i].supervisor.profile.lastName)
+                }
+              })
+            }
+          }
+        }
         /*
         this.form.setFields({
           topicInEstonian: {
@@ -166,6 +205,12 @@ class TopicAdd extends React.Component {
             {getFieldDecorator('topicInEnglish', {
               rules: [{ required: false, message: 'Insert your chosen topic!' }]
             })(<Input placeholder='Topic In English'/>)}
+          </FormItem>
+
+          <FormItem label="Juhendaja" labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
+            {getFieldDecorator('mainSupervisor', {
+              rules: [{ required: false, message: 'Insert a main supervisor for chosen topic!' }]
+            })(<Input placeholder='Main Supervisor'/>)}
           </FormItem>
 
           <FormItem label="TLU email" labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
