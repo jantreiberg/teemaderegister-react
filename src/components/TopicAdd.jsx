@@ -7,6 +7,7 @@ import Api from '../utils/api'
 // import getTabs from '../utils/getTabs'
 import { Form, Input, Button, Select, AutoComplete } from 'antd'
 
+const Option = Select.Option
 const FormItem = Form.Item
 
 // const th = (props)
@@ -17,9 +18,11 @@ class TopicAdd extends React.Component {
     // const data = ['Tere', 'tetris', 'erts']
     this.state = {
       curriculums: [],
-      topics: []
+      topics: [],
+      topicDisablement: true
     }
-    this.handleSelectChange = this.handleSelectChange.bind(this)
+    this.handleCurriculumChange = this.handleCurriculumChange.bind(this)
+    this.handleTopicChange = this.handleTopicChange.bind(this)
   }
 
   componentDidMount () {
@@ -37,25 +40,69 @@ class TopicAdd extends React.Component {
       })
   }
 
-  handleSelectChange (value) {
-    Api('GET', 'api/topics?curriculumId=' + value + '&tab=topics&sub=available&order=ascend&all=true', {})
+  handleCurriculumChange (value) {
+    console.log(value)
+    Api('GET', 'api/topics?curriculumId=' + value + '&tab=topics&sub=registered&order=ascend&all=true', {})
       .then(results => {
         console.log(results)
-        const topics = results.topics.map(topic => { return topic.title })
-        console.log(topics)
+        const { topics } = results
+        const topicIds = results.topics.map(topic => { return topic._id })
         this.setState({
-          topics
+          topics,
+          topicIds
         })
       })
       .catch(error => {
         console.error(error)
       })
+    if (!value) {
+      const topicDisablement = true
+      this.setState({topicDisablement})
+    } else {
+      const topicDisablement = false
+      this.setState({ topicDisablement })
+    }
+  }
+
+  handleTopicChange (value) {
+    if (value) {
+      if (this.state.topicIds.indexOf(value) === -1) {
+        this.props.form.setFields({topicInEstonian: {value: null}, topicInEnglish: {value: null}})
+        console.log('Uus teema')
+      } else {
+        console.log(value)
+        console.log(this.props.form.setFields)
+        console.log(this.state.topics[this.state.topicIds.indexOf(value)])
+        this.props.form.setFields({
+          topicInEstonian: {
+            value: this.state.topics[this.state.topicIds.indexOf(value)].title
+          },
+          topicInEnglish: {
+            value: this.state.topics[this.state.topicIds.indexOf(value)].titleEng
+          }
+        })
+        /*
+        this.form.setFields({
+          topicInEstonian: {
+            value: this.state.topics.title,
+            errors: [new Error('forbid ha')]
+          }
+        })
+          topicInEnglish: {
+            value: this.state.topics.titleEng,
+            errors: [new Error('forbid ha')]
+          }
+        })
+        */
+      }
+    }
   }
 
   render () {
     const curriculumsByType = (this.state.curriculums)
     const topics = (this.state.topics)
-    // console.log(curriculumsByType)
+    let topicDisablement = (this.state.topicDisablement)
+    // console.log(topicDisablement)
 
     const selectOptions = curriculumsByType.map(
       types => {
@@ -79,10 +126,6 @@ class TopicAdd extends React.Component {
 
         <Form onSubmit={this.submit}>
 
-          <FormItem label="Topic" labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
-            <AutoComplete dataSource={topics} filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1} />
-          </FormItem>
-
           <FormItem label="Nimi" labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
             {getFieldDecorator('name', {
               rules: [{ required: true, message: 'Insert your name!' }]
@@ -93,9 +136,17 @@ class TopicAdd extends React.Component {
             {getFieldDecorator('curriculum', {
               rules: [{ required: true, message: 'Choose curriculum!' }]
             })(
-              <Select placeholder="Choose curriculum" onChange={this.handleSelectChange}>
+              <Select placeholder="Choose curriculum" onChange={this.handleCurriculumChange}>
                 {selectOptions}
               </Select>
+            )}
+          </FormItem>
+
+          <FormItem label="Teema" labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
+            {getFieldDecorator('topic', {
+              rules: [{ required: true, message: 'Choose topic!' }]
+            })(
+              <AutoComplete placeholder="Choose topic" disabled={topicDisablement} onChange={this.handleTopicChange} dataSource={topics.map(topic => <Option key={topic._id} label={topic.title}>{topic.title}</Option>)} filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1} />
             )}
           </FormItem>
 
