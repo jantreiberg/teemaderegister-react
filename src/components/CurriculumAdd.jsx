@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
 import Breadcrumbs from './Breadcrumbs'
-import { Row, Col, Form, Input, Button, message, Select, Spin, Checkbox } from 'antd'
+import { Row, Col, Form, Input, Button, message, Select, Spin, Checkbox, Tooltip } from 'antd'
 import debounce from 'lodash.debounce'
 import { setDocTitle } from '../utils/Helpers'
-
+import { CURRICULUM_TYPE } from 'config'
 
 import Api from '../utils/Api'
 import { SUPERVISOR_CURRICULUMFORM_URL } from '../constants/ApiConstants'
@@ -154,12 +154,17 @@ class AddCurriculum extends React.Component {
                   <Select
                     placeholder="Type"
                   >
-                    <Option value="BA">BA</Option>
-                    <Option value="MA">MA</Option>
-                    <Option value="PHD">PHD</Option>
+                  {CURRICULUM_TYPE.map(function(type){
+                    return <Option key={type} value={type}>{type}</Option>;
+                  })}
                   </Select>)}
               </FormItem>
               <FormItem>
+                <Tooltip
+                      placement='topLeft'
+                      title='Start typing supervisors name'
+                      trigger='focus'
+                    >
                 {getFieldDecorator('representative', {
                   rules: [
                     { required: true, message: 'Please select represantive!' }
@@ -175,7 +180,9 @@ class AddCurriculum extends React.Component {
                     style={{ width: '100%' }}
                   >
                     {data.map(d => <Option key={d.value}>{d.text}</Option>)}
-                  </Select>)}
+                  </Select>
+                  )}
+                </Tooltip>
               </FormItem>
               <FormItem>
                 {getFieldDecorator('faculty', {
