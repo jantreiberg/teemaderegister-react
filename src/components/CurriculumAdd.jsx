@@ -61,7 +61,7 @@ class AddCurriculum extends React.Component {
     if (curriculumForm.loading && !loading) {
       if (curriculum._id) {
         message.success('Saved new curriculum ' + curriculum.names.et)
-        // TODO clear form fields!
+        this.props.form.resetFields()
       }
       if (hasError) {
         message.error(error.message, 10)
