@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Redirect } from 'react-router-dom'
 import Breadcrumbs from './Breadcrumbs'
 import { Row, Col, Form, Input, Button, message, Select, Spin, Checkbox, Tooltip } from 'antd'
 import debounce from 'lodash.debounce'
 import { setDocTitle } from '../utils/Helpers'
-import { CURRICULUM_TYPE } from 'config'
+
+import { FACULTY } from 'config'
+import { CURRICULUM_TYPES } from '../constants/CurriculumTypes'
 
 import Api from '../utils/Api'
 import { SUPERVISOR_CURRICULUMFORM_URL } from '../constants/ApiConstants'
@@ -40,18 +41,16 @@ class AddCurriculum extends React.Component {
   constructor (props) {
     super(props)
 
-    this.plainOptions = ['ET', 'EN']
-    this.checkboxValues = []
+    this.languages = ['ET', 'EN']
+    this.languagesValues = []
 
-    this.fetchUser = debounce(this.fetchUser.bind(this), 500)
+    this.fetchUsers = debounce(this.fetchUsers.bind(this), 500)
     this.submit = this.submit.bind(this)
-    this.checkboxChanged = this.checkboxChanged.bind(this)
+    this.languagesChanged = this.languagesChanged.bind(this)
 
     this.state = {
-      data: [],
-      value: [],
-      fetching: false,
-      redirectToNewPage: false
+      representatives: [],
+      fetching: false
     }
   }
 
@@ -59,7 +58,6 @@ class AddCurriculum extends React.Component {
     const { curriculumForm } = this.props
     const { curriculum, error, loading, hasError } = nextProps.curriculumForm
 
-    // trigger when loading finishes
     if (curriculumForm.loading && !loading) {
       if (curriculum._id) {
         message.success('Saved new curriculum ' + curriculum.names.et)
@@ -71,29 +69,29 @@ class AddCurriculum extends React.Component {
     }
   }
 
-  componentWillUnmount () {
-    this.props.initCurriculum()
-  }
-
   componentDidMount () {
     setDocTitle('Add Curriculum')
   }
 
-  checkboxChanged (values) {
-    this.checkboxValues = values
+  componentWillUnmount () {
+    this.props.initCurriculum()
   }
 
-  fetchUser (value) {
+  languagesChanged (values) {
+    this.languagesValues = values
+  }
+
+  fetchUsers (value) {
     if (!value) return
 
     this.setState({ fetching: true }, () => {
       Api('GET', SUPERVISOR_CURRICULUMFORM_URL, { params: { q: value } })
         .then(body => {
-          const data = body.supervisors.map(user => ({
+          const representatives = body.supervisors.map(user => ({
             text: user.fullName,
             value: user._id
           }))
-          this.setState({ data, fetching: false })
+          this.setState({ representatives, fetching: false })
         })
     })
   }
@@ -105,7 +103,7 @@ class AddCurriculum extends React.Component {
 
       this.props.triggerAddCurriculum({
         ...values,
-        languages: this.checkboxValues,
+        languages: this.languagesValues,
         representative: values.representative.key,
         names: { et: values.nameEt, en: values.nameEn },
         nameEt: undefined,
@@ -120,15 +118,8 @@ class AddCurriculum extends React.Component {
       curriculumForm: { loading }
     } = this.props
 
-    const crumbs = [{ url: this.props.location.pathname, name: 'Lisa õppekava' }]
-    const { fetching, data } = this.state
-
-    // The part that makes the redirect happen
-    if (this.state.redirectToNewPage) {
-      return (
-        <Redirect to="/"/>
-      )
-    }
+    const crumbs = [{ url: null, name: 'Lisa õppekava' }]
+    const { representatives, fetching } = this.state
 
     return (
       <div className='curriculumAdd'>
@@ -140,82 +131,76 @@ class AddCurriculum extends React.Component {
               <h2 className='text-align-center'>Lisa õppekava</h2>
               <FormItem>
                 {getFieldDecorator('abbreviation', {
-                  rules: [
-                    { required: true, message: 'Please input your abbreviation!' }
-                  ]
-                })(<Input id='abbreviation' placeholder='Abbreviation' />)}
+                  rules: [{ required: true, message: 'Please input your abbreviation!' }]
+                })(
+                  <Input id='abbreviation' placeholder='Abbreviation' />
+                )}
               </FormItem>
               <FormItem>
                 {getFieldDecorator('type', {
-                  rules: [
-                    { required: true, message: 'Please select type!' }
-                  ]
+                  rules: [{ required: true, message: 'Please select type!' }]
                 })(
-                  <Select
-                    placeholder="Type"
-                  >
-                  {CURRICULUM_TYPE.map(function(type){
-                    return <Option key={type} value={type}>{type}</Option>;
-                  })}
-                  </Select>)}
+                  <Select placeholder="Type">
+                    {CURRICULUM_TYPES.map(function (type) {
+                      return <Option key={type} value={type}>{type}</Option>
+                    })}
+                  </Select>
+                )}
               </FormItem>
               <FormItem>
                 <Tooltip
-                      placement='topLeft'
-                      title='Start typing supervisors name'
-                      trigger='focus'
+                  placement='topLeft'
+                  title='Start typing name'
+                  trigger='focus'
+                >
+                  {getFieldDecorator('representative', {
+                    rules: [{ required: true, message: 'Please select represantive!' }]
+                  })(
+                    <Select
+                      showSearch
+                      labelInValue
+                      placeholder="Representative"
+                      notFoundContent={fetching ? <Spin size="small" /> : null}
+                      filterOption={false}
+                      onSearch={this.fetchUsers}
+                      style={{ width: '100%' }}
                     >
-                {getFieldDecorator('representative', {
-                  rules: [
-                    { required: true, message: 'Please select represantive!' }
-                  ]
-                })(
-                  <Select
-                    showSearch
-                    labelInValue
-                    placeholder="Representative"
-                    notFoundContent={fetching ? <Spin size="small" /> : null}
-                    filterOption={false}
-                    onSearch={this.fetchUser}
-                    style={{ width: '100%' }}
-                  >
-                    {data.map(d => <Option key={d.value}>{d.text}</Option>)}
-                  </Select>
+                      {representatives.map(d => <Option key={d.value}>{d.text}</Option>)}
+                    </Select>
                   )}
                 </Tooltip>
               </FormItem>
               <FormItem>
                 {getFieldDecorator('faculty', {
-                  rules: [
-                    { required: true, message: 'Please input faculty!' }
-                  ]
+                  rules: [{ required: true, message: 'Please input faculty!' }],
+                  initialValue: FACULTY
                 })(
-                  <Input placeholder='Faculty' />)}
+                  <Input disabled placeholder='Faculty' />
+                )}
               </FormItem>
               <FormItem>
                 {getFieldDecorator('languages', {
-                  rules: [
-                    { required: true, message: 'Please select language!' }
-                  ]
+                  rules: [{ required: true, message: 'Please select language!' }]
                 })(
-                  <CheckboxGroup options={this.plainOptions} onChange={this.checkboxChanged} />
+                  <CheckboxGroup
+                    options={this.languages}
+                    onChange={this.languagesChanged}
+                  />
                 )}
               </FormItem>
               <FormItem>
                 {getFieldDecorator('nameEt', {
-                  rules: [
-                    { required: true, message: 'Please input name!' }
-                  ]
+                  rules: [{ required: true, message: 'Please input name!' }]
                 })(
-                  <Input placeholder='Name ET' />)}
+                  <Input placeholder='Name ET' />
+                )}
               </FormItem>
               <FormItem>
                 {getFieldDecorator('nameEn', {
-                  rules: [
-                    { required: true, message: 'Please input name!' }
-                  ]
+                  rules: [{ required: true, message: 'Please input name!' }]
                 })(
-                  <Input placeholder='Name EN' />)}
+                  <Input placeholder='Name EN' />
+                )}
               </FormItem>
               <FormItem>
                 <Button
