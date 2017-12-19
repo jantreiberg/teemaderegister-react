@@ -129,25 +129,25 @@ class AddCurriculum extends React.Component {
           <Col xs={24} sm={8}>
             <Form onSubmit={this.submit} className='form--narrow'>
               <h2 className='text-align-center'>Lisa õppekava</h2>
-              <FormItem>
+              <FormItem label='Abbreviation'>
                 {getFieldDecorator('abbreviation', {
                   rules: [{ required: true, message: 'Please input your abbreviation!' }]
                 })(
-                  <Input id='abbreviation' placeholder='Abbreviation' />
+                  <Input id='abbreviation' />
                 )}
               </FormItem>
-              <FormItem>
+              <FormItem label='Type'>
                 {getFieldDecorator('type', {
                   rules: [{ required: true, message: 'Please select type!' }]
                 })(
-                  <Select placeholder="Type">
+                  <Select>
                     {CURRICULUM_TYPES.map(function (type) {
                       return <Option key={type} value={type}>{type}</Option>
                     })}
                   </Select>
                 )}
               </FormItem>
-              <FormItem>
+              <FormItem label='Representative'>
                 <Tooltip
                   placement='topLeft'
                   title='Start typing name'
@@ -159,7 +159,6 @@ class AddCurriculum extends React.Component {
                     <Select
                       showSearch
                       labelInValue
-                      placeholder="Representative"
                       notFoundContent={fetching ? <Spin size="small" /> : null}
                       filterOption={false}
                       onSearch={this.fetchUsers}
@@ -170,15 +169,15 @@ class AddCurriculum extends React.Component {
                   )}
                 </Tooltip>
               </FormItem>
-              <FormItem>
+              <FormItem label='Faculty'>
                 {getFieldDecorator('faculty', {
                   rules: [{ required: true, message: 'Please input faculty!' }],
                   initialValue: FACULTY
                 })(
-                  <Input disabled placeholder='Faculty' />
+                  <Input disabled/>
                 )}
               </FormItem>
-              <FormItem>
+              <FormItem label='Languages'>
                 {getFieldDecorator('languages', {
                   rules: [{ required: true, message: 'Please select language!' }]
                 })(
@@ -188,18 +187,24 @@ class AddCurriculum extends React.Component {
                   />
                 )}
               </FormItem>
-              <FormItem>
+              <FormItem label='Name ET'>
                 {getFieldDecorator('nameEt', {
-                  rules: [{ required: true, message: 'Please input name!' }]
+                  rules: [
+                    { required: true, message: 'Please input name!' },
+                    { min: 3, message: 'Name has to be atleast 3 chars long!' }
+                  ]
                 })(
-                  <Input placeholder='Name ET' />
+                  <Input/>
                 )}
               </FormItem>
-              <FormItem>
+              <FormItem label='Name EN'>
                 {getFieldDecorator('nameEn', {
-                  rules: [{ required: true, message: 'Please input name!' }]
+                  rules: [
+                    { required: true, message: 'Please input name!' },
+                    { min: 3, message: 'Name has to be atleast 3 chars long!' }
+                  ]
                 })(
-                  <Input placeholder='Name EN' />
+                  <Input/>
                 )}
               </FormItem>
               <FormItem>
