@@ -104,7 +104,6 @@ class HeaderWrap extends Component {
             <div className='login'>
               <Button onClick={this.props.logout} ghost icon='logout' title='logout' />
             </div>}
-
           </div>
         </div>
       </Header>

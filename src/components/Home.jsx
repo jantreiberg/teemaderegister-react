@@ -1,12 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { setDocTitle } from '../utils/Helpers'
-
 import HomeCollection from './HomeCollection'
 
 import { Button } from 'antd'
-
-import { Link } from 'react-router-dom'
 
 const { array, bool, func, shape } = PropTypes
 
