@@ -1,10 +1,10 @@
 import React from 'react'
 import Breadcrumbs from './Breadcrumbs'
 import PropTypes from 'prop-types'
-import { Row, Col, Form, Input, Button } from 'antd'
+import { Row, Col, Form, Input, Button, message } from 'antd'
 import { Link } from 'react-router-dom'
 
-const { func, object, shape } = PropTypes
+const { func, object, shape, bool } = PropTypes
 
 const FormItem = Form.Item
 
@@ -16,7 +16,10 @@ const propTypes = {
     validateFields: func.isRequired
   }).isRequired,
   initPasswordSettings: func.isRequired,
-  location: object.isRequired
+  location: object.isRequired,
+  passwordsettings: shape({
+    loading: bool.isRequired
+  })
 }
 
 class ChangePassword extends React.Component {
@@ -24,6 +27,16 @@ class ChangePassword extends React.Component {
     super(props)
     this.submit = this.submit.bind(this)
     this.checkPassword = this.checkPassword.bind(this)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.passwordsettings.message !== this.props.passwordsettings.message) {
+      if (nextProps.passwordsettings.hasError) {
+        message.error(nextProps.passwordsettings.message, 10)
+      } else {
+        message.success(nextProps.passwordsettings.message, 10)
+      }
+    }
   }
 
   componentWillUnmount () {

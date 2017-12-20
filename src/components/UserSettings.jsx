@@ -1,14 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Breadcrumbs from './Breadcrumbs'
-import { Row, Col, Form, Input, Button } from 'antd'
+import { Row, Col, Form, Input, Button, Upload, Icon, message } from 'antd'
 import { Link } from 'react-router-dom'
 
 const FormItem = Form.Item
 
-const { func, object, shape, bool, string } = PropTypes
+const { func, object, shape, bool, string, array } = PropTypes
 
 const propTypes = {
+  fileList: array,
   form: shape({
     getFieldDecorator: func.isRequired,
     getFieldInstance: func.isRequired,
@@ -22,7 +23,8 @@ const propTypes = {
     user: shape({
       firstName: string,
       lastName: string,
-      email: string
+      email: string,
+      image: string
     }).isRequired
   }).isRequired,
   saveData: func.isRequired
@@ -32,6 +34,16 @@ class UserSettings extends React.Component {
   constructor (props) {
     super(props)
     this.submit = this.submit.bind(this)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.profile.message !== this.props.profile.message) {
+      if (nextProps.profile.hasError) {
+        message.error(nextProps.profile.message, 10)
+      } else {
+        message.success(nextProps.profile.message, 10)
+      }
+    }
   }
 
   componentDidMount () {
@@ -61,7 +73,8 @@ class UserSettings extends React.Component {
         user: {
           firstName,
           lastName,
-          email
+          email,
+          image
         }
       }
     } = this.props
@@ -74,6 +87,12 @@ class UserSettings extends React.Component {
           <Row gutter={8}>
             <Col span={8} />
             <Col xs={24} sm={8}>
+              <img src={'/uploads/' + image} width='200px' height='200px' style={{ height: 200, width: 200 }} />
+              <Upload name="profile-image" action="/api/profile-image">
+                <Button>
+                  <Icon type='upload' /> Choose File
+                </Button>
+              </Upload>
               <Form onSubmit={this.submit} className='login__form'>
                 <h2 style={{ marginBottom: '20' }} className='text-align-center'>
                 Your Details
@@ -121,7 +140,7 @@ class UserSettings extends React.Component {
             <Row gutter={8}>
               <Col span={8} />
               <Col xs={24} sm={8}>
-                <h2 style={{ marginBottom: '20' }} className='text-align-center'>
+                <h2 style={{ marginBottom: 20 }} className='text-align-center'>
                 Password Settings
                 </h2>
                 <Link to='/settings/password'><Button

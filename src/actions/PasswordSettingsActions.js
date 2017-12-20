@@ -9,9 +9,10 @@ export const changeUserPassword = creds => dispatch => {
 
   return Api('POST', USER_PASSWORD_UPDATE_URL, { data: creds })
     .then(data => {
-      dispatch({ type: types.PASSWORD_CHANGE_END })
+      dispatch({ type: types.PASSWORD_CHANGE_END, message: data.message })
     }).catch(err => {
-      const error = err.data
-      dispatch({ type: types.PASSWORD_CHANGE_END, error })
+      const error = err.data.message
+      console.log(error)
+      dispatch({ type: types.PASSWORD_CHANGE_ERROR, error })
     })
 }

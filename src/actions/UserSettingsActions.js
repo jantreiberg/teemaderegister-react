@@ -27,7 +27,8 @@ export const saveData = creds => dispatch => {
     .then(data => {
       dispatch({ type: types.USER_SETTINGS_SAVE_END, message: data.message })
     }).catch(err => {
-      const error = err.data
+      const error = err.data.message
+      console.log(error)
       dispatch({ type: types.USER_SETTINGS_SAVE_ERROR, error })
     })
 }

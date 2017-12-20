@@ -3,7 +3,8 @@ import * as types from '../constants/ActionTypes'
 const INITIAL_STATE = {
   loading: false,
   error: {},
-  hasError: false
+  hasError: false,
+  message: ''
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -18,8 +19,18 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: false,
-        hasError: !!action.error,
-        error: action.error || {}
+        hasError: false,
+        message: action.message,
+        error: !!action.error
+      }
+
+    case types.PASSWORD_CHANGE_ERROR:
+      return {
+        ...state,
+        loading: false,
+        hasError: true,
+        error: !!action.error,
+        message: action.error
       }
 
     case types.PASSWORD_CHANGE_INIT:

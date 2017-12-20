@@ -9,7 +9,7 @@ import supervisor from './SupervisorReducers'
 import tableContent from './TableContentReducers'
 import password from './PasswordReducers'
 import profile from './ProfileReducer'
-import passwordSettings from './PasswordSettingsReducer'
+import passwordsettings from './PasswordSettingsReducer'
 
 const rootReducer = combineReducers({
   auth,
@@ -21,7 +21,7 @@ const rootReducer = combineReducers({
   supervisor,
   tableContent,
   profile,
-  passwordSettings
+  passwordsettings
 })
 
 export default rootReducer
