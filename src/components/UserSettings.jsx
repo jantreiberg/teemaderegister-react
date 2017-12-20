@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Breadcrumbs from './Breadcrumbs'
 import { Row, Col, Form, Input, Button, Upload, Icon, message } from 'antd'
 import { Link } from 'react-router-dom'
+import { getToken } from '../utils/jwt'
 
 const FormItem = Form.Item
 
@@ -87,8 +88,11 @@ class UserSettings extends React.Component {
           <Row gutter={8}>
             <Col span={8} />
             <Col xs={24} sm={8}>
-              <img src={'/uploads/' + image} width='200px' height='200px' style={{ height: 200, width: 200 }} />
-              <Upload name="profile-image" action="/api/profile-image">
+              <img src={'/uploads/profile/' + image} width='200px' height='200px' style={{ height: 200, width: 200 }} />
+              <Upload
+                name={'profile-image'}
+                action={'/api/profile-image'}
+                headers={{Authorization: `Bearer ${getToken()}`}}>
                 <Button>
                   <Icon type='upload' /> Choose File
                 </Button>
