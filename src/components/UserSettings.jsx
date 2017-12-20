@@ -92,7 +92,8 @@ class UserSettings extends React.Component {
               <Upload
                 name={'profile-image'}
                 action={'/api/profile-image'}
-                headers={{Authorization: `Bearer ${getToken()}`}}>
+                headers={{Authorization: `Bearer ${getToken()}`}}
+              >
                 <Button>
                   <Icon type='upload' /> Choose File
                 </Button>
