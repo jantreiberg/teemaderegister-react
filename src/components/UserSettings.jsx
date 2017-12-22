@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Breadcrumbs from './Breadcrumbs'
-import { Row, Col, Form, Input, Button, Upload, Icon, message } from 'antd'
+import { Row, Col, Form, Input, Button, Upload, Icon, message, Avatar, Popover } from 'antd'
 import { Link } from 'react-router-dom'
 import { getToken } from '../utils/jwt'
 
@@ -28,6 +28,7 @@ const propTypes = {
       image: string
     }).isRequired
   }).isRequired,
+  resetProfilePicture: func.isRequired,
   saveData: func.isRequired
 }
 
@@ -35,6 +36,7 @@ class UserSettings extends React.Component {
   constructor (props) {
     super(props)
     this.submit = this.submit.bind(this)
+    this.resetPicture = this.resetPicture.bind(this)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -64,6 +66,11 @@ class UserSettings extends React.Component {
     })
   }
 
+  resetPicture (e) {
+    e.preventDefault()
+    this.props.resetProfilePicture()
+  }
+
   render () {
     const crumbs = [{ url: this.props.location.pathname, name: 'Profile' }]
 
@@ -80,6 +87,23 @@ class UserSettings extends React.Component {
       }
     } = this.props
 
+    const content = (
+      <div>
+        <Upload
+          name={'profile-image'}
+          action={'/api/profile-image'}
+          headers={{Authorization: `Bearer ${getToken()}`}}
+        >
+          <Button shape={'circle'}>
+            <Icon type='upload' />
+          </Button>
+        </Upload>
+        <Button shape={'circle'} onClick={this.resetPicture}>
+          <Icon type='delete' />
+        </Button>
+      </div>
+    )
+
     return (
       <div className='usersettings'>
         {!loading &&
@@ -88,16 +112,9 @@ class UserSettings extends React.Component {
           <Row gutter={8}>
             <Col span={8} />
             <Col xs={24} sm={8}>
-              <img src={'/uploads/profile/' + image} width='200px' height='200px' style={{ height: 200, width: 200 }} />
-              <Upload
-                name={'profile-image'}
-                action={'/api/profile-image'}
-                headers={{Authorization: `Bearer ${getToken()}`}}
-              >
-                <Button>
-                  <Icon type='upload' /> Choose File
-                </Button>
-              </Upload>
+              <Popover content={ content }>
+                <Avatar src={'/uploads/profile/' + image} style={{ width: '200px', height: '200px' }} size={'large'} />
+              </Popover>
               <Form onSubmit={this.submit} className='login__form'>
                 <h2 style={{ marginBottom: '20' }} className='text-align-center'>
                 Your Details

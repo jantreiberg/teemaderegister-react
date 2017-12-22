@@ -1,7 +1,7 @@
 import Api from '../utils/Api'
 import * as types from '../constants/ActionTypes'
 
-import { USER_PROFILE_URL, USER_UPDATE_URL } from '../constants/ApiConstants'
+import { USER_PROFILE_URL, USER_UPDATE_URL, USER_PICTURE_RESET_URL } from '../constants/ApiConstants'
 
 export const initProfile = () => dispatch => {
   dispatch({ type: types.USER_SETTINGS_INIT })
@@ -30,5 +30,18 @@ export const saveData = creds => dispatch => {
       const error = err.data.message
       console.log(error)
       dispatch({ type: types.USER_SETTINGS_SAVE_ERROR, error })
+    })
+}
+
+export const resetProfilePicture = () => dispatch => {
+  dispatch({ type: types.USER_PICTURE_RESET_START })
+
+  return Api('POST', USER_PICTURE_RESET_URL)
+    .then(data => {
+      dispatch({ type: types.USER_PICTURE_RESET_END })
+    }).catch(err => {
+      const error = err.data
+      console.log(error)
+      dispatch({ type: types.USER_PICTURE_RESET_ERROR, error })
     })
 }

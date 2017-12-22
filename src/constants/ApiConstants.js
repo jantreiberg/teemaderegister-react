@@ -14,3 +14,4 @@ export const USER_ME_URL = `${API}/users/me`
 export const USER_PROFILE_URL = `${API}/users/profile`
 export const USER_UPDATE_URL = `${API}/update-profile`
 export const USER_PASSWORD_UPDATE_URL = `${API}/update-password`
+export const USER_PICTURE_RESET_URL = `${API}/profile-image-reset`

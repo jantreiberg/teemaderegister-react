@@ -44,6 +44,29 @@ export default (state = INITIAL_STATE, action) => {
     case types.USER_SETTINGS_INIT:
       return INITIAL_STATE
 
+    case types.USER_PICTURE_RESET_START:
+      return {
+        ...state
+      }
+
+    case types.USER_PICTURE_RESET_END:
+      return {
+        ...state,
+        loading: false,
+        error: !!action.error,
+        message: 'Picture reset successful',
+        hasError: false
+      }
+
+    case types.USER_PICTURE_RESET_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: !!action.error,
+        message: action.error,
+        hasError: true
+      }
+
     default:
       return {
         ...state
