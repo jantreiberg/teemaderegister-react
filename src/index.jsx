@@ -29,13 +29,9 @@ import CurriculumAddContainer from './containers/CurriculumAddContainer'
 import store from './store/configureStore'
 import { initAnalytics } from './utils/Analytics'
 
-import './styles/main.scss'
-
-// antd fonts
-import './fonts/iconfont.eot'
-import './fonts/iconfont.svg'
-import './fonts/iconfont.ttf'
-import './fonts/iconfont.woff'
+import './fonts' // antd fonts
+import './media/favicons' // favicons
+import './styles/main.scss' // all css
 
 import { Layout, LocaleProvider } from 'antd'
 import etEE from 'antd/lib/locale-provider/et_EE'

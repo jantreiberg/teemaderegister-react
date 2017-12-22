@@ -3,9 +3,9 @@ import { PropTypes } from 'prop-types'
 import { Col, Card, Row, Collapse } from 'antd'
 import { Link } from 'react-router-dom'
 
-import noneBack from '../media/none-home-back.svg'
-import halfBack from '../media/half-home-back.svg'
-import fullBack from '../media/full-home-back.svg'
+import noneBack from '../media/background/none-home-back.svg'
+import halfBack from '../media/background/half-home-back.svg'
+import fullBack from '../media/background/full-home-back.svg'
 
 const { array, arrayOf, shape, string } = PropTypes
 
@@ -79,7 +79,7 @@ const HomeCards = props => {
       </Row>
       {items.closed.length !== 0 &&
         <Collapse className='homeCards__dropdown' bordered={false}>
-          <Panel className='homeCards__closed' header="Suletud" key="1">
+          <Panel className='homeCards__closed' header='Suletud' key='1'>
             <Row gutter={24}>
               {items.closed}
             </Row>

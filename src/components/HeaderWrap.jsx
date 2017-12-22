@@ -83,7 +83,7 @@ class HeaderWrap extends Component {
       <Header className='headerWrap'>
         <div className='headerWrap__wrapper'>
           <Link to='/'>
-            <div className='logo'>Te</div>
+            <div className='logo'>T</div>
           </Link>
           <div className='content'>
             <Form className='search'>
