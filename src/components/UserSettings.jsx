@@ -35,8 +35,12 @@ const propTypes = {
 class UserSettings extends React.Component {
   constructor (props) {
     super(props)
+    this.state = {
+      newImage: ''
+    }
     this.submit = this.submit.bind(this)
     this.resetPicture = this.resetPicture.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -69,6 +73,22 @@ class UserSettings extends React.Component {
   resetPicture (e) {
     e.preventDefault()
     this.props.resetProfilePicture()
+    this.setState({
+      newImage: 'default.jpg'
+    })
+  }
+
+  handleChange (info) {
+    if (info.file.status === 'error') {
+      message.error(info.file.response.message || info.file.response)
+    }
+    if (info.file.status === 'done') {
+      console.log(info)
+      this.setState({
+        newImage: info.file.response.user.profile.image
+      })
+      console.log(this.state)
+    }
   }
 
   render () {
@@ -93,16 +113,26 @@ class UserSettings extends React.Component {
           name={'profile-image'}
           action={'/api/profile-image'}
           headers={{Authorization: `Bearer ${getToken()}`}}
+          showUploadList={false}
+          onChange={this.handleChange}
         >
           <Button shape={'circle'}>
             <Icon type='upload' />
           </Button>
         </Upload>
-        <Button shape={'circle'} onClick={this.resetPicture}>
+        <Button style={{ marginLeft: '20px' }} shape={'circle'} onClick={this.resetPicture}>
           <Icon type='delete' />
         </Button>
       </div>
     )
+
+    const {newImage} = this.state
+    let imagePreview = null
+    if (!newImage) {
+      imagePreview = (<Avatar src={'/uploads/profile/' + image} style={{ width: '200px', height: '200px' }} size={'large'} />)
+    } else {
+      imagePreview = (<Avatar src={'/uploads/profile/' + newImage} style={{ width: '200px', height: '200px' }} size={'large'} />)
+    }
 
     return (
       <div className='usersettings'>
@@ -113,10 +143,10 @@ class UserSettings extends React.Component {
             <Col span={8} />
             <Col xs={24} sm={8}>
               <Popover content={ content }>
-                <Avatar src={'/uploads/profile/' + image} style={{ width: '200px', height: '200px' }} size={'large'} />
+                {imagePreview}
               </Popover>
               <Form onSubmit={this.submit} className='login__form'>
-                <h2 style={{ marginBottom: '20' }} className='text-align-center'>
+                <h2 style={{ marginBottom: '20px' }} className='text-align-center'>
                 Your Details
                 </h2>
                 <FormItem>
