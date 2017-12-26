@@ -200,8 +200,7 @@ class TableWrap extends React.Component {
       curriculum,
       supervisor,
       tableContent,
-      tabs,
-      search
+      tabs
     } = this.props
 
     return (
@@ -215,7 +214,6 @@ class TableWrap extends React.Component {
           supervisor={supervisor}
           tableContent={tableContent}
           tabs={tabs}
-          search={search}
         />
       </div>
     )

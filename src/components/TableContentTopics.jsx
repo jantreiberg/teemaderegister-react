@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import moment from 'moment'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import queryString from 'query-string'
+import reactStringReplace from 'react-string-replace'
 
 import { message, Badge, Tooltip, Icon } from 'antd'
 
@@ -30,7 +31,7 @@ const accepted = ({ columnKey, order }) => ({
   sortOrder: columnKey === 'accepted' && order
 })
 
-const author = ({ columnKey, order, search }) => ({
+const author = ({ columnKey, order, q }) => ({
   title: 'Author',
   dataIndex: 'author',
   key: 'author',
@@ -41,14 +42,10 @@ const author = ({ columnKey, order, search }) => ({
 
     const fullName = author.firstName + ' ' + author.lastName
 
-    if (search) {
-      const reg = new RegExp(search, 'gi')
-      const match = fullName.match(reg)
-
-      const authorHighlight = fullName.split(reg).map((text, i) => (
-        i > 0 ? [<span key={i} className="highlight">{match[0]}</span>, text] : text
+    if (q) {
+      return reactStringReplace(fullName, q, (match, i) => (
+        <span key={i} className='highlight'>{match}</span>
       ))
-      return authorHighlight
     }
 
     return fullName
@@ -191,7 +188,7 @@ const supervisors = () => ({
   }
 })
 
-const title = ({ columnKey, order, sub, search }) => ({
+const title = ({ columnKey, order, sub, q }) => ({
   title: 'Title',
   dataIndex: 'title',
   key: 'title',
@@ -200,12 +197,9 @@ const title = ({ columnKey, order, sub, search }) => ({
   render: (title, row) => {
     let finalTitle = title
 
-    if (search) {
-      const reg = new RegExp(search, 'gi')
-      const match = title.match(reg)
-
-      finalTitle = title.split(reg).map((text, i) => (
-        i > 0 ? [<span key={i} className="highlight">{match[0]}</span>, text] : text
+    if (q) {
+      finalTitle = reactStringReplace(title, q, (match, i) => (
+        <span key={i} className='highlight'>{match}</span>
       ))
     }
 
@@ -271,7 +265,7 @@ const types = ({ columnKey, order, sub, types }) => ({
 
 const renderDate = date => moment(date).format('DD.MM.YY')
 
-const getColumnNames = ({ sub, names, type, supervisor, search }) => {
+const getColumnNames = ({ sub, names, type, supervisor }) => {
   let columns = ['title'] // default
 
   const isInformaticsBa = names && names.et === 'Informaatika' && type === 'BA'
