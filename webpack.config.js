@@ -103,7 +103,7 @@ const rules = [
     }
   },
   {
-    test: /media\/(background|brand)\/([^/]*)\.(jpe?g|png|gif|svg)$/i,
+    test: /media\/(background|brand|personal)\/([^/]*)\.(jpe?g|png|gif|svg)$/i,
     use: [
       {
         loader: 'url-loader',

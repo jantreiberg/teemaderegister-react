@@ -73,11 +73,15 @@ $menu-link-hover: rgb(138, 131, 131);
   background-color: #5f5f5f;
 
   .ant-dropdown-menu-item {
-    padding: 10px 20px;
+    padding: 0;
+
     a,
     .link,
     &.user-info {
+      display: block;
       color: $menu-link;
+      padding: 10px 20px;
+      margin: 0;
     }
     
     .user-name{

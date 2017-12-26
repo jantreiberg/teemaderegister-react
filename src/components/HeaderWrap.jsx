@@ -6,7 +6,7 @@ import queryString from 'query-string'
 import setUrl from '../utils/setUrl'
 import { Menu, Dropdown, Form, Input, Layout } from 'antd'
 
-import personalCenter from '../media/personal-center.svg'
+import personalCenter from '../media/personal/personal-center.svg'
 
 const Search = Input.Search
 const { Header } = Layout
