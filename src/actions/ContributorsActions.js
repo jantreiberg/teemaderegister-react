@@ -13,7 +13,7 @@ export const getContributors = () => dispatch => {
   return Api('GET', CONTRIBUTORS_URL)
     .then(data => dispatch({
       type: types.CONTRIBUTORS_LOADED,
-      contributor: data
+      contributors: data.contributors
     }))
     .catch(err => {
       console.log(err)

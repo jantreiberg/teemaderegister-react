@@ -1,21 +1,17 @@
 import * as types from '../constants/ActionTypes'
 
 const INITIAL_STATE = {
-  data: {
-    contributors: null
-  },
+  contributors: [],
   loading: true
 }
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case types.CONTRIBUTORS_LOADED: {
-      const { contributor } = action
+      const { contributors } = action
       return {
         ...state,
-        data: {
-          contributor
-        },
+        contributors,
         loading: false
       }
     }
