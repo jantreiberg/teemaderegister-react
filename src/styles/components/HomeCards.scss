@@ -20,4 +20,14 @@
       padding: 14px;
     }
   }
+
+  &__closed {
+    & div:nth-child(2){
+      padding: 0;
+    }
+  }
+
+  &__dropdown {
+    margin-bottom: 2.5em
+  }
 }

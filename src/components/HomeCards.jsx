@@ -1,13 +1,15 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
-import { Col, Card, Row } from 'antd'
+import { Col, Card, Row, Collapse } from 'antd'
 import { Link } from 'react-router-dom'
 
-import noneBack from '../media/none-home-back.svg'
-import halfBack from '../media/half-home-back.svg'
-import fullBack from '../media/full-home-back.svg'
+import noneBack from '../media/background/none-home-back.svg'
+import halfBack from '../media/background/half-home-back.svg'
+import fullBack from '../media/background/full-home-back.svg'
 
 const { array, arrayOf, shape, string } = PropTypes
+
+const Panel = Collapse.Panel
 
 const propTypes = {
   collection: arrayOf(
@@ -35,19 +37,23 @@ const HomeCards = props => {
     PHD: noneBack
   }
 
-  let items = []
+  let items = {
+    available: [],
+    closed: []
+  }
 
   collection.forEach((c, i) => {
-    const { abbreviation, names, slugs, _id, languages } = c
+    const { abbreviation, names, slugs, _id, languages, closed } = c
     const cardBackground = { backgroundImage: 'url(' + colorMap[type] + ')' }
     const languageList = languages.map(
       (l, i) =>
         l + ((i !== languages.length - 1) & (languages.length > 1) ? '/' : '')
     )
+    const place = closed ? 'closed' : 'available'
 
-    items.push(
+    items[place].push(
       <Col key={i} sm={12} md={8}>
-        <Link to={'/curriculum/' + slugs.et}>
+        <Link to={'/curriculum/s/' + slugs.et}>
           <Card
             key={_id}
             className='homeCards__card'
@@ -58,7 +64,7 @@ const HomeCards = props => {
               {names.et}
             </h2>
             <p>
-              {abbreviation} | {languageList}
+              {abbreviation} | {languageList} { closed && <span>| <b>Suletud</b> </span> }
             </p>
           </Card>
         </Link>
@@ -67,9 +73,20 @@ const HomeCards = props => {
   })
 
   return (
-    <Row className='homeCards' gutter={24}>
-      {items}
-    </Row>
+    <div className='homeCards'>
+      <Row gutter={24}>
+        {items.available}
+      </Row>
+      {items.closed.length !== 0 &&
+        <Collapse className='homeCards__dropdown' bordered={false}>
+          <Panel className='homeCards__closed' header='Suletud' key='1'>
+            <Row gutter={24}>
+              {items.closed}
+            </Row>
+          </Panel>
+        </Collapse>
+      }
+    </div>
   )
 }
 

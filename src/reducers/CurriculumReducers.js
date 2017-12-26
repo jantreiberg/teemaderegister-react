@@ -5,6 +5,12 @@ const INITIAL_STATE = {
   loading: true,
   hasError: false,
   err: {}
+  form: {
+    loading: false,
+    curriculum: {},
+    hasError: false,
+    error: {}
+  }
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -16,6 +22,29 @@ export default (state = INITIAL_STATE, action) => {
         meta,
         loading: false,
         hasError: false
+      }
+    }
+
+    case types.CURRICULUM_ADD_START:
+      return {
+        ...state,
+        form: {
+          ...state.form,
+          loading: true
+        }
+      }
+
+    case types.CURRICULUM_ADD_END: {
+      const { curriculum, error } = action
+      return {
+        ...state,
+        form: {
+          loading: false,
+          curriculum: curriculum || {},
+          hasError: !!error,
+          error: error || {}
+        }
+
       }
     }
 

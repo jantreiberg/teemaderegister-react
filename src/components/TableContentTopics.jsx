@@ -1,8 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
+import queryString from 'query-string'
 
-import { Badge, Tooltip, Icon } from 'antd'
+import { message, Badge, Tooltip, Icon } from 'antd'
 
 export default params => {
   const columns = getColumnNames(params)
@@ -82,7 +84,7 @@ const detailCurriculums = () => ({
   render: curriculums => {
     if (curriculums.length === 0) return null
     return curriculums.map((c, i) => {
-      const url = '/curriculum/' + c.slugs.et
+      const url = '/curriculum/s/' + c.slugs.et
       const abbr = c.abbreviation
       const content =
         i < curriculums.length - 1 && curriculums.length > 1
@@ -130,10 +132,12 @@ const file = ({ columnKey, order }) => ({
   key: 'file',
   sortOrder: columnKey === 'file' && order,
   render: file => {
-    let content = (
+    const content = (
       <span>
-        <a className='link--pdf' href={file} target='_blank'>
-          <Icon type='file-pdf' className='icon-15' />
+        <a href={file}>
+          <Tooltip title='Download .pdf'>
+            <Icon type='download' className='icon--download' />
+          </Tooltip>
         </a>
       </span>
     )
@@ -174,18 +178,34 @@ const supervisors = () => ({
   }
 })
 
-const title = ({ columnKey, order }) => ({
+const title = ({ columnKey, order, sub }) => ({
   title: 'Title',
   dataIndex: 'title',
   key: 'title',
   sorter: true,
   sortOrder: columnKey === 'title' && order,
-  render: title => {
-    let content = (
+  render: (title, row) => {
+    const { starred, file: fileUrl, slug } = row
+    const fileInViewerUrl = <a href={'https://docs.google.com/gview?url=' + fileUrl} target='_blank'>{title}</a>
+    const topicTitle = sub === 'defended'
+      ? fileInViewerUrl
+      : title
+    const shareUrl = window.location.host + '/search?' + queryString.stringify({ q: slug, sub })
+    const content = (
       <span>
-        {title}
+        {topicTitle}
+        {starred &&
+          <Tooltip title='Esiletõstetud töö'>
+            {` `}<Icon style={{color: 'gold'}} type='star' />
+          </Tooltip>}
+        <CopyToClipboard text={shareUrl} onCopy={() => message.success('Link copied to clipboard')}>
+          <Tooltip title='Copy link to clipboard'>
+            <Icon type='copy' className='icon--copy' />
+          </Tooltip>
+        </CopyToClipboard>
       </span>
     )
+
     return content
   }
 })
