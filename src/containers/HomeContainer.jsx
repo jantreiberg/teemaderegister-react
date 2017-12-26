@@ -7,7 +7,8 @@ import { getCurriculums } from '../actions/CurriculumActions'
 const HomeContainer = props => <Home {...props} />
 
 const mapStateToProps = state => ({
-  home: state.home
+  home: state.home,
+  auth: state.auth
 })
 
 export default connect(mapStateToProps, {

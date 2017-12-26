@@ -103,11 +103,20 @@ const rules = [
     }
   },
   {
-    test: /media\/([^/]*)\.(jpe?g|png|gif|svg)$/i,
+    test: /media\/(background|brand|personal)\/([^/]*)\.(jpe?g|png|gif|svg)$/i,
     use: [
       {
         loader: 'url-loader',
         options: { limit: 1024, name: 'media/[hash:10].[ext]' } // embed images size < 10kb
+      }
+    ]
+  },
+  {
+    test: /media\/favicons\/([^/]*)\.(png|svg|ico|json|xml)$/i,
+    use: [
+      {
+        loader: 'url-loader',
+        options: { limit: 1, name: '[name].[ext]' } // // do not embed favicons > 1b
       }
     ]
   },

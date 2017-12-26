@@ -3,9 +3,9 @@ import { PropTypes } from 'prop-types'
 
 import { Avatar, Tooltip } from 'antd'
 
-import noneBack from '../media/none-cur-back.svg'
-import halfBack from '../media/half-cur-back.svg'
-import fullBack from '../media/full-cur-back.svg'
+import noneBack from '../media/background/none-cur-back.svg'
+import halfBack from '../media/background/half-cur-back.svg'
+import fullBack from '../media/background/full-cur-back.svg'
 
 const { array, object, shape, string } = PropTypes
 

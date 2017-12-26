@@ -40,24 +40,25 @@
   }
   
   &__chart {
-    display: flex;
 
     .card {
+      height: 120px;
 
-      &--supervising {
-        width: 120px;
-        height: 120px;
+      &--curriculums {
+
+        .ant-card-body{
+          padding: 0;
+        }
+        .pie-chart {
+          margin: 0 auto;
+        }
       }
 
       &--supervised {
-        position: absolute;
         color: #6bcaba;
-        top: 15px;
-        min-width: 90px;
       }
 
       &--chart {
-        width: calc(100% - 120px);
 
         .ant-card-body {
           padding-bottom: 0;
