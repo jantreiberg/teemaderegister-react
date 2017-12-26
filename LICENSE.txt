@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) 2017 Romil Rõbtšenkov
+Copyright (c) 2017-2018 Romil Rõbtšenkov
 
 All rights reserved.
 
