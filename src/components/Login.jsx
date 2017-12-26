@@ -5,6 +5,8 @@ import { Redirect, Link } from 'react-router-dom'
 import { getToken } from '../utils/jwt'
 import Breadcrumbs from './Breadcrumbs'
 import { Row, Col, Form, Icon, Input, Button, message, Tooltip } from 'antd'
+import { setDocTitle } from '../utils/Helpers'
+
 const FormItem = Form.Item
 
 const { bool, func, object, shape, string } = PropTypes
@@ -49,6 +51,8 @@ class Login extends React.Component {
   componentDidMount () {
     const emailInput = this.props.form.getFieldInstance('email').refs.input
     emailInput.focus()
+
+    setDocTitle('Login')
   }
 
   componentWillUnmount () {

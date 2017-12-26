@@ -6,6 +6,7 @@ import { Route, Switch, BrowserRouter, browserHistory } from 'react-router-dom'
 import {
   INDEX_PATH,
   LOGIN_PATH,
+  CURRICULUM_ADD_PATH,
   CURRICULUM_PATH,
   SEARCH_PATH,
   SUPERVISOR_PATH,
@@ -27,21 +28,21 @@ import AccountForgotContainer from './containers/AccountForgotContainer'
 import AccountPasswordContainer from './containers/AccountPasswordContainer'
 import UserSettingsContainer from './containers/UserSettingsContainer'
 import ChangePasswordContainer from './containers/ChangePasswordContainer'
+import CurriculumAddContainer from './containers/CurriculumAddContainer'
 
 import store from './store/configureStore'
+import { initAnalytics } from './utils/Analytics'
 
-import './styles/main.scss'
-
-// antd fonts
-import './fonts/iconfont.eot'
-import './fonts/iconfont.svg'
-import './fonts/iconfont.ttf'
-import './fonts/iconfont.woff'
+import './fonts' // antd fonts
+import './media/favicons' // favicons
+import './styles/main.scss' // all css
 
 import { Layout, LocaleProvider } from 'antd'
 import etEE from 'antd/lib/locale-provider/et_EE'
 
 const { Content, Footer } = Layout
+
+initAnalytics()
 
 render(
   <Provider store={store}>
@@ -58,6 +59,8 @@ render(
                   component={RouteWrapContainer(LoginContainer)} />
                 <Route path={SEARCH_PATH}
                   component={RouteWrapContainer(SearchContainer)} />
+                <Route path={CURRICULUM_ADD_PATH}
+                  component={RouteWrapContainer(CurriculumAddContainer, { restrict: true })} />
                 <Route path={CURRICULUM_PATH}
                   component={RouteWrapContainer(CurriculumContainer)} />
                 <Route path={SUPERVISOR_PATH}

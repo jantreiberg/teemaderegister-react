@@ -1,7 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import { Link } from 'react-router-dom'
+import { setDocTitle } from '../utils/Helpers'
 import HomeCollection from './HomeCollection'
+
+import { Button } from 'antd'
+
 const { array, bool, func, shape } = PropTypes
 
 const propTypes = {
@@ -18,16 +22,21 @@ const propTypes = {
 class Home extends React.Component {
   componentDidMount () {
     this.props.getCurriculums()
+    setDocTitle('Home')
   }
 
   render () {
-    const { home: { loading, curriculums } } = this.props
-
+    const { home: { loading, curriculums }, auth: { user, isAuthenticated } } = this.props
+    const showAddCurriculumLink = isAuthenticated && user.roles.includes('admin')
     return (
       <div className='home'>
         <div className='home__intro'>
-          <h1>Tere tulemast DTI uue teemaderegistri lehele!!!!</h1>
+          <h1>Tere tulemast DTI uue teemaderegistri lehele!</h1>
         </div>
+        {showAddCurriculumLink &&
+          <Link to='/curriculum/add'>
+            <Button icon="plus">Lisa õppekava</Button>
+          </Link>}
         {!loading && <HomeCollection curriculums={curriculums} />}
       </div>
     )
