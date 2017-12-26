@@ -143,16 +143,16 @@ class UserSettings extends React.Component {
             <Col span={8} />
             <Col xs={24} sm={8}>
               <div>
-                <Popover placement={'bottom'} content={ content }>
+                <Popover placement={'bottomLeft'} content={ content }>
                   <Avatar
                     src={avatarSrc}
-                    style={{ marginTop: '35px', marginLeft: '55px', marginBottom: '65px', width: '200px', height: '200px' }}
+                    style={{ marginTop: '35px', marginBottom: '65px', width: '200px', height: '200px' }}
                     size={'large'}
                   />
                 </Popover>
               </div>
               <Form onSubmit={this.submit} className='login__form'>
-                <h2 style={{ textAlign: 'center', textDecoration: 'underline', marginBottom: '20px' }} className='text-align-center'>
+                <h2 style={{ textDecoration: 'underline', marginBottom: '20px' }} className='text-align-center'>
                 Your Details
                 </h2>
                 <FormItem>

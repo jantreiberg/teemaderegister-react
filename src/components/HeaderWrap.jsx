@@ -6,8 +6,6 @@ import queryString from 'query-string'
 import setUrl from '../utils/setUrl'
 import { Menu, Dropdown, Form, Input, Layout } from 'antd'
 
-import personalCenter from '../media/personal/personal-center.svg'
-
 const Search = Input.Search
 const { Header } = Layout
 
@@ -125,11 +123,13 @@ class HeaderWrap extends Component {
 
   render () {
     const {
-      auth: { isAuthenticated, user: { roles, slug, fullName } },
+      auth: { isAuthenticated, user: { roles, slug, fullName, image, updatedAt } },
       form: { getFieldDecorator }
     } = this.props
 
-    const userImage = { backgroundImage: `url(${personalCenter})` }
+    console.log(image)
+
+    const userImage = { backgroundImage: `url(${'/uploads/profile/' + image + '?updatedAt=' + updatedAt})` }
 
     return (
       <Header className='headerWrap'>
