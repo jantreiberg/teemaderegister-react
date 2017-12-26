@@ -25,7 +25,8 @@ const propTypes = {
       firstName: string,
       lastName: string,
       email: string,
-      image: string
+      image: string,
+      updatedAt: string
     }).isRequired
   }).isRequired,
   resetProfilePicture: func.isRequired,
@@ -36,7 +37,7 @@ class UserSettings extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      newImage: ''
+      newImage: null
     }
     this.submit = this.submit.bind(this)
     this.resetPicture = this.resetPicture.bind(this)
@@ -85,7 +86,8 @@ class UserSettings extends React.Component {
     if (info.file.status === 'done') {
       console.log(info)
       this.setState({
-        newImage: info.file.response.user.profile.image
+        newImage: info.file.response.user.profile.image,
+        newUpdatedAt: info.file.response.user.updatedAt
       })
       console.log(this.state)
     }
@@ -102,10 +104,18 @@ class UserSettings extends React.Component {
           firstName,
           lastName,
           email,
-          image
+          image,
+          updatedAt
         }
       }
     } = this.props
+
+    const { newImage, newUpdatedAt } = this.state
+
+    const avatarSrc = '/uploads/profile/' +
+      (newImage || image) +
+      '?userUpdated=' +
+      (updatedAt || newUpdatedAt)
 
     const content = (
       <div>
@@ -126,14 +136,6 @@ class UserSettings extends React.Component {
       </div>
     )
 
-    const {newImage} = this.state
-    let imagePreview = null
-    if (!newImage) {
-      imagePreview = (<Avatar src={'/uploads/profile/' + image} style={{ width: '200px', height: '200px' }} size={'large'} />)
-    } else {
-      imagePreview = (<Avatar src={'/uploads/profile/' + newImage} style={{ width: '200px', height: '200px' }} size={'large'} />)
-    }
-
     return (
       <div className='usersettings'>
         {!loading &&
@@ -143,7 +145,11 @@ class UserSettings extends React.Component {
             <Col span={8} />
             <Col xs={24} sm={8}>
               <Popover content={ content }>
-                {imagePreview}
+                <Avatar
+                  src={avatarSrc}
+                  style={{ width: '200px', height: '200px' }}
+                  size={'large'}
+                />
               </Popover>
               <Form onSubmit={this.submit} className='login__form'>
                 <h2 style={{ marginBottom: '20px' }} className='text-align-center'>
