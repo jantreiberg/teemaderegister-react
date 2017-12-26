@@ -84,12 +84,10 @@ class UserSettings extends React.Component {
       message.error(info.file.response.message || info.file.response)
     }
     if (info.file.status === 'done') {
-      console.log(info)
       this.setState({
         newImage: info.file.response.user.profile.image,
         newUpdatedAt: info.file.response.user.updatedAt
       })
-      console.log(this.state)
     }
   }
 
@@ -144,15 +142,17 @@ class UserSettings extends React.Component {
           <Row gutter={8}>
             <Col span={8} />
             <Col xs={24} sm={8}>
-              <Popover content={ content }>
-                <Avatar
-                  src={avatarSrc}
-                  style={{ width: '200px', height: '200px' }}
-                  size={'large'}
-                />
-              </Popover>
+              <div>
+                <Popover placement={'bottom'} content={ content }>
+                  <Avatar
+                    src={avatarSrc}
+                    style={{ marginTop: '35px', marginLeft: '55px', marginBottom: '65px', width: '200px', height: '200px' }}
+                    size={'large'}
+                  />
+                </Popover>
+              </div>
               <Form onSubmit={this.submit} className='login__form'>
-                <h2 style={{ marginBottom: '20px' }} className='text-align-center'>
+                <h2 style={{ textAlign: 'center', textDecoration: 'underline', marginBottom: '20px' }} className='text-align-center'>
                 Your Details
                 </h2>
                 <FormItem>
@@ -185,7 +185,6 @@ class UserSettings extends React.Component {
                     type='primary'
                     htmlType='submit'
                     className='button--fullWidth'
-                    loading={loading}
                   >
                 Save Changes
                   </Button>
@@ -198,13 +197,16 @@ class UserSettings extends React.Component {
             <Row gutter={8}>
               <Col span={8} />
               <Col xs={24} sm={8}>
-                <h2 style={{ marginBottom: 20 }} className='text-align-center'>
+                <h2 style={{ textDecoration: 'underline', marginBottom: 20 }} className='text-align-center'>
                 Password Settings
                 </h2>
-                <Link to='/settings/password'><Button
-                  type='primary'
-                  className='button--fullWidth'
-                >Change Password</Button></Link>
+                <FormItem>
+                  <Link to='/settings/password'><Button
+                    type='primary'
+                    className='button--fullWidth'
+                    htmlType='button'
+                  >Change Password</Button></Link>
+                </FormItem>
               </Col>
               <Col span={8} />
             </Row>
