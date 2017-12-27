@@ -1,10 +1,24 @@
 .profile-pic {
+
+  position: relative;
+  height: 200px;
+  width: 200px;
+  margin: 0 auto;
+
   .profile-pic-buttons {
     display: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -14px;
+    margin-left: -33px;
   }
 
   .pic-itself {
     background-color: lightgrey;
+    position: absolute;
+    height: 200px;
+    width: 200px;
   }
 
   &:hover {
@@ -21,4 +35,16 @@
       }
     }
   }
+}
+
+.settingsaccount {
+    h2 {
+        margin-bottom: 20px;
+        text-decoration: underline;
+    }
+
+    #pictureresetBtn {
+        margin-left: 10px;
+    }
+
 }

@@ -105,18 +105,12 @@ class SettingsAccount extends React.Component {
       form: { getFieldDecorator },
       settings: {
         loading,
+        formLoading,
         user: {
-          profile: {
-            firstName,
-            lastName,
-            image
-          },
-          login: {
-            email
-          },
+          profile: { firstName, lastName, image },
+          login: { email },
           updatedAt
-        },
-        formLoading
+        }
       }
     } = this.props
 
@@ -125,14 +119,14 @@ class SettingsAccount extends React.Component {
       : null
 
     return (
-      <div className='usersettings'>
+      <div className='settingsaccount'>
         {!loading &&
         <div>
           <Breadcrumbs crumbs={crumbs} />
           <Row gutter={8}>
             <Col span={8} />
             <Col xs={24} sm={8}>
-              <div className='profile-pic' style={{ position: 'relative', height: 200, margin: '0 auto', width: 200 }}>
+              <div className='profile-pic'>
                 {formLoading.picture &&
                   <Icon style={{
                     display: 'block',
@@ -147,10 +141,9 @@ class SettingsAccount extends React.Component {
                 <Avatar
                   className='pic-itself'
                   src={avatarSrc}
-                  style={{ width: '200px', height: '200px', position: 'absolute' }}
                   size={'large'}
                 />
-                <div className='profile-pic-buttons' style={{ position: 'absolute', left: '50%', top: '50%', marginTop: -14, marginLeft: -33 }}>
+                <div className='profile-pic-buttons'>
                   <Upload
                     name={'profileImage'}
                     customRequest={this.props.uploadProfilePicture}
@@ -164,14 +157,18 @@ class SettingsAccount extends React.Component {
                     </Tooltip>
                   </Upload>
                   <Tooltip placement='top' title={'Restore default'}>
-                    <Button style={{ marginLeft: '10px' }} shape={'circle'} onClick={this.props.resetProfilePicture}>
+                    <Button
+                      id='pictureresetBtn'
+                      shape={'circle'}
+                      onClick={this.props.resetProfilePicture}
+                    >
                       <Icon type='close' />
                     </Button>
                   </Tooltip>
                 </div>
               </div>
               <Form onSubmit={this.submit} className='login__form'>
-                <h2 style={{ textDecoration: 'underline', marginBottom: '20px' }} className='text-align-center'>
+                <h2 className='text-align-center'>
                 Your Details
                 </h2>
                 <FormItem>
@@ -217,7 +214,7 @@ class SettingsAccount extends React.Component {
             <Row gutter={8}>
               <Col span={8} />
               <Col xs={24} sm={8}>
-                <h2 style={{ textDecoration: 'underline', marginBottom: 20 }} className='text-align-center'>
+                <h2 className='text-align-center'>
                 Password Settings
                 </h2>
                 <FormItem>
