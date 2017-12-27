@@ -196,7 +196,7 @@ const title = ({ columnKey, order, sub }) => ({
         {topicTitle}
         {starred &&
           <Tooltip title='Esiletõstetud töö'>
-            {` `}<Icon style={{color: 'gold'}} type='star' />
+            {' '}<Icon style={{color: 'gold'}} type='star' />
           </Tooltip>}
         <CopyToClipboard text={shareUrl} onCopy={() => message.success('Link copied to clipboard')}>
           <Tooltip title='Copy link to clipboard'>

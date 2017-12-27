@@ -6,6 +6,8 @@ import queryString from 'query-string'
 import setUrl from '../utils/setUrl'
 import { Menu, Dropdown, Form, Input, Layout } from 'antd'
 
+import personalCenter from '../media/personal/personal-center.svg'
+
 const Search = Input.Search
 const { Header } = Layout
 
@@ -104,17 +106,17 @@ class HeaderWrap extends Component {
         {roles.includes('supervisor') &&
           <Menu.Item>
             <Link to={ '/supervisor/' + slug }>
-              <i className="anticon anticon-user icon--15"></i> Profile
+              <i className='anticon anticon-user icon--15'></i> Profile
             </Link>
           </Menu.Item>}
         <Menu.Item>
           <Link to='/settings/account'>
-            <i className="anticon anticon-setting icon--15"></i> Settings
+            <i className='anticon anticon-setting icon--15'></i> Settings
           </Link>
         </Menu.Item>
         <Menu.Item>
           <span className='link' onClick={this.props.logout}>
-            <i className="anticon anticon-logout icon--15"></i> Logout
+            <i className='anticon anticon-logout icon--15'></i> Logout
           </span>
         </Menu.Item>
       </Menu>
@@ -123,13 +125,11 @@ class HeaderWrap extends Component {
 
   render () {
     const {
-      auth: { isAuthenticated, user: { roles, slug, fullName, image, updatedAt } },
+      auth: { isAuthenticated, user: { roles, slug, fullName } },
       form: { getFieldDecorator }
     } = this.props
 
-    console.log(image)
-
-    const userImage = { backgroundImage: `url(${'/uploads/profile/' + image + '?updatedAt=' + updatedAt})` }
+    const userImage = { backgroundImage: `url(${personalCenter})` }
 
     return (
       <Header className='headerWrap'>

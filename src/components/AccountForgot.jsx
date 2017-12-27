@@ -78,7 +78,7 @@ class AccountForgot extends React.Component {
     const crumbs = [{ url: this.props.location.pathname, name: 'Request password reset' }]
 
     return (
-      <div className="accountForgot">
+      <div className='accountForgot'>
         <Breadcrumbs crumbs={crumbs} />
         <Row gutter={8}>
           <Col span={8} />

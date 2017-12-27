@@ -35,7 +35,7 @@ class Home extends React.Component {
         </div>
         {showAddCurriculumLink &&
           <Link to='/curriculum/add'>
-            <Button icon="plus">Lisa õppekava</Button>
+            <Button icon='plus'>Lisa õppekava</Button>
           </Link>}
         {!loading && <HomeCollection curriculums={curriculums} />}
       </div>
