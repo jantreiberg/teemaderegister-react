@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types'
 import { Link } from 'react-router-dom'
 import queryString from 'query-string'
 
+import { UPLOAD_PATH } from 'config'
 import setUrl from '../utils/setUrl'
 import { Menu, Dropdown, Form, Input, Layout } from 'antd'
 
@@ -127,7 +128,7 @@ class HeaderWrap extends Component {
       form: { getFieldDecorator }
     } = this.props
 
-    const userImage = { backgroundImage: `url(${'/uploads' + thumbnail + '?updatedAt=' + updatedAt})` }
+    const userImage = { backgroundImage: `url(${UPLOAD_PATH + thumbnail}?updatedAt=${updatedAt})` }
 
     return (
       <Header className='headerWrap'>

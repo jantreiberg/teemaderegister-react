@@ -23,7 +23,7 @@ const propTypes = {
   })
 }
 
-class ChangePassword extends React.Component {
+class SettingsPassword extends React.Component {
   constructor (props) {
     super(props)
     this.submit = this.submit.bind(this)
@@ -68,7 +68,7 @@ class ChangePassword extends React.Component {
 
   render () {
     const crumbs = [
-      { url: '/settings/account', name: 'Account settings' },
+      { url: '/settings/account', name: 'Settings' },
       { url: null, name: 'Change Password' }
     ]
 
@@ -139,6 +139,6 @@ class ChangePassword extends React.Component {
   }
 }
 
-ChangePassword.propTypes = propTypes
+SettingsPassword.propTypes = propTypes
 
-export default Form.create()(ChangePassword)
+export default Form.create()(SettingsPassword)

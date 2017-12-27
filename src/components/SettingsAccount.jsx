@@ -3,19 +3,13 @@ import PropTypes from 'prop-types'
 import Breadcrumbs from './Breadcrumbs'
 import { Row, Col, Form, Input, Button, Upload, Icon, message, Avatar, Popover } from 'antd'
 import { Link } from 'react-router-dom'
-import { getToken } from '../utils/jwt'
-import { USER_PICTURE_UPLOAD_URL } from '../constants/ApiConstants'
+import { UPLOAD_PATH } from 'config'
 
 const FormItem = Form.Item
 
 const { func, object, shape, bool, string, array } = PropTypes
 
 const propTypes = {
-  auth: shape({
-    user: shape({
-      _id: string
-    }).isRequired
-  }).isRequired,
   fileList: array,
   form: shape({
     getFieldDecorator: func.isRequired,
@@ -25,7 +19,8 @@ const propTypes = {
   getProfile: func.isRequired,
   initProfile: func.isRequired,
   location: object.isRequired,
-  profile: shape({
+  resetProfilePicture: func.isRequired,
+  settings: shape({
     loading: bool.isRequired,
     user: shape({
       profile: shape({
@@ -40,27 +35,26 @@ const propTypes = {
       updatedAt: string
     }).isRequired
   }).isRequired,
-  resetProfilePicture: func.isRequired,
-  saveData: func.isRequired
+  updateProfile: func.isRequired,
+  uploadProfilePicture: func.isRequired
+
 }
 
-class UserSettings extends React.Component {
+class SettingsAccount extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {
-      newImage: null
-    }
+
     this.submit = this.submit.bind(this)
     this.resetPicture = this.resetPicture.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.profile.message !== this.props.profile.message) {
-      if (nextProps.profile.hasError) {
-        message.error(nextProps.profile.message, 10)
+    if (nextProps.settings.message !== this.props.settings.message) {
+      if (nextProps.settings.hasError) {
+        message.error(nextProps.settings.message, 10)
       } else {
-        message.success(nextProps.profile.message, 10)
+        message.success(nextProps.settings.message, 10)
       }
     }
   }
@@ -77,7 +71,7 @@ class UserSettings extends React.Component {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.props.saveData(values)
+        this.props.updateProfile(values)
       }
     })
   }
@@ -85,9 +79,6 @@ class UserSettings extends React.Component {
   resetPicture (e) {
     e.preventDefault()
     this.props.resetProfilePicture()
-    this.setState({
-      newImage: 'default.jpg'
-    })
   }
 
   handleChange (info) {
@@ -103,10 +94,10 @@ class UserSettings extends React.Component {
   }
 
   render () {
-    const crumbs = [{ url: null, name: 'Account settings' }]
+    const crumbs = [{ url: null, name: 'Settings' }]
     const {
       form: { getFieldDecorator },
-      profile: {
+      settings: {
         loading,
         user: {
           profile: {
@@ -123,15 +114,14 @@ class UserSettings extends React.Component {
     } = this.props
 
     const avatarSrc = image
-      ? '/uploads' + image.full + '?userUpdated=' + updatedAt
+      ? UPLOAD_PATH + image.full + '?userUpdated=' + updatedAt
       : null
 
     const content = (
       <div>
         <Upload
-          name={'profile-image'}
-          action={USER_PICTURE_UPLOAD_URL.replace(':id', this.props.auth.user._id)}
-          headers={{Authorization: `Bearer ${getToken()}`}}
+          name={'profileImage'}
+          customRequest={this.props.uploadProfilePicture}
           showUploadList={false}
           onChange={this.handleChange}
         >
@@ -228,6 +218,6 @@ class UserSettings extends React.Component {
   }
 }
 
-UserSettings.propTypes = propTypes
+SettingsAccount.propTypes = propTypes
 
-export default Form.create()(UserSettings)
+export default Form.create()(SettingsAccount)
