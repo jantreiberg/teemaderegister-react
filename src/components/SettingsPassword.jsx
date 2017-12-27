@@ -83,9 +83,7 @@ class SettingsPassword extends React.Component {
 
     const {
       form: { getFieldDecorator },
-      settings: {
-        formLoading
-      }
+      settings: { formLoading }
     } = this.props
 
     return (
@@ -129,7 +127,7 @@ class SettingsPassword extends React.Component {
                     className='button--fullWidth'
                     loading={formLoading.password}
                   >
-                Change Password
+                    Change Password
                   </Button>
                 </FormItem>
                 <FormItem>
@@ -138,7 +136,7 @@ class SettingsPassword extends React.Component {
                       type='default'
                       className='button--fullWidth'
                     >
-                    Cancel
+                      Cancel
                     </Button>
                   </Link>
                 </FormItem>
