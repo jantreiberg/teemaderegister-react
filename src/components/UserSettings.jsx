@@ -4,12 +4,18 @@ import Breadcrumbs from './Breadcrumbs'
 import { Row, Col, Form, Input, Button, Upload, Icon, message, Avatar, Popover } from 'antd'
 import { Link } from 'react-router-dom'
 import { getToken } from '../utils/jwt'
+import { USER_PICTURE_UPLOAD_URL } from '../constants/ApiConstants'
 
 const FormItem = Form.Item
 
 const { func, object, shape, bool, string, array } = PropTypes
 
 const propTypes = {
+  auth: shape({
+    user: shape({
+      _id: string
+    }).isRequired
+  }).isRequired,
   fileList: array,
   form: shape({
     getFieldDecorator: func.isRequired,
@@ -22,10 +28,15 @@ const propTypes = {
   profile: shape({
     loading: bool.isRequired,
     user: shape({
-      firstName: string,
-      lastName: string,
-      email: string,
-      image: string,
+      profile: shape({
+        firstName: string,
+        lastName: string,
+        image: object
+      }),
+      login: shape({
+        email: string
+      }),
+      roles: array,
       updatedAt: string
     }).isRequired
   }).isRequired,
@@ -92,34 +103,34 @@ class UserSettings extends React.Component {
   }
 
   render () {
-    const crumbs = [{ url: this.props.location.pathname, name: 'Profile' }]
-
+    const crumbs = [{ url: null, name: 'Account settings' }]
     const {
       form: { getFieldDecorator },
       profile: {
         loading,
         user: {
-          firstName,
-          lastName,
-          email,
-          image,
+          profile: {
+            firstName,
+            lastName,
+            image
+          },
+          login: {
+            email
+          },
           updatedAt
         }
       }
     } = this.props
 
-    const { newImage, newUpdatedAt } = this.state
-
-    const avatarSrc = '/uploads/profile/' +
-      (newImage || image) +
-      '?userUpdated=' +
-      (updatedAt || newUpdatedAt)
+    const avatarSrc = image
+      ? '/uploads' + image.full + '?userUpdated=' + updatedAt
+      : null
 
     const content = (
       <div>
         <Upload
           name={'profile-image'}
-          action={'/api/profile-image'}
+          action={USER_PICTURE_UPLOAD_URL.replace(':id', this.props.auth.user._id)}
           headers={{Authorization: `Bearer ${getToken()}`}}
           showUploadList={false}
           onChange={this.handleChange}

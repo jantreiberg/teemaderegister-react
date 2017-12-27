@@ -13,6 +13,7 @@ const propTypes = {
   form: shape({
     getFieldDecorator: func.isRequired,
     getFieldInstance: func.isRequired,
+    // resetFields: func.isRequired,
     validateFields: func.isRequired
   }).isRequired,
   initPasswordSettings: func.isRequired,
@@ -35,6 +36,7 @@ class ChangePassword extends React.Component {
         message.error(nextProps.passwordsettings.message, 10)
       } else {
         message.success(nextProps.passwordsettings.message, 10)
+        this.props.form.resetFields()
       }
     }
   }
@@ -65,7 +67,10 @@ class ChangePassword extends React.Component {
   }
 
   render () {
-    const crumbs = [{ url: this.props.location.pathname, name: 'Change Password' }]
+    const crumbs = [
+      { url: '/settings/account', name: 'Account settings' },
+      { url: null, name: 'Change Password' }
+    ]
 
     const {
       form: { getFieldDecorator }

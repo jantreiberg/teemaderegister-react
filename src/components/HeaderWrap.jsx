@@ -127,7 +127,7 @@ class HeaderWrap extends Component {
       form: { getFieldDecorator }
     } = this.props
 
-    const userImage = { backgroundImage: `url(${'/uploads/profile/' + thumbnail + '?updatedAt=' + updatedAt})` }
+    const userImage = { backgroundImage: `url(${'/uploads' + thumbnail + '?updatedAt=' + updatedAt})` }
 
     return (
       <Header className='headerWrap'>

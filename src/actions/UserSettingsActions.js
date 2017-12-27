@@ -7,23 +7,21 @@ export const initProfile = () => dispatch => {
   dispatch({ type: types.USER_SETTINGS_INIT })
 }
 
-export const getProfile = () => dispatch => {
-  return Api('GET', USER_PROFILE_URL)
+export const getProfile = id => dispatch => {
+  return Api('GET', USER_PROFILE_URL.replace(':id', id))
     .then(data => {
-      dispatch({
-        type: types.USER_SETTINGS_LOADED,
-        user: data.user
-      })
+      const { user } = data
+      dispatch({ type: types.USER_SETTINGS_LOADED, user })
     })
     .catch(err => {
       console.log(err)
     })
 }
 
-export const saveData = creds => dispatch => {
+export const saveData = (id, user) => dispatch => {
   dispatch({ type: types.USER_SETTINGS_SAVE_START })
 
-  return Api('POST', USER_UPDATE_URL, { data: creds })
+  return Api('PUT', USER_UPDATE_URL.replace(':id', id), { data: user })
     .then(data => {
       dispatch({ type: types.USER_SETTINGS_SAVE_END, message: data.message })
     }).catch(err => {
@@ -33,10 +31,10 @@ export const saveData = creds => dispatch => {
     })
 }
 
-export const resetProfilePicture = () => dispatch => {
+export const resetProfilePicture = id => dispatch => {
   dispatch({ type: types.USER_PICTURE_RESET_START })
 
-  return Api('POST', USER_PICTURE_RESET_URL)
+  return Api('PUT', USER_PICTURE_RESET_URL.replace(':id', id))
     .then(data => {
       dispatch({ type: types.USER_PICTURE_RESET_END })
     }).catch(err => {

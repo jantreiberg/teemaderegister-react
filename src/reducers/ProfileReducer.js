@@ -2,7 +2,11 @@ import * as types from '../constants/ActionTypes'
 
 const INITIAL_STATE = {
   loading: true,
-  user: {},
+  user: {
+    login: {},
+    profile: {},
+    updatedAt: ''
+  },
   error: {},
   message: '',
   hasError: false
