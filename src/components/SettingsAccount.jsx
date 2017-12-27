@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Breadcrumbs from './Breadcrumbs'
-import { Row, Col, Form, Input, Button, Upload, Icon, message, Avatar, Popover } from 'antd'
+import { Row, Col, Form, Input, Button, Upload, Icon, message, Avatar, Tooltip } from 'antd'
 import { Link } from 'react-router-dom'
 import { UPLOAD_PATH } from 'config'
 
@@ -22,6 +22,11 @@ const propTypes = {
   resetProfilePicture: func.isRequired,
   settings: shape({
     loading: bool.isRequired,
+    error: shape({
+      message: string
+    }).isRequired,
+    hasError: bool.isRequired,
+    message: string,
     user: shape({
       profile: shape({
         firstName: string,
@@ -33,6 +38,10 @@ const propTypes = {
       }),
       roles: array,
       updatedAt: string
+    }).isRequired,
+    formLoading: shape({
+      picture: bool.isRequired,
+      account: bool.isRequired
     }).isRequired
   }).isRequired,
   updateProfile: func.isRequired,
@@ -45,14 +54,16 @@ class SettingsAccount extends React.Component {
     super(props)
 
     this.submit = this.submit.bind(this)
-    this.resetPicture = this.resetPicture.bind(this)
-    this.handleChange = this.handleChange.bind(this)
   }
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.settings.message !== this.props.settings.message) {
+    const { settings: { formLoading } } = this.props
+    const { settings: { formLoading: newFormLoading } } = nextProps
+
+    if ((!newFormLoading.picture && newFormLoading.picture !== formLoading.picture) ||
+      (!newFormLoading.account && newFormLoading.account !== formLoading.account)) {
       if (nextProps.settings.hasError) {
-        message.error(nextProps.settings.message, 10)
+        message.error(nextProps.settings.error.message, 10)
       } else {
         message.success(nextProps.settings.message, 10)
       }
@@ -76,21 +87,16 @@ class SettingsAccount extends React.Component {
     })
   }
 
-  resetPicture (e) {
-    e.preventDefault()
-    this.props.resetProfilePicture()
-  }
-
-  handleChange (info) {
-    if (info.file.status === 'error') {
-      message.error(info.file.response.message || info.file.response)
+  beforeUpload (file) {
+    const isJPG = file.type === 'image/jpeg'
+    if (!isJPG) {
+      message.error('You can only upload JPG file!')
     }
-    if (info.file.status === 'done') {
-      this.setState({
-        newImage: info.file.response.user.profile.image,
-        newUpdatedAt: info.file.response.user.updatedAt
-      })
+    const isLt2M = file.size / 1024 / 1024 < 2
+    if (!isLt2M) {
+      message.error('Image must smaller than 2MB!')
     }
+    return isJPG && isLt2M
   }
 
   render () {
@@ -109,31 +115,14 @@ class SettingsAccount extends React.Component {
             email
           },
           updatedAt
-        }
+        },
+        formLoading
       }
     } = this.props
 
     const avatarSrc = image
       ? UPLOAD_PATH + image.full + '?userUpdated=' + updatedAt
       : null
-
-    const content = (
-      <div>
-        <Upload
-          name={'profileImage'}
-          customRequest={this.props.uploadProfilePicture}
-          showUploadList={false}
-          onChange={this.handleChange}
-        >
-          <Button shape={'circle'}>
-            <Icon type='upload' />
-          </Button>
-        </Upload>
-        <Button style={{ marginLeft: '20px' }} shape={'circle'} onClick={this.resetPicture}>
-          <Icon type='delete' />
-        </Button>
-      </div>
-    )
 
     return (
       <div className='usersettings'>
@@ -143,14 +132,43 @@ class SettingsAccount extends React.Component {
           <Row gutter={8}>
             <Col span={8} />
             <Col xs={24} sm={8}>
-              <div>
-                <Popover placement={'bottomLeft'} content={ content }>
-                  <Avatar
-                    src={avatarSrc}
-                    style={{ marginTop: '35px', marginBottom: '65px', width: '200px', height: '200px' }}
-                    size={'large'}
-                  />
-                </Popover>
+              <div className='profile-pic' style={{ position: 'relative', height: 200, margin: '0 auto', width: 200 }}>
+                {formLoading.picture &&
+                  <Icon style={{
+                    display: 'block',
+                    position: 'absolute',
+                    height: '100%',
+                    width: '100%',
+                    fontSize: '3em',
+                    lineHeight: '5.5em',
+                    zIndex: 100
+                  }} type='loading' />
+                }
+                <Avatar
+                  className='pic-itself'
+                  src={avatarSrc}
+                  style={{ width: '200px', height: '200px', position: 'absolute' }}
+                  size={'large'}
+                />
+                <div className='profile-pic-buttons' style={{ position: 'absolute', left: '50%', top: '50%', marginTop: -14, marginLeft: -33 }}>
+                  <Upload
+                    name={'profileImage'}
+                    customRequest={this.props.uploadProfilePicture}
+                    showUploadList={false}
+                    beforeUpload={this.beforeUpload}
+                  >
+                    <Tooltip placement='top' title={'Upload new image'}>
+                      <Button shape={'circle'}>
+                        <Icon type='upload' />
+                      </Button>
+                    </Tooltip>
+                  </Upload>
+                  <Tooltip placement='top' title={'Restore default'}>
+                    <Button style={{ marginLeft: '10px' }} shape={'circle'} onClick={this.props.resetProfilePicture}>
+                      <Icon type='close' />
+                    </Button>
+                  </Tooltip>
+                </div>
               </div>
               <Form onSubmit={this.submit} className='login__form'>
                 <h2 style={{ textDecoration: 'underline', marginBottom: '20px' }} className='text-align-center'>
@@ -186,6 +204,7 @@ class SettingsAccount extends React.Component {
                     type='primary'
                     htmlType='submit'
                     className='button--fullWidth'
+                    loading={formLoading.account}
                   >
                 Save Changes
                   </Button>

@@ -7,6 +7,11 @@ const INITIAL_STATE = {
     profile: {},
     updatedAt: ''
   },
+  formLoading: {
+    picture: false,
+    account: false,
+    password: false
+  },
   error: {},
   message: '',
   hasError: false
@@ -22,19 +27,37 @@ export default (state = INITIAL_STATE, action) => {
         user
       }
 
+    case types.USER_SETTINGS_SAVE_START:
+      return {
+        ...state,
+        formLoading: {
+          ...state.formLoading,
+          account: true
+        }
+      }
+
     case types.USER_SETTINGS_SAVE_END:
       return {
         ...state,
+        formLoading: {
+          ...state.formLoading,
+          account: false
+        },
         message: action.message,
-        // loading: false, other loading
         hasError: !!action.error,
         error: action.error || {}
       }
 
-    case types.USER_SETTINGS_INIT:
-      return INITIAL_STATE
+    case types.USER_PICTURE_SET_START:
+      return {
+        ...state,
+        formLoading: {
+          ...state.formLoading,
+          picture: true
+        }
+      }
 
-    case types.USER_PICTURE_SET: {
+    case types.USER_PICTURE_SET_END: {
       const { user: { profile: { image }, updatedAt } } = action
 
       return {
@@ -47,12 +70,39 @@ export default (state = INITIAL_STATE, action) => {
           },
           updatedAt
         },
-        message: 'Picture updated successful',
-        // loading: false, other loading
+        formLoading: {
+          ...state.formLoading,
+          picture: false
+        },
+        message: 'Picture updated successfully',
         hasError: !!action.error,
         error: action.error || {}
       }
     }
+
+    case types.PASSWORD_CHANGE_START :
+      return {
+        ...state,
+        formLoading: {
+          ...state.formLoading,
+          password: true
+        }
+      }
+
+    case types.PASSWORD_CHANGE_END:
+      return {
+        ...state,
+        formLoading: {
+          ...state.formLoading,
+          password: false
+        },
+        message: action.message,
+        hasError: !!action.error,
+        error: action.error || {}
+      }
+
+    case types.USER_SETTINGS_INIT:
+      return INITIAL_STATE
 
     default:
       return {

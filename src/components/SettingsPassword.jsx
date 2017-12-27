@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { Row, Col, Form, Input, Button, message } from 'antd'
 import { Link } from 'react-router-dom'
 
-const { func, object, shape, bool } = PropTypes
+const { func, object, shape, bool, string } = PropTypes
 
 const FormItem = Form.Item
 
@@ -13,14 +13,21 @@ const propTypes = {
   form: shape({
     getFieldDecorator: func.isRequired,
     getFieldInstance: func.isRequired,
-    // resetFields: func.isRequired,
+    resetFields: func.isRequired,
     validateFields: func.isRequired
   }).isRequired,
   initPasswordSettings: func.isRequired,
   location: object.isRequired,
-  passwordsettings: shape({
-    loading: bool.isRequired
-  })
+  settings: shape({
+    error: shape({
+      message: string
+    }).isRequired,
+    hasError: bool.isRequired,
+    message: string,
+    formLoading: shape({
+      password: bool.isRequired
+    }).isRequired
+  }).isRequired
 }
 
 class SettingsPassword extends React.Component {
@@ -31,11 +38,15 @@ class SettingsPassword extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.passwordsettings.message !== this.props.passwordsettings.message) {
-      if (nextProps.passwordsettings.hasError) {
-        message.error(nextProps.passwordsettings.message, 10)
-      } else {
-        message.success(nextProps.passwordsettings.message, 10)
+    const { settings } = this.props
+    const { message: newMessage, error, formLoading, hasError } = nextProps.settings
+
+    if (!formLoading.password && formLoading.password !== settings.formLoading.password) {
+      if (hasError) {
+        message.error(error.message, 10)
+      }
+      if (newMessage) {
+        message.success(newMessage, 10)
         this.props.form.resetFields()
       }
     }
@@ -54,8 +65,6 @@ class SettingsPassword extends React.Component {
     })
   }
 
-  // Function for checking the equality of passwords
-  // Must have a callback
   checkPassword (rule, value, callback) {
     const form = this.props.form
     const formInputValue = form.getFieldValue('newPassword')
@@ -73,7 +82,10 @@ class SettingsPassword extends React.Component {
     ]
 
     const {
-      form: { getFieldDecorator }
+      form: { getFieldDecorator },
+      settings: {
+        formLoading
+      }
     } = this.props
 
     return (
@@ -115,6 +127,7 @@ class SettingsPassword extends React.Component {
                     type='primary'
                     htmlType='submit'
                     className='button--fullWidth'
+                    loading={formLoading.password}
                   >
                 Change Password
                   </Button>

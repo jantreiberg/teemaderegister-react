@@ -1,12 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { initPasswordSettings, changeUserPassword } from '../actions/PasswordSettingsActions'
+import { initPasswordSettings, changeUserPassword } from '../actions/SettingsActions'
 import SettingsPassword from '../components/SettingsPassword'
 
 const SettingsPasswordContainer = props => <SettingsPassword {...props} />
 
 const mapStateToProps = state => ({
-  passwordsettings: state.passwordsettings
+  settings: state.settings
 })
 
 export default connect(mapStateToProps, { initPasswordSettings, changeUserPassword })(SettingsPasswordContainer)
