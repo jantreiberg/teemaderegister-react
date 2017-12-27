@@ -106,17 +106,17 @@ class HeaderWrap extends Component {
         {roles.includes('supervisor') &&
           <Menu.Item>
             <Link to={ '/supervisor/' + slug }>
-              <i className="anticon anticon-user icon--15"></i> Profile
+              <i className='anticon anticon-user icon--15'></i> Profile
             </Link>
           </Menu.Item>}
         <Menu.Item>
           <Link to='/settings/account'>
-            <i className="anticon anticon-setting icon--15"></i> Settings
+            <i className='anticon anticon-setting icon--15'></i> Settings
           </Link>
         </Menu.Item>
         <Menu.Item>
           <span className='link' onClick={this.props.logout}>
-            <i className="anticon anticon-logout icon--15"></i> Logout
+            <i className='anticon anticon-logout icon--15'></i> Logout
           </span>
         </Menu.Item>
       </Menu>
