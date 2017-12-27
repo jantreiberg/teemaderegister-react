@@ -1,0 +1,24 @@
+.profile-pic {
+  .profile-pic-buttons {
+    display: none;
+  }
+
+  .pic-itself {
+    background-color: lightgrey;
+  }
+
+  &:hover {
+    
+    .profile-pic-buttons {
+      display: block;
+    }
+    
+    .pic-itself {
+        background-color: black;
+
+      img {
+        opacity: 0.5;
+      }
+    }
+  }
+}
