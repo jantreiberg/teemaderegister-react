@@ -33,10 +33,17 @@ import './fonts' // antd fonts
 import './media/favicons' // favicons
 import './styles/main.scss' // all css
 
-import { Layout, LocaleProvider } from 'antd'
+import { Layout, LocaleProvider, Icon } from 'antd'
 import etEE from 'antd/lib/locale-provider/et_EE'
 
 const { Content, Footer } = Layout
+
+const links = {
+  project: 'https://github.com/romilrobtsenkov/teemaderegister-react',
+  creator: 'https://github.com/romilrobtsenkov',
+  license: 'https://opensource.org/licenses/mit-license.html',
+  contet: 'https://www.tlu.ee'
+}
 
 initAnalytics()
 
@@ -71,7 +78,10 @@ render(
             </div>
           </Content>
           <Footer className='layout__footer'>
-            TLU ©{new Date().getFullYear()} | Made by Romil Rõbtšenkov
+            <a href={links.project}><Icon type="github" /> Teemaderegister</a>{' · '}
+            Created by <a href={links.creator}>Romil Rõbtšenkov</a><br/>
+            Code licensed under <a href={links.license}>MIT License</a><br/>
+            Content © 2010-{new Date().getFullYear()} <a href={links.contet}>Tallinn University</a>
           </Footer>
         </Layout>
       </LocaleProvider>
