@@ -118,7 +118,7 @@ class SettingsAccount extends React.Component {
       : null
 
     const content = (
-      <div>
+      <div className='settingsaccount'>
         <Upload
           name={'profileImage'}
           customRequest={this.props.uploadProfilePicture}
@@ -129,31 +129,28 @@ class SettingsAccount extends React.Component {
             <Icon type='upload' />
           </Button>
         </Upload>
-        <Button style={{ marginLeft: '20px' }} shape={'circle'} onClick={this.resetPicture}>
+        <Button id={'pictureresetBtn'} shape={'circle'} onClick={this.resetPicture}>
           <Icon type='delete' />
         </Button>
       </div>
     )
 
     return (
-      <div className='usersettings'>
+      <div className='settingsaccount'>
         {!loading &&
         <div>
           <Breadcrumbs crumbs={crumbs} />
           <Row gutter={8}>
             <Col span={8} />
             <Col xs={24} sm={8}>
-              <div>
-                <Popover placement={'bottomLeft'} content={ content }>
-                  <Avatar
-                    src={avatarSrc}
-                    style={{ marginTop: '35px', marginBottom: '65px', width: '200px', height: '200px' }}
-                    size={'large'}
-                  />
-                </Popover>
-              </div>
+              <Popover placement={'bottomLeft'} content={ content }>
+                <Avatar
+                  src={avatarSrc}
+                  size={'large'}
+                />
+              </Popover>
               <Form onSubmit={this.submit} className='login__form'>
-                <h2 style={{ textDecoration: 'underline', marginBottom: '20px' }} className='text-align-center'>
+                <h2 className='text-align-center'>
                 Your Details
                 </h2>
                 <FormItem>
@@ -198,7 +195,7 @@ class SettingsAccount extends React.Component {
             <Row gutter={8}>
               <Col span={8} />
               <Col xs={24} sm={8}>
-                <h2 style={{ textDecoration: 'underline', marginBottom: 20 }} className='text-align-center'>
+                <h2 className='text-align-center'>
                 Password Settings
                 </h2>
                 <FormItem>

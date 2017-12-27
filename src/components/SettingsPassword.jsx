@@ -77,14 +77,14 @@ class SettingsPassword extends React.Component {
     } = this.props
 
     return (
-      <div className='passwordsettings'>
+      <div className='settingspassword'>
         <div>
           <Breadcrumbs crumbs={crumbs} />
           <Row gutter={8}>
             <Col span={8} />
             <Col xs={24} sm={8}>
               <Form onSubmit={this.submit} className='login__form'>
-                <h2 style={{ marginBottom: 20 }}className='text-align-center'>
+                <h2 className='text-align-center'>
                 Change Your Password
                 </h2>
                 <FormItem>
