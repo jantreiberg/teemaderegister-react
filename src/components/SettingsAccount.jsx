@@ -53,6 +53,8 @@ class SettingsAccount extends React.Component {
   constructor (props) {
     super(props)
 
+    this.defaultAvatarSrc = '/profile/full/default.jpg'
+
     this.submit = this.submit.bind(this)
     this.resetPictureConfirm = this.resetPictureConfirm.bind(this)
   }
@@ -136,11 +138,6 @@ class SettingsAccount extends React.Component {
             <Col span={8} />
             <Col xs={24} sm={8}>
               <div className='profilePicture'>
-                {formLoading.picture &&
-                  <div className='profilePicture__loading'>
-                    <Spin size='large' />
-                  </div>
-                }
                 <Dropdown
                   trigger={['click']}
                   placement='bottomCenter'
@@ -158,7 +155,7 @@ class SettingsAccount extends React.Component {
                           </span>
                         </Upload>
                       </Menu.Item>
-                      {image.full !== '/profile/full/default.jpg' &&
+                      {image.full !== this.defaultAvatarSrc &&
                         <Menu.Item>
                           <span className='profileResetDropdownMenu__link' onClick={this.resetPictureConfirm}>
                             <Icon type='close' /> Remove
@@ -169,12 +166,22 @@ class SettingsAccount extends React.Component {
                       </Menu.Item>
                     </Menu>
                   }>
-                  <Avatar
-                    className='profilePicture__avatar'
-                    src={avatarSrc}
-                    size={'large'}
-                  />
+                  <div style={{height: '100%'}}>
+                    <Avatar
+                      className='profilePicture__avatar'
+                      src={avatarSrc}
+                      size={'large'}
+                    />
+                    <span className='profilePicture__edit-icon'>
+                      <Icon type='edit' />
+                    </span>
+                  </div>
                 </Dropdown>
+                {formLoading.picture &&
+                  <div className='profilePicture__loading'>
+                    <Spin size='large' />
+                  </div>
+                }
               </div>
               <Form onSubmit={this.submit} className='form--narrow'>
                 <h2 className='text-align--center'>Your details</h2>
