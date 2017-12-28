@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Breadcrumbs from './Breadcrumbs'
-import { Row, Col, Form, Input, Button, Upload, Icon, message, Avatar, Tooltip } from 'antd'
+import { Row, Col, Form, Input, Button, Upload, Icon, message, Avatar, Spin, Modal, Dropdown, Menu } from 'antd'
 import { Link } from 'react-router-dom'
 import { UPLOAD_PATH, PROFILE_PIC_MAX_SIZE_IN_MB } from 'config'
 
 const FormItem = Form.Item
-
+const confirm = Modal.confirm
 const { func, object, shape, bool, string, array } = PropTypes
 
 const propTypes = {
@@ -54,6 +54,7 @@ class SettingsAccount extends React.Component {
     super(props)
 
     this.submit = this.submit.bind(this)
+    this.resetPictureConfirm = this.resetPictureConfirm.bind(this)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -98,6 +99,15 @@ class SettingsAccount extends React.Component {
     return allowedType && allowedSize
   }
 
+  resetPictureConfirm () {
+    const { resetProfilePicture } = this.props
+
+    confirm({
+      title: 'Do you want to reset to default picture?',
+      onOk: () => resetProfilePicture()
+    })
+  }
+
   render () {
     const crumbs = [{ url: null, name: 'Settings' }]
     const {
@@ -127,36 +137,44 @@ class SettingsAccount extends React.Component {
             <Col xs={24} sm={8}>
               <div className='profilePicture'>
                 {formLoading.picture &&
-                  <Icon class='profilePicture__loading' type='loading' />
+                  <div className='profilePicture__loading'>
+                    <Spin size='large' />
+                  </div>
                 }
-                <Avatar
-                  className='profilePicture__avatar'
-                  src={avatarSrc}
-                  size={'large'}
-                />
-                <div className='profilePicture__buttons'>
-                  <Upload
-                    name={'profileImage'}
-                    customRequest={this.props.uploadProfilePicture}
-                    showUploadList={false}
-                    beforeUpload={this.beforeUpload}
-                  >
-                    <Tooltip placement='top' title={'Upload new image'}>
-                      <Button shape={'circle'}>
-                        <Icon type='upload' />
-                      </Button>
-                    </Tooltip>
-                  </Upload>
-                  <Tooltip placement='top' title={'Restore default'}>
-                    <Button
-                      className='profilePicture__buttons--close'
-                      shape={'circle'}
-                      onClick={this.props.resetProfilePicture}
-                    >
-                      <Icon type='close' />
-                    </Button>
-                  </Tooltip>
-                </div>
+                <Dropdown
+                  trigger={['click']}
+                  placement='bottomCenter'
+                  overlay={
+                    <Menu className='profileResetDropdownMenu'>
+                      <Menu.Item>
+                        <Upload
+                          name={'profileImage'}
+                          customRequest={this.props.uploadProfilePicture}
+                          showUploadList={false}
+                          beforeUpload={this.beforeUpload}
+                        >
+                          <span className='link'>
+                            <Icon type='upload' /> Upload photo
+                          </span>
+                        </Upload>
+                      </Menu.Item>
+                      {image.full !== '/profile/full/default.jpg' &&
+                        <Menu.Item>
+                          <span className='link' onClick={this.resetPictureConfirm}>
+                            <Icon type='close' /> Remove
+                          </span>
+                        </Menu.Item>}
+                      <Menu.Item>
+                        <span className='link'>Cancel</span>
+                      </Menu.Item>
+                    </Menu>
+                  }>
+                  <Avatar
+                    className='profilePicture__avatar'
+                    src={avatarSrc}
+                    size={'large'}
+                  />
+                </Dropdown>
               </div>
               <Form onSubmit={this.submit} className='form--narrow'>
                 <h2 className='text-align--center'>Your details</h2>
