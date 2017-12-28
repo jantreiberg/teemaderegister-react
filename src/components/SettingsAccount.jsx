@@ -153,19 +153,19 @@ class SettingsAccount extends React.Component {
                           showUploadList={false}
                           beforeUpload={this.beforeUpload}
                         >
-                          <span className='link'>
+                          <span className='profileResetDropdownMenu__link'>
                             <Icon type='upload' /> Upload photo
                           </span>
                         </Upload>
                       </Menu.Item>
                       {image.full !== '/profile/full/default.jpg' &&
                         <Menu.Item>
-                          <span className='link' onClick={this.resetPictureConfirm}>
+                          <span className='profileResetDropdownMenu__link' onClick={this.resetPictureConfirm}>
                             <Icon type='close' /> Remove
                           </span>
                         </Menu.Item>}
                       <Menu.Item>
-                        <span className='link'>Cancel</span>
+                        <span className='profileResetDropdownMenu__link'>Cancel</span>
                       </Menu.Item>
                     </Menu>
                   }>

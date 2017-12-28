@@ -36,15 +36,15 @@
 .profileResetDropdownMenu {
   text-align: center;
 
+  &__link {
+    display: block;
+    padding: 10px 20px;
+    margin: 0;
+  }
+
   .ant-dropdown-menu-item {
     padding: 0;
 
-    .link {
-      display: block;
-      padding: 10px 20px;
-      margin: 0;
-    }
-    
     .ant-upload.ant-upload-select { 
       display: block;
     }
