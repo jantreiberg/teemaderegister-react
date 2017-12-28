@@ -1,50 +1,63 @@
-.profile-pic {
+.settingsAccount {
 
-  position: relative;
-  height: 200px;
-  width: 200px;
-  margin: 0 auto;
-
-  .profile-pic-buttons {
-    display: none;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-top: -14px;
-    margin-left: -33px;
+  h2 {
+    margin-bottom: 20px;
   }
 
-  .pic-itself {
-    background-color: lightgrey;
-    position: absolute;
+  .ant-form-item-label {
+    margin-top: -10px;
+  }
+
+  .profilePicture {
+    position: relative;
     height: 200px;
     width: 200px;
-  }
+    margin: 0 auto 30px;
 
-  &:hover {
-    
-    .profile-pic-buttons {
+    &__loading {
+      position: absolute;
+      height: 100%;
+      width: 100%;
       display: block;
+      font-size: 3em;
+      line-height: 5.5em;
+      z-index: 100;
     }
-    
-    .pic-itself {
-        background-color: black;
 
-      img {
-        opacity: 0.5;
+    &__avatar {
+      background-color: lightgrey;
+      position: absolute;
+      height: 200px;
+      width: 200px;
+    }
+
+    &__buttons {
+      display: none;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin-top: -14px;
+      margin-left: -33px;
+
+      &--close {
+        margin-left: 10px;
+      }
+
+    }
+
+    &:hover {
+      // TODO optimize selector to use &
+      .profilePicture__buttons {
+        display: block;
+      }
+      
+      .profilePicture__avatar {
+        background-color: black;
+  
+        img {
+          opacity: 0.5;
+        }
       }
     }
   }
-}
-
-.settingsaccount {
-    h2 {
-        margin-bottom: 20px;
-        text-decoration: underline;
-    }
-
-    #pictureresetBtn {
-        margin-left: 10px;
-    }
-
 }

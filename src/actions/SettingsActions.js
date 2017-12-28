@@ -53,8 +53,8 @@ export const uploadProfilePicture = uploadData => dispatch => {
 
   return Api('POST', USER_PICTURE_UPLOAD_URL, { data })
     .then(data => {
-      const { user } = data
-      dispatch({ type: types.USER_PICTURE_SET_END, user })
+      const { user, message } = data
+      dispatch({ type: types.USER_PICTURE_SET_END, user, message })
       dispatch(checkUser())
     }).catch(err => {
       const error = err.data
@@ -68,8 +68,8 @@ export const resetProfilePicture = () => dispatch => {
 
   return Api('PUT', USER_PICTURE_RESET_URL)
     .then(data => {
-      const { user } = data
-      dispatch({ type: types.USER_PICTURE_SET_END, user })
+      const { user, message } = data
+      dispatch({ type: types.USER_PICTURE_SET_END, user, message })
       dispatch(checkUser())
     }).catch(err => {
       const error = err.data

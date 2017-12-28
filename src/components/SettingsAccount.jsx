@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Breadcrumbs from './Breadcrumbs'
 import { Row, Col, Form, Input, Button, Upload, Icon, message, Avatar, Tooltip } from 'antd'
 import { Link } from 'react-router-dom'
-import { UPLOAD_PATH } from 'config'
+import { UPLOAD_PATH, PROFILE_PIC_MAX_SIZE_IN_MB } from 'config'
 
 const FormItem = Form.Item
 
@@ -63,9 +63,9 @@ class SettingsAccount extends React.Component {
     if ((!newFormLoading.picture && newFormLoading.picture !== formLoading.picture) ||
       (!newFormLoading.account && newFormLoading.account !== formLoading.account)) {
       if (nextProps.settings.hasError) {
-        message.error(nextProps.settings.error.message, 10)
+        message.error(nextProps.settings.error.message, 2)
       } else {
-        message.success(nextProps.settings.message, 10)
+        message.success(nextProps.settings.message, 2)
       }
     }
   }
@@ -88,15 +88,14 @@ class SettingsAccount extends React.Component {
   }
 
   beforeUpload (file) {
-    const isJPG = file.type === 'image/jpeg'
-    if (!isJPG) {
-      message.error('You can only upload JPG file!')
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2
-    if (!isLt2M) {
-      message.error('Image must smaller than 2MB!')
-    }
-    return isJPG && isLt2M
+    const fileTypes = new RegExp('jpeg|jpg|png')
+    const allowedType = fileTypes.test(file.type.toLowerCase())
+    if (!allowedType) message.error('You can only upload JPG file!')
+
+    const allowedSize = file.size / 1024 / 1024 < PROFILE_PIC_MAX_SIZE_IN_MB
+    if (!allowedSize) message.error(`Image must smaller than ${PROFILE_PIC_MAX_SIZE_IN_MB}MB!`)
+
+    return allowedType && allowedSize
   }
 
   render () {
@@ -119,31 +118,23 @@ class SettingsAccount extends React.Component {
       : null
 
     return (
-      <div className='settingsaccount'>
+      <div className='settingsAccount'>
         {!loading &&
         <div>
           <Breadcrumbs crumbs={crumbs} />
           <Row gutter={8}>
             <Col span={8} />
             <Col xs={24} sm={8}>
-              <div className='profile-pic'>
+              <div className='profilePicture'>
                 {formLoading.picture &&
-                  <Icon style={{
-                    display: 'block',
-                    position: 'absolute',
-                    height: '100%',
-                    width: '100%',
-                    fontSize: '3em',
-                    lineHeight: '5.5em',
-                    zIndex: 100
-                  }} type='loading' />
+                  <Icon class='profilePicture__loading' type='loading' />
                 }
                 <Avatar
-                  className='pic-itself'
+                  className='profilePicture__avatar'
                   src={avatarSrc}
                   size={'large'}
                 />
-                <div className='profile-pic-buttons'>
+                <div className='profilePicture__buttons'>
                   <Upload
                     name={'profileImage'}
                     customRequest={this.props.uploadProfilePicture}
@@ -158,7 +149,7 @@ class SettingsAccount extends React.Component {
                   </Upload>
                   <Tooltip placement='top' title={'Restore default'}>
                     <Button
-                      id='pictureresetBtn'
+                      className='profilePicture__buttons--close'
                       shape={'circle'}
                       onClick={this.props.resetProfilePicture}
                     >
@@ -167,34 +158,38 @@ class SettingsAccount extends React.Component {
                   </Tooltip>
                 </div>
               </div>
-              <Form onSubmit={this.submit} className='login__form'>
-                <h2 className='text-align-center'>
-                Your Details
-                </h2>
-                <FormItem>
+              <Form onSubmit={this.submit} className='form--narrow'>
+                <h2 className='text-align--center'>Your details</h2>
+                <FormItem label='First name'>
                   {getFieldDecorator('firstName', {
                     rules: [
                       { required: true, message: 'Please enter your first name' }
                     ],
                     initialValue: firstName
-                  })(<Input type='text' name='firstName' placeholder='First Name' />)}
+                  })(
+                    <Input type='text'/>
+                  )}
                 </FormItem>
-                <FormItem>
+                <FormItem label='Last name'>
                   {getFieldDecorator('lastName', {
                     rules: [
                       { required: true, message: 'Please enter your last name' }
                     ],
                     initialValue: lastName
-                  })(<Input type='text' name='lastName' placeholder='Last Name' />)}
+                  })(
+                    <Input type='text' name='lastName' />
+                  )}
                 </FormItem>
-                <FormItem>
+                <FormItem label='Email'>
                   {getFieldDecorator('email', {
                     rules: [
                       { required: true, message: 'Please enter your email' },
                       { type: 'email', message: 'Please enter a correct email' }
                     ],
                     initialValue: email
-                  })(<Input name='userEmail' placeholder='Email' />)}
+                  })(
+                    <Input name='userEmail' />
+                  )}
                 </FormItem>
                 <FormItem>
                   <Button
@@ -203,31 +198,24 @@ class SettingsAccount extends React.Component {
                     className='button--fullWidth'
                     loading={formLoading.account}
                   >
-                Save Changes
+                    Save Changes
+                  </Button>
+                </FormItem>
+                <h2 className='text-align--center'>Password Settings</h2>
+                <FormItem>
+                  <Button
+                    type='primary'
+                    className='button--fullWidth'
+                  >
+                    <Link to='/settings/password'>
+                    Change Password
+                    </Link>
                   </Button>
                 </FormItem>
               </Form>
             </Col>
             <Col span={8} />
           </Row>
-          <div>
-            <Row gutter={8}>
-              <Col span={8} />
-              <Col xs={24} sm={8}>
-                <h2 className='text-align-center'>
-                Password Settings
-                </h2>
-                <FormItem>
-                  <Link to='/settings/password'><Button
-                    type='primary'
-                    className='button--fullWidth'
-                    htmlType='button'
-                  >Change Password</Button></Link>
-                </FormItem>
-              </Col>
-              <Col span={8} />
-            </Row>
-          </div>
         </div>}
       </div>
     )

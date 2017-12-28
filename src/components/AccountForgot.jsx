@@ -84,7 +84,7 @@ class AccountForgot extends React.Component {
           <Col span={8} />
           <Col xs={24} sm={8}>
             <Form onSubmit={this.submit} className='form--narrow'>
-              <h2 className='text-align-center'>Request password reset</h2>
+              <h2 className='text-align--center'>Request password reset</h2>
               <FormItem>
                 {getFieldDecorator('email', {
                   rules: [

@@ -58,25 +58,27 @@ export default (state = INITIAL_STATE, action) => {
       }
 
     case types.USER_PICTURE_SET_END: {
-      const { user: { profile: { image }, updatedAt } } = action
+      const { user, error, message } = action
 
       return {
         ...state,
-        user: {
-          ...state.user,
-          profile: {
-            ...state.user.profile,
-            image
-          },
-          updatedAt
-        },
+        user: user
+          ? {
+            ...state.user,
+            profile: {
+              ...state.user.profile,
+              image: user.profile.image
+            },
+            updatedAt: user.updatedAt
+          }
+          : { ...state.user },
         formLoading: {
           ...state.formLoading,
           picture: false
         },
-        message: 'Picture updated successfully',
-        hasError: !!action.error,
-        error: action.error || {}
+        message: message || '',
+        hasError: !!error,
+        error: error || {}
       }
     }
 

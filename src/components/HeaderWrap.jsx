@@ -84,11 +84,11 @@ class HeaderWrap extends Component {
     )
   }
 
-  dropdownMenu ({ roles, slug, fullName }) {
+  dropdownMenu ({ roles, slug, firstName, lastName }) {
     return (
       <Menu className='headerWrapDropdownMenu'>
         <Menu.Item className='noHover user-info'>
-          <span className='user-name'>{fullName}</span>
+          <span className='user-name'>{firstName + ' ' + lastName}</span>
           <ul className='user-roles'>
             {roles.map((role, index) => (
               <li key={index} >{this.rolesMap[role]}</li>
@@ -124,11 +124,20 @@ class HeaderWrap extends Component {
 
   render () {
     const {
-      auth: { isAuthenticated, user: { roles, slug, fullName, thumbnail, updatedAt } },
+      auth: {
+        isAuthenticated,
+        user: {
+          profile: { slug, firstName, lastName, image },
+          login: { roles },
+          updatedAt
+        }
+      },
       form: { getFieldDecorator }
     } = this.props
 
-    const userImage = { backgroundImage: `url(${UPLOAD_PATH + thumbnail}?updatedAt=${updatedAt})` }
+    const userImage = image
+      ? { backgroundImage: `url(${UPLOAD_PATH + image.thumb}?updatedAt=${updatedAt})` }
+      : {}
 
     return (
       <Header className='headerWrap'>
@@ -153,7 +162,7 @@ class HeaderWrap extends Component {
                   className='userDropdown'
                   placement='bottomRight'
                   trigger={['click']}
-                  overlay={this.dropdownMenu({ roles, slug, fullName })}
+                  overlay={this.dropdownMenu({ roles, slug, firstName, lastName })}
                 >
                   <div className='userDropdown--icon' style={userImage} />
                 </Dropdown>

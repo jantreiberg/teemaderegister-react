@@ -43,10 +43,10 @@ class SettingsPassword extends React.Component {
 
     if (!formLoading.password && formLoading.password !== settings.formLoading.password) {
       if (hasError) {
-        message.error(error.message, 10)
+        message.error(error.message, 2)
       }
       if (newMessage) {
-        message.success(newMessage, 10)
+        message.success(newMessage, 2)
         this.props.form.resetFields()
       }
     }
@@ -87,64 +87,66 @@ class SettingsPassword extends React.Component {
     } = this.props
 
     return (
-      <div className='settingspassword'>
-        <div>
-          <Breadcrumbs crumbs={crumbs} />
-          <Row gutter={8}>
-            <Col span={8} />
-            <Col xs={24} sm={8}>
-              <Form onSubmit={this.submit} className='login__form'>
-                <h2 className='text-align-center'>
-                Change Your Password
-                </h2>
-                <FormItem>
-                  {getFieldDecorator('currentPassword', {
-                    rules: [
-                      { required: true, message: 'Please enter your current password' }
-                    ]
-                  })(<Input type='password' name='currentPassword' placeholder='Current Password' />)}
-                </FormItem>
-                <FormItem>
-                  {getFieldDecorator('newPassword', {
-                    rules: [
-                      { required: true, message: 'Please enter your new password' },
-                      { min: 8, message: 'Passwords must be at least 8 characters long' }
-                    ]
-                  })(<Input type='password' name='newPassword' placeholder='New Password' />)}
-                </FormItem>
-                <FormItem>
-                  {getFieldDecorator('confirmPassword', {
-                    rules: [
-                      { required: true, message: 'Please enter your new password again' },
-                      { validator: this.checkPassword }
-                    ]
-                  })(<Input type='Password' name='confirmPassword' placeholder='Confirm Password' />)}
-                </FormItem>
-                <FormItem>
-                  <Button
-                    type='primary'
-                    htmlType='submit'
-                    className='button--fullWidth'
-                    loading={formLoading.password}
-                  >
-                    Change Password
-                  </Button>
-                </FormItem>
-                <FormItem>
+      <div className='settingsPassword'>
+        <Breadcrumbs crumbs={crumbs} />
+        <Row gutter={8}>
+          <Col span={8} />
+          <Col xs={24} sm={8}>
+            <Form onSubmit={this.submit} className='login__form'>
+              <h2 className='text-align--center'>Change Your Password</h2>
+              <FormItem label='Current Password'>
+                {getFieldDecorator('currentPassword', {
+                  rules: [
+                    { required: true, message: 'Please enter your current password' }
+                  ]
+                })(
+                  <Input type='password' name='currentPassword' />
+                )}
+              </FormItem>
+              <FormItem label='New Password'>
+                {getFieldDecorator('newPassword', {
+                  rules: [
+                    { required: true, message: 'Please enter your new password' },
+                    { min: 8, message: 'Passwords must be at least 8 characters long' }
+                  ]
+                })(
+                  <Input type='password' name='newPassword' />
+                )}
+              </FormItem>
+              <FormItem label='Confirm New Password'>
+                {getFieldDecorator('confirmPassword', {
+                  rules: [
+                    { required: true, message: 'Please enter your new password again' },
+                    { validator: this.checkPassword }
+                  ]
+                })(
+                  <Input type='Password' name='confirmPassword' />
+                )}
+              </FormItem>
+              <FormItem>
+                <Button
+                  type='primary'
+                  htmlType='submit'
+                  className='button--fullWidth'
+                  loading={formLoading.password}
+                >
+                  Change Password
+                </Button>
+              </FormItem>
+              <FormItem>
+                <Button
+                  type='default'
+                  className='button--fullWidth'
+                >
                   <Link to='/settings/account'>
-                    <Button
-                      type='default'
-                      className='button--fullWidth'
-                    >
-                      Cancel
-                    </Button>
+                    Cancel
                   </Link>
-                </FormItem>
-              </Form>
-            </Col>
-            <Col span={8} />
-          </Row>
-        </div>
+                </Button>
+              </FormItem>
+            </Form>
+          </Col>
+          <Col span={8} />
+        </Row>
       </div>
     )
   }
