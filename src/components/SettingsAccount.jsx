@@ -17,7 +17,7 @@ const propTypes = {
     validateFields: func.isRequired
   }).isRequired,
   getProfile: func.isRequired,
-  initProfile: func.isRequired,
+  initSettings: func.isRequired,
   location: object.isRequired,
   resetProfilePicture: func.isRequired,
   settings: shape({
@@ -75,7 +75,7 @@ class SettingsAccount extends React.Component {
   }
 
   componentWillUnmount () {
-    this.props.initProfile()
+    this.props.initSettings()
   }
 
   submit (e) {

@@ -43,7 +43,7 @@ export const TABLE_CLEAR = 'TABLE_CLEAR'
 export const TABLE_LOADED = 'TABLE_LOADED'
 export const TABLE_INIT = 'TABLE_INIT'
 
-// account settings
+// settings
 export const USER_SETTINGS_LOADED = 'USER_SETTINGS_LOADED'
 export const USER_SETTINGS_INIT = 'USER_SETTINGS_INIT'
 

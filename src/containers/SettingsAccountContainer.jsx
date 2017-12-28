@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import {
   getProfile,
   updateProfile,
-  initProfile,
+  initSettings,
   uploadProfilePicture,
   resetProfilePicture
 } from '../actions/SettingsActions'
@@ -18,7 +18,7 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   getProfile,
   updateProfile,
-  initProfile,
+  initSettings,
   uploadProfilePicture,
   resetProfilePicture
 })(SettingsAccountContainer)

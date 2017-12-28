@@ -11,10 +11,7 @@ import {
   USER_UPDATE_PASSWORD_URL
 } from '../constants/ApiConstants'
 
-export const initProfile = () => dispatch =>
-  dispatch({ type: types.USER_SETTINGS_INIT })
-
-export const initPasswordSettings = () => dispatch =>
+export const initSettings = () => dispatch =>
   dispatch({ type: types.USER_SETTINGS_INIT })
 
 export const getProfile = () => dispatch => {

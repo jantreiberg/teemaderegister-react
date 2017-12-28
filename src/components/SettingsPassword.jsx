@@ -16,7 +16,7 @@ const propTypes = {
     resetFields: func.isRequired,
     validateFields: func.isRequired
   }).isRequired,
-  initPasswordSettings: func.isRequired,
+  initSettings: func.isRequired,
   location: object.isRequired,
   settings: shape({
     error: shape({
@@ -53,7 +53,7 @@ class SettingsPassword extends React.Component {
   }
 
   componentWillUnmount () {
-    this.props.initPasswordSettings()
+    this.props.initSettings()
   }
 
   submit (e) {
