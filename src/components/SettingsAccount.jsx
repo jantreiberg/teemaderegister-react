@@ -90,9 +90,9 @@ class SettingsAccount extends React.Component {
 
   submitUpdateProfile (e) {
     e.preventDefault()
-    const { updateProfile, form: { validateFields } } = this.props
 
-    validateFields((err, values) => !err && updateProfile(values))
+    this.props.form.validateFields((err, values) =>
+      !err && this.props.updateProfile(values))
   }
 
   beforeUpload (file) {
@@ -109,11 +109,9 @@ class SettingsAccount extends React.Component {
   }
 
   resetPictureConfirm () {
-    const { resetProfilePicture } = this.props
-
     confirm({
       title: 'Do you want to reset to default picture?',
-      onOk: () => resetProfilePicture()
+      onOk: () => this.props.resetProfilePicture()
     })
   }
 

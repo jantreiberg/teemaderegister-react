@@ -67,15 +67,13 @@ class SettingsPassword extends React.Component {
 
   submitUpdatePassword (e) {
     e.preventDefault()
-    const { changePassword, form: { validateFields } } = this.props
 
-    validateFields((err, values) => !err && changePassword(values))
+    this.props.form.validateFields((err, values) =>
+      !err && this.props.changePassword(values))
   }
 
   checkPassword (rule, value, callback) {
-    const { form: { getFieldValue } } = this.props
-
-    if (value && value !== getFieldValue('newPassword')) {
+    if (value && value !== this.props.form.getFieldValue('newPassword')) {
       callback(new Error('Passwords must match'))
     } else {
       callback()
@@ -138,7 +136,7 @@ class SettingsPassword extends React.Component {
               </FormItem>
               <FormItem>
                 <Button type='default' className='button--fullWidth'>
-                  <Link to='/settings/account'>Cancel</Link>
+                  <Link to='/settings/account'>Back</Link>
                 </Button>
               </FormItem>
             </Form>
