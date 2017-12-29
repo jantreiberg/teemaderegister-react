@@ -5,10 +5,9 @@ import { checkUser } from './AuthActions'
 import {
   USER_PROFILE_URL,
   USER_UPDATE_PROFILE_URL,
+  USER_UPDATE_PASSWORD_URL,
   USER_PICTURE_UPLOAD_URL,
-  USER_PICTURE_RESET_URL,
-
-  USER_UPDATE_PASSWORD_URL
+  USER_PICTURE_RESET_URL
 } from '../constants/ApiConstants'
 
 export const initSettings = () => dispatch =>
@@ -75,7 +74,7 @@ export const resetProfilePicture = () => dispatch => {
     })
 }
 
-export const changeUserPassword = user => dispatch => {
+export const changePassword = user => dispatch => {
   dispatch({ type: types.PASSWORD_CHANGE_START })
 
   return Api('PUT', USER_UPDATE_PASSWORD_URL, { data: user })

@@ -26,8 +26,15 @@ class Home extends React.Component {
   }
 
   render () {
-    const { home: { loading, curriculums }, auth: { user, isAuthenticated } } = this.props
-    const showAddCurriculumLink = isAuthenticated && user.login.roles.includes('admin')
+    const {
+      home: { loading, curriculums },
+      auth: {
+        user: { login: { roles } },
+        isAuthenticated
+      }
+    } = this.props
+    const showAddCurriculumLink = isAuthenticated && roles.includes('admin')
+
     return (
       <div className='home'>
         <div className='home__intro'>

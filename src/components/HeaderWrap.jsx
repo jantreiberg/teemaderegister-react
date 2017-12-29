@@ -3,19 +3,31 @@ import { PropTypes } from 'prop-types'
 import { Link } from 'react-router-dom'
 import queryString from 'query-string'
 
-import { UPLOAD_PATH } from 'config'
 import setUrl from '../utils/setUrl'
 import { Menu, Dropdown, Form, Input, Layout } from 'antd'
 
 const Search = Input.Search
 const { Header } = Layout
 
-const { bool, func, object, shape } = PropTypes
+const { arr, bool, func, object, shape, string } = PropTypes
 
 const propTypes = {
   auth: shape({
     isAuthenticated: bool.isRequired,
-    user: object.isRequired
+    user: shape({
+      profile: shape({
+        firstName: string,
+        lastName: string,
+        slug: string,
+        image: shape({
+          full: string
+        })
+      }).isRequired,
+      login: shape({
+        roles: arr
+      }).isRequired,
+      updatedAt: string.isRequired
+    }).isRequired
   }).isRequired,
   form: shape({
     getFieldDecorator: func.isRequired,
@@ -84,11 +96,11 @@ class HeaderWrap extends Component {
     )
   }
 
-  dropdownMenu ({ roles, slug, firstName, lastName }) {
+  dropdownMenu ({ roles, slug, fullName }) {
     return (
       <Menu className='headerWrapDropdownMenu'>
         <Menu.Item className='noHover user-info'>
-          <span className='user-name'>{firstName + ' ' + lastName}</span>
+          <span className='user-name'>{fullName}</span>
           <ul className='user-roles'>
             {roles.map((role, index) => (
               <li key={index} >{this.rolesMap[role]}</li>
@@ -127,7 +139,7 @@ class HeaderWrap extends Component {
       auth: {
         isAuthenticated,
         user: {
-          profile: { slug, firstName, lastName, image },
+          profile: { firstName, lastName, slug, image },
           login: { roles },
           updatedAt
         }
@@ -136,8 +148,8 @@ class HeaderWrap extends Component {
     } = this.props
 
     const userImage = image
-      ? { backgroundImage: `url(${UPLOAD_PATH + image.thumb}?updatedAt=${updatedAt})` }
-      : {}
+      ? `url(/uploads${image.thumb}?updatedAt=${updatedAt})`
+      : 'none'
 
     return (
       <Header className='headerWrap'>
@@ -162,9 +174,13 @@ class HeaderWrap extends Component {
                   className='userDropdown'
                   placement='bottomRight'
                   trigger={['click']}
-                  overlay={this.dropdownMenu({ roles, slug, firstName, lastName })}
+                  overlay={this.dropdownMenu({
+                    roles,
+                    slug,
+                    fullName: firstName + ' ' + lastName
+                  })}
                 >
-                  <div className='userDropdown--icon' style={userImage} />
+                  <div className='userDropdown--icon' style={{backgroundImage: userImage}} />
                 </Dropdown>
               </div>}
             {!isAuthenticated &&

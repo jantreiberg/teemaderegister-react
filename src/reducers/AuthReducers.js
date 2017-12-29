@@ -3,7 +3,8 @@ import * as types from '../constants/ActionTypes'
 const INITIAL_STATE = {
   user: {
     profile: {},
-    login: {}
+    login: {},
+    updatedAt: ''
   },
   isAuthenticated: false,
   authInProgress: false

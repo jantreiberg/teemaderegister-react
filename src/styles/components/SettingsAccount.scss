@@ -32,21 +32,26 @@
     }
     
     &__avatar {
-      background-color: lightgrey;
       position: absolute;
       height: 200px;
       width: 200px;
+      background-color: lightgrey;
     }
     
     &__edit-icon {
-      border-radius: 50%;
       position: absolute;
       bottom: 10px;
       right: 10px;
-      font-size: 1.5em;
       width: 27px;
+      border-radius: 50%;
       background-color: rgba(255,255,255, 0.8);
+      font-size: 1.5em;
       text-align: center;
+    }
+
+    // fix for dropdown start position
+    .ant-dropdown-trigger {
+      height: 100%;
     }
   }
 }
@@ -54,10 +59,11 @@
 .profileResetDropdownMenu {
   text-align: center;
 
+  
   &__link {
     display: block;
-    padding: 10px 20px;
     margin: 0;
+    padding: 10px 20px;
   }
 
   .ant-dropdown-menu-item {

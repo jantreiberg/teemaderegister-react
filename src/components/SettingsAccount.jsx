@@ -1,24 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Breadcrumbs from './Breadcrumbs'
-import { Row, Col, Form, Input, Button, Upload, Icon, message, Avatar, Spin, Modal, Dropdown, Menu } from 'antd'
 import { Link } from 'react-router-dom'
-import { UPLOAD_PATH, PROFILE_PIC_MAX_SIZE_IN_MB } from 'config'
+import { PROFILE_PIC_MAX_SIZE_IN_MB } from 'config'
 
+import { Row, Col, Form, Input, Button, Upload, Icon, message, Avatar, Spin, Modal, Dropdown, Menu, Select } from 'antd'
 const FormItem = Form.Item
-const confirm = Modal.confirm
-const { func, object, shape, bool, string, array } = PropTypes
+const { confirm } = Modal
+const { Option } = Select
+
+const { func, shape, bool, string, array } = PropTypes
 
 const propTypes = {
-  fileList: array,
   form: shape({
     getFieldDecorator: func.isRequired,
-    getFieldInstance: func.isRequired,
     validateFields: func.isRequired
   }).isRequired,
   getProfile: func.isRequired,
   initSettings: func.isRequired,
-  location: object.isRequired,
   resetProfilePicture: func.isRequired,
   settings: shape({
     loading: bool.isRequired,
@@ -31,13 +30,15 @@ const propTypes = {
       profile: shape({
         firstName: string,
         lastName: string,
-        image: object
-      }),
+        image: shape({
+          full: string
+        })
+      }).isRequired,
       login: shape({
-        email: string
-      }),
-      roles: array,
-      updatedAt: string
+        email: string,
+        roles: array
+      }).isRequired,
+      updatedAt: string.isRequired
     }).isRequired,
     formLoading: shape({
       picture: bool.isRequired,
@@ -55,20 +56,26 @@ class SettingsAccount extends React.Component {
 
     this.defaultAvatarSrc = '/profile/full/default.jpg'
 
-    this.submit = this.submit.bind(this)
+    this.submitUpdateProfile = this.submitUpdateProfile.bind(this)
     this.resetPictureConfirm = this.resetPictureConfirm.bind(this)
   }
 
   componentWillReceiveProps (nextProps) {
     const { settings: { formLoading } } = this.props
-    const { settings: { formLoading: newFormLoading } } = nextProps
+    const {
+      settings,
+      settings: {
+        formLoading: newFormLoading,
+        hasError
+      }
+    } = nextProps
 
     if ((!newFormLoading.picture && newFormLoading.picture !== formLoading.picture) ||
       (!newFormLoading.account && newFormLoading.account !== formLoading.account)) {
-      if (nextProps.settings.hasError) {
-        message.error(nextProps.settings.error.message, 2)
+      if (hasError) {
+        message.error(settings.error.message, 2)
       } else {
-        message.success(nextProps.settings.message, 2)
+        message.success(settings.message, 2)
       }
     }
   }
@@ -81,22 +88,22 @@ class SettingsAccount extends React.Component {
     this.props.initSettings()
   }
 
-  submit (e) {
+  submitUpdateProfile (e) {
     e.preventDefault()
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        this.props.updateProfile(values)
-      }
-    })
+    const { updateProfile, form: { validateFields } } = this.props
+
+    validateFields((err, values) => !err && updateProfile(values))
   }
 
   beforeUpload (file) {
     const fileTypes = new RegExp('jpeg|jpg|png')
     const allowedType = fileTypes.test(file.type.toLowerCase())
-    if (!allowedType) message.error('You can only upload JPG file!')
+    if (!allowedType) message.error('You can only upload image files - jpg, jpeg, png!')
 
     const allowedSize = file.size / 1024 / 1024 < PROFILE_PIC_MAX_SIZE_IN_MB
-    if (!allowedSize) message.error(`Image must smaller than ${PROFILE_PIC_MAX_SIZE_IN_MB}MB!`)
+    if (!allowedSize) {
+      message.error(`Image must smaller than ${PROFILE_PIC_MAX_SIZE_IN_MB}MB!`)
+    }
 
     return allowedType && allowedSize
   }
@@ -119,14 +126,15 @@ class SettingsAccount extends React.Component {
         formLoading,
         user: {
           profile: { firstName, lastName, image },
-          login: { email },
+          login: { email, roles },
           updatedAt
         }
-      }
+      },
+      uploadProfilePicture
     } = this.props
 
     const avatarSrc = image
-      ? UPLOAD_PATH + image.full + '?userUpdated=' + updatedAt
+      ? `/uploads${image.full}?updatedAt=${updatedAt}`
       : null
 
     return (
@@ -146,7 +154,7 @@ class SettingsAccount extends React.Component {
                       <Menu.Item>
                         <Upload
                           name={'profileImage'}
-                          customRequest={this.props.uploadProfilePicture}
+                          customRequest={uploadProfilePicture}
                           showUploadList={false}
                           beforeUpload={this.beforeUpload}
                         >
@@ -157,16 +165,21 @@ class SettingsAccount extends React.Component {
                       </Menu.Item>
                       {image.full !== this.defaultAvatarSrc &&
                         <Menu.Item>
-                          <span className='profileResetDropdownMenu__link' onClick={this.resetPictureConfirm}>
+                          <span
+                            className='profileResetDropdownMenu__link'
+                            onClick={this.resetPictureConfirm}
+                          >
                             <Icon type='close' /> Remove
                           </span>
                         </Menu.Item>}
                       <Menu.Item>
-                        <span className='profileResetDropdownMenu__link'>Cancel</span>
+                        <span className='profileResetDropdownMenu__link'>
+                          Cancel
+                        </span>
                       </Menu.Item>
                     </Menu>
                   }>
-                  <div style={{height: '100%'}}>
+                  <div>
                     <Avatar
                       className='profilePicture__avatar'
                       src={avatarSrc}
@@ -183,7 +196,7 @@ class SettingsAccount extends React.Component {
                   </div>
                 }
               </div>
-              <Form onSubmit={this.submit} className='form--narrow'>
+              <Form onSubmit={this.submitUpdateProfile} className='form--narrow'>
                 <h2 className='text-align--center'>Your details</h2>
                 <FormItem label='First name'>
                   {getFieldDecorator('firstName', {
@@ -191,9 +204,7 @@ class SettingsAccount extends React.Component {
                       { required: true, message: 'Please enter your first name' }
                     ],
                     initialValue: firstName
-                  })(
-                    <Input type='text'/>
-                  )}
+                  })(<Input/>)}
                 </FormItem>
                 <FormItem label='Last name'>
                   {getFieldDecorator('lastName', {
@@ -201,9 +212,7 @@ class SettingsAccount extends React.Component {
                       { required: true, message: 'Please enter your last name' }
                     ],
                     initialValue: lastName
-                  })(
-                    <Input type='text' name='lastName' />
-                  )}
+                  })(<Input/>)}
                 </FormItem>
                 <FormItem label='Email'>
                   {getFieldDecorator('email', {
@@ -212,8 +221,18 @@ class SettingsAccount extends React.Component {
                       { type: 'email', message: 'Please enter a correct email' }
                     ],
                     initialValue: email
+                  })(<Input type='email'/>)}
+                </FormItem>
+                <FormItem label='Roles'>
+                  {getFieldDecorator('roles', {
+                    initialValue: roles,
+                    rules: [ { required: true } ]
                   })(
-                    <Input name='userEmail' />
+                    <Select disabled mode='multiple'>
+                      {roles.map(r =>
+                        <Option key={r}>{r}</Option>
+                      )}
+                    </Select>
                   )}
                 </FormItem>
                 <FormItem>
@@ -228,13 +247,8 @@ class SettingsAccount extends React.Component {
                 </FormItem>
                 <h2 className='text-align--center'>Password Settings</h2>
                 <FormItem>
-                  <Button
-                    type='primary'
-                    className='button--fullWidth'
-                  >
-                    <Link to='/settings/password'>
-                    Change Password
-                    </Link>
+                  <Button type='primary' className='button--fullWidth'>
+                    <Link to='/settings/password'>Change Password</Link>
                   </Button>
                 </FormItem>
               </Form>

@@ -1,18 +1,18 @@
 import React from 'react'
 import Breadcrumbs from './Breadcrumbs'
 import PropTypes from 'prop-types'
-import { Row, Col, Form, Input, Button, message } from 'antd'
 import { Link } from 'react-router-dom'
+
+import { Row, Col, Form, Input, Button, message } from 'antd'
+const FormItem = Form.Item
 
 const { func, object, shape, bool, string } = PropTypes
 
-const FormItem = Form.Item
-
 const propTypes = {
-  changeUserPassword: func.isRequired,
+  changePassword: func.isRequired,
   form: shape({
     getFieldDecorator: func.isRequired,
-    getFieldInstance: func.isRequired,
+    getFieldValue: func.isRequired,
     resetFields: func.isRequired,
     validateFields: func.isRequired
   }).isRequired,
@@ -23,7 +23,7 @@ const propTypes = {
       message: string
     }).isRequired,
     hasError: bool.isRequired,
-    message: string,
+    message: string.isRequired,
     formLoading: shape({
       password: bool.isRequired
     }).isRequired
@@ -33,13 +33,22 @@ const propTypes = {
 class SettingsPassword extends React.Component {
   constructor (props) {
     super(props)
-    this.submit = this.submit.bind(this)
+
+    this.submitUpdatePassword = this.submitUpdatePassword.bind(this)
     this.checkPassword = this.checkPassword.bind(this)
   }
 
   componentWillReceiveProps (nextProps) {
     const { settings } = this.props
-    const { message: newMessage, error, formLoading, hasError } = nextProps.settings
+    const {
+      form: { resetFields },
+      settings: {
+        message: newMessage,
+        error,
+        formLoading,
+        hasError
+      }
+    } = nextProps
 
     if (!formLoading.password && formLoading.password !== settings.formLoading.password) {
       if (hasError) {
@@ -47,7 +56,7 @@ class SettingsPassword extends React.Component {
       }
       if (newMessage) {
         message.success(newMessage, 2)
-        this.props.form.resetFields()
+        resetFields()
       }
     }
   }
@@ -56,19 +65,17 @@ class SettingsPassword extends React.Component {
     this.props.initSettings()
   }
 
-  submit (e) {
+  submitUpdatePassword (e) {
     e.preventDefault()
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        this.props.changeUserPassword(values)
-      }
-    })
+    const { changePassword, form: { validateFields } } = this.props
+
+    validateFields((err, values) => !err && changePassword(values))
   }
 
   checkPassword (rule, value, callback) {
-    const form = this.props.form
-    const formInputValue = form.getFieldValue('newPassword')
-    if (value && value !== formInputValue) {
+    const { form: { getFieldValue } } = this.props
+
+    if (value && value !== getFieldValue('newPassword')) {
       callback(new Error('Passwords must match'))
     } else {
       callback()
@@ -92,16 +99,14 @@ class SettingsPassword extends React.Component {
         <Row gutter={8}>
           <Col span={8} />
           <Col xs={24} sm={8}>
-            <Form onSubmit={this.submit} className='login__form'>
+            <Form onSubmit={this.submitUpdatePassword} className='login__form'>
               <h2 className='text-align--center'>Change Your Password</h2>
               <FormItem label='Current Password'>
                 {getFieldDecorator('currentPassword', {
                   rules: [
                     { required: true, message: 'Please enter your current password' }
                   ]
-                })(
-                  <Input type='password' name='currentPassword' />
-                )}
+                })(<Input type='password'/>)}
               </FormItem>
               <FormItem label='New Password'>
                 {getFieldDecorator('newPassword', {
@@ -110,7 +115,7 @@ class SettingsPassword extends React.Component {
                     { min: 8, message: 'Passwords must be at least 8 characters long' }
                   ]
                 })(
-                  <Input type='password' name='newPassword' />
+                  <Input type='password'/>
                 )}
               </FormItem>
               <FormItem label='Confirm New Password'>
@@ -119,9 +124,7 @@ class SettingsPassword extends React.Component {
                     { required: true, message: 'Please enter your new password again' },
                     { validator: this.checkPassword }
                   ]
-                })(
-                  <Input type='Password' name='confirmPassword' />
-                )}
+                })(<Input type='password'/>)}
               </FormItem>
               <FormItem>
                 <Button
@@ -134,13 +137,8 @@ class SettingsPassword extends React.Component {
                 </Button>
               </FormItem>
               <FormItem>
-                <Button
-                  type='default'
-                  className='button--fullWidth'
-                >
-                  <Link to='/settings/account'>
-                    Cancel
-                  </Link>
+                <Button type='default' className='button--fullWidth'>
+                  <Link to='/settings/account'>Cancel</Link>
                 </Button>
               </FormItem>
             </Form>

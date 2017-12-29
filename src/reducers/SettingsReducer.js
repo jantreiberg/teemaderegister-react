@@ -76,7 +76,7 @@ export default (state = INITIAL_STATE, action) => {
           ...state.formLoading,
           picture: false
         },
-        message: message || '',
+        message: message || INITIAL_STATE.message,
         hasError: !!error,
         error: error || {}
       }
@@ -98,7 +98,7 @@ export default (state = INITIAL_STATE, action) => {
           ...state.formLoading,
           password: false
         },
-        message: action.message,
+        message: action.message || INITIAL_STATE.message,
         hasError: !!action.error,
         error: action.error || {}
       }
