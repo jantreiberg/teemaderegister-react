@@ -3,5 +3,5 @@
   "GA_ENABLED": false,
   "FACULTY": "DTI",
   "UPLOAD_PATH": "/uploads",
-  "PROFILE_PIC_MAX_SIZE_IN_MB": 5
+  "PROFILE_PIC_MAX_SIZE_IN_MB": 10
 }
