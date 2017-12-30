@@ -1,5 +1,7 @@
 {
   "GA_CODE": "UA-000000000-0",
   "GA_ENABLED": false,
-  "FACULTY": "DTI"  
+  "FACULTY": "DTI",
+  "UPLOAD_PATH": "/uploads",
+  "PROFILE_PIC_MAX_SIZE_IN_MB": 10
 }

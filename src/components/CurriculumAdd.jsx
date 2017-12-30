@@ -128,7 +128,7 @@ class AddCurriculum extends React.Component {
           <Col span={8} />
           <Col xs={24} sm={8}>
             <Form onSubmit={this.submit} className='form--narrow'>
-              <h2 className='text-align-center'>Lisa õppekava</h2>
+              <h2 className='text-align--center'>Lisa õppekava</h2>
               <FormItem label='Abbreviation'>
                 {getFieldDecorator('abbreviation', {
                   rules: [{ required: true, message: 'Please input your abbreviation!' }]

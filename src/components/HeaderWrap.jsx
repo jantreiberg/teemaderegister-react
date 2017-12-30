@@ -6,17 +6,28 @@ import queryString from 'query-string'
 import setUrl from '../utils/setUrl'
 import { Menu, Dropdown, Form, Input, Layout } from 'antd'
 
-import personalCenter from '../media/personal/personal-center.svg'
-
 const Search = Input.Search
 const { Header } = Layout
 
-const { bool, func, object, shape } = PropTypes
+const { arr, bool, func, object, shape, string } = PropTypes
 
 const propTypes = {
   auth: shape({
     isAuthenticated: bool.isRequired,
-    user: object.isRequired
+    user: shape({
+      profile: shape({
+        firstName: string,
+        lastName: string,
+        slug: string,
+        image: shape({
+          full: string
+        })
+      }).isRequired,
+      login: shape({
+        roles: arr
+      }).isRequired,
+      updatedAt: string.isRequired
+    }).isRequired
   }).isRequired,
   form: shape({
     getFieldDecorator: func.isRequired,
@@ -125,11 +136,20 @@ class HeaderWrap extends Component {
 
   render () {
     const {
-      auth: { isAuthenticated, user: { roles, slug, fullName } },
+      auth: {
+        isAuthenticated,
+        user: {
+          profile: { firstName, lastName, slug, image },
+          login: { roles },
+          updatedAt
+        }
+      },
       form: { getFieldDecorator }
     } = this.props
 
-    const userImage = { backgroundImage: `url(${personalCenter})` }
+    const userImage = image
+      ? `url(/uploads${image.thumb}?updatedAt=${updatedAt})`
+      : 'none'
 
     return (
       <Header className='headerWrap'>
@@ -154,9 +174,13 @@ class HeaderWrap extends Component {
                   className='userDropdown'
                   placement='bottomRight'
                   trigger={['click']}
-                  overlay={this.dropdownMenu({ roles, slug, fullName })}
+                  overlay={this.dropdownMenu({
+                    roles,
+                    slug,
+                    fullName: firstName + ' ' + lastName
+                  })}
                 >
-                  <div className='userDropdown--icon' style={userImage} />
+                  <div className='userDropdown--icon' style={{backgroundImage: userImage}} />
                 </Dropdown>
               </div>}
             {!isAuthenticated &&
