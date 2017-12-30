@@ -4,8 +4,10 @@ import {
   getProfile,
   updateProfile,
   initSettings,
-  uploadProfilePicture,
-  resetProfilePicture
+  uploadPictureStart,
+  uploadPictureEnd,
+  uploadPictureError,
+  resetPicture
 } from '../actions/SettingsActions'
 import SettingsAccount from '../components/SettingsAccount'
 
@@ -19,6 +21,8 @@ export default connect(mapStateToProps, {
   getProfile,
   updateProfile,
   initSettings,
-  uploadProfilePicture,
-  resetProfilePicture
+  uploadPictureStart,
+  uploadPictureEnd,
+  uploadPictureError,
+  resetPicture
 })(SettingsAccountContainer)

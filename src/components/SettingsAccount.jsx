@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import Breadcrumbs from './Breadcrumbs'
 import { Link } from 'react-router-dom'
 import { PROFILE_PIC_MAX_SIZE_IN_MB } from 'config'
+import { USER_PICTURE_UPLOAD_URL } from '../constants/ApiConstants'
+import { getToken } from '../utils/jwt'
 
 import { Row, Col, Form, Input, Button, Upload, Icon, message, Avatar, Spin, Modal, Dropdown, Menu, Select } from 'antd'
 const FormItem = Form.Item
@@ -18,7 +20,7 @@ const propTypes = {
   }).isRequired,
   getProfile: func.isRequired,
   initSettings: func.isRequired,
-  resetProfilePicture: func.isRequired,
+  resetPicture: func.isRequired,
   settings: shape({
     loading: bool.isRequired,
     error: shape({
@@ -46,8 +48,9 @@ const propTypes = {
     }).isRequired
   }).isRequired,
   updateProfile: func.isRequired,
-  uploadProfilePicture: func.isRequired
-
+  uploadPictureEnd: func.isRequired,
+  uploadPictureError: func.isRequired,
+  uploadPictureStart: func.isRequired
 }
 
 class SettingsAccount extends React.Component {
@@ -58,6 +61,7 @@ class SettingsAccount extends React.Component {
 
     this.submitUpdateProfile = this.submitUpdateProfile.bind(this)
     this.resetPictureConfirm = this.resetPictureConfirm.bind(this)
+    this.onUploadPictureChange = this.onUploadPictureChange.bind(this)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -71,7 +75,7 @@ class SettingsAccount extends React.Component {
     } = nextProps
 
     if ((!newFormLoading.picture && newFormLoading.picture !== formLoading.picture) ||
-      (!newFormLoading.account && newFormLoading.account !== formLoading.account)) {
+    (!newFormLoading.account && newFormLoading.account !== formLoading.account)) {
       if (hasError) {
         message.error(settings.error.message, 2)
       } else {
@@ -108,10 +112,18 @@ class SettingsAccount extends React.Component {
     return allowedType && allowedSize
   }
 
+  onUploadPictureChange ({ file: { status, response } }) {
+    if (status === 'uploading' && !this.props.settings.formLoading.picture) {
+      return this.props.uploadPictureStart()
+    }
+    if (status === 'done') return this.props.uploadPictureEnd(response)
+    if (status === 'error') return this.props.uploadPictureError(response)
+  }
+
   resetPictureConfirm () {
     confirm({
       title: 'Do you want to reset to default picture?',
-      onOk: () => this.props.resetProfilePicture()
+      onOk: () => this.props.resetPicture()
     })
   }
 
@@ -127,8 +139,7 @@ class SettingsAccount extends React.Component {
           login: { email, roles },
           updatedAt
         }
-      },
-      uploadProfilePicture
+      }
     } = this.props
 
     const avatarSrc = image
@@ -152,9 +163,10 @@ class SettingsAccount extends React.Component {
                       <Menu.Item>
                         <Upload
                           name={'profileImage'}
-                          customRequest={uploadProfilePicture}
+                          action={USER_PICTURE_UPLOAD_URL}
+                          headers={{Authorization: `Bearer ${getToken()}`}}
                           showUploadList={false}
-                          beforeUpload={this.beforeUpload}
+                          onChange={this.onUploadPictureChange}
                         >
                           <span className='profileResetDropdownMenu__link'>
                             <Icon type='upload' /> Upload photo

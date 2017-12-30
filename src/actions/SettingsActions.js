@@ -6,7 +6,6 @@ import {
   USER_PROFILE_URL,
   USER_UPDATE_PROFILE_URL,
   USER_UPDATE_PASSWORD_URL,
-  USER_PICTURE_UPLOAD_URL,
   USER_PICTURE_RESET_URL
 } from '../constants/ApiConstants'
 
@@ -39,27 +38,21 @@ export const updateProfile = user => dispatch => {
     })
 }
 
-export const uploadProfilePicture = uploadData => dispatch => {
-  const { filename, file } = uploadData
-
-  let data = new FormData()
-  data.append(filename, file)
-
+export const uploadPictureStart = () => dispatch => {
   dispatch({ type: types.USER_PICTURE_SET_START })
-
-  return Api('POST', USER_PICTURE_UPLOAD_URL, { data })
-    .then(data => {
-      const { user, message } = data
-      dispatch({ type: types.USER_PICTURE_SET_END, user, message })
-      dispatch(checkUser())
-    }).catch(err => {
-      const error = err.data
-      console.log(error)
-      dispatch({ type: types.USER_PICTURE_SET_END, error })
-    })
 }
 
-export const resetProfilePicture = () => dispatch => {
+export const uploadPictureEnd = ({ user, message }) => dispatch => {
+  dispatch({ type: types.USER_PICTURE_SET_END, user, message })
+  dispatch(checkUser())
+}
+
+export const uploadPictureError = (error) => dispatch => {
+  console.log(error)
+  dispatch({ type: types.USER_PICTURE_SET_END, error })
+}
+
+export const resetPicture = () => dispatch => {
   dispatch({ type: types.USER_PICTURE_SET_START })
 
   return Api('PUT', USER_PICTURE_RESET_URL)
