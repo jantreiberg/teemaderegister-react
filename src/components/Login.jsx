@@ -90,7 +90,7 @@ class Login extends React.Component {
     }
 
     return (
-      <div className='login'>
+      <div className='login width--public-page'>
         <Breadcrumbs crumbs={crumbs} />
         <Row gutter={8}>
           <Col span={8} />

@@ -36,7 +36,7 @@ class Home extends React.Component {
     const showAddCurriculumLink = isAuthenticated && roles.includes('admin')
 
     return (
-      <div className='home'>
+      <div className='home width--public-page'>
         <div className='home__intro'>
           <h1>Tere tulemast DTI uue teemaderegistri lehele!</h1>
         </div>

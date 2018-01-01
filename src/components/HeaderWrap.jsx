@@ -97,6 +97,8 @@ class HeaderWrap extends Component {
   }
 
   dropdownMenu ({ roles, slug, fullName }) {
+    const isSupervisor = roles && roles.includes('supervisor')
+
     return (
       <Menu className='headerWrapDropdownMenu'>
         <Menu.Item className='noHover user-info'>
@@ -114,7 +116,7 @@ class HeaderWrap extends Component {
           </Link>
         </Menu.Item>
         <Menu.Divider />
-        {roles.includes('supervisor') &&
+        {isSupervisor &&
           <Menu.Item>
             <Link to={ '/supervisor/' + slug }>
               <i className='anticon anticon-user icon--15'></i> Profile

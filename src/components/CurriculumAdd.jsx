@@ -122,7 +122,7 @@ class AddCurriculum extends React.Component {
     const { representatives, fetching } = this.state
 
     return (
-      <div className='curriculumAdd'>
+      <div className='curriculumAdd width--public-page'>
         <Breadcrumbs crumbs={crumbs} />
         <Row gutter={8}>
           <Col span={8} />

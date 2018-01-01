@@ -10,6 +10,7 @@ import {
   CURRICULUM_PATH,
   SEARCH_PATH,
   SUPERVISOR_PATH,
+  ADMIN_PATH,
   ACCOUNT_FORGOT,
   ACCOUNT_PASSWORD,
   SETTINGS_ACCOUNT_PATH,
@@ -24,6 +25,7 @@ import NotFound from './components/NotFound'
 import RouteWrapContainer from './containers/RouteWrapContainer'
 import SupervisorContainer from './containers/SupervisorContainer'
 import SearchContainer from './containers/SearchContainer'
+import AdminContainer from './containers/AdminContainer'
 import AccountForgotContainer from './containers/AccountForgotContainer'
 import AccountPasswordContainer from './containers/AccountPasswordContainer'
 import SettingsAccountContainer from './containers/SettingsAccountContainer'
@@ -72,6 +74,8 @@ render(
                   component={RouteWrapContainer(CurriculumContainer)} />
                 <Route path={SUPERVISOR_PATH}
                   component={RouteWrapContainer(SupervisorContainer)} />
+                <Route path={ADMIN_PATH}
+                  component={RouteWrapContainer(AdminContainer, {restrict: true})} />
                 <Route path={SETTINGS_ACCOUNT_PATH}
                   component={RouteWrapContainer(SettingsAccountContainer, {restrict: true})} />
                 <Route path={SETTINGS_PASSWORD_PATH}
@@ -86,7 +90,7 @@ render(
             </div>
           </Content>
           <Footer className='layout__footer'>
-            <a href={links.project}><Icon type="github" /> Teemaderegister</a>{' · '}
+            <a href={links.project}><Icon type='github' /> Teemaderegister</a>{' · '}
             Created by <a href={links.creator}>Romil Rõbtšenkov</a><br/>
             Code licensed under <a href={links.license}>MIT License</a><br/>
             Content © 2010-{new Date().getFullYear()} <a href={links.contet}>Tallinn University</a>

@@ -85,7 +85,7 @@ class SupervisorMeta extends PureComponent {
     const imgSrc = `http://via.placeholder.com/150/b1e3da/ffffff/?text=${firstName[0]} ${lastName[0]}`
 
     return (
-      <div className='supervisorMeta'>
+      <div className='supervisorMeta width--public-page'>
         <Row className='supervisorMeta__row' gutter={24} type='flex'>
 
           <Col sm={13} md={12} className='profile'>

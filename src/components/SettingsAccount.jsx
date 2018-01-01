@@ -147,7 +147,7 @@ class SettingsAccount extends React.Component {
       : null
 
     return (
-      <div className='settingsAccount'>
+      <div className='settingsAccount width--public-page'>
         {!loading &&
         <div>
           <Breadcrumbs crumbs={crumbs} />

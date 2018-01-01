@@ -92,7 +92,7 @@ class SettingsPassword extends React.Component {
     } = this.props
 
     return (
-      <div className='settingsPassword'>
+      <div className='settingsPassword width--public-page'>
         <Breadcrumbs crumbs={crumbs} />
         <Row gutter={8}>
           <Col span={8} />
