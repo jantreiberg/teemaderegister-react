@@ -27,6 +27,7 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - ./dist:/var/www/teemaderegister-react/dist
       - /etc/letsencrypt:/etc/letsencrypt
+      - ../teemaderegister-be/data/uploads:/var/www/teemaderegister-be/data/uploads
 
 networks:
   main:

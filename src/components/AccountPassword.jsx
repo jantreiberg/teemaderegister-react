@@ -79,7 +79,7 @@ class AccountPassword extends React.Component {
     const formInputValue = form.getFieldValue('password')
 
     if (value && value !== formInputValue) {
-      callback(new Error(`Passwords does not match!`))
+      callback(new Error('Passwords does not match!'))
     }
     callback()
   }
@@ -111,13 +111,13 @@ class AccountPassword extends React.Component {
     const crumbs = [{ url: this.props.location.pathname, name: 'Password reset' }]
 
     return (
-      <div className="accountPassword">
+      <div className='accountPassword width--public-page'>
         <Breadcrumbs crumbs={crumbs} />
         <Row gutter={8}>
           <Col span={8} />
           <Col xs={24} sm={8}>
             <Form onSubmit={this.submit} className='form--narrow'>
-              <h2 className='text-align-center'>Password reset</h2>
+              <h2 className='text-align--center'>Password reset</h2>
               <FormItem>
                 {getFieldDecorator('password', {
                   rules: [

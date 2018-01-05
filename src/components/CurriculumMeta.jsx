@@ -3,9 +3,9 @@ import { PropTypes } from 'prop-types'
 
 import { Avatar, Tooltip } from 'antd'
 
-import noneBack from '../media/none-cur-back.svg'
-import halfBack from '../media/half-cur-back.svg'
-import fullBack from '../media/full-cur-back.svg'
+import noneBack from '../media/background/none-cur-back.svg'
+import halfBack from '../media/background/half-cur-back.svg'
+import fullBack from '../media/background/full-cur-back.svg'
 
 const { array, object, shape, string } = PropTypes
 
@@ -57,7 +57,7 @@ class CurriculumMeta extends PureComponent {
     const metaBackGround = { backgroundImage: `url(${this.colorMap[type]})` }
 
     return (
-      <div className='curriculumMeta' style={metaBackGround}>
+      <div className='curriculumMeta width--public-page' style={metaBackGround}>
         <h1>{names.et}</h1>
         <h3>{abbreviation} | {names.en}</h3>
         <h4>{this.typeMap[type]} - {languageList}</h4>

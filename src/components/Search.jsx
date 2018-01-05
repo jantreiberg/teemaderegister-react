@@ -45,7 +45,7 @@ class Search extends React.Component {
     } = this.props
 
     return (
-      <div className='search'>
+      <div className='search width--public-page'>
         {!loading &&
           <div>
             <Breadcrumbs crumbs={this.getCrumbs()} />

@@ -7,13 +7,15 @@
   "extends": ["standard", "plugin:react/recommended"],
   "parserOptions": {
     "ecmaFeatures": {
-      "experimentalObjectRestSpread": true,      
+      "experimentalObjectRestSpread": true,
       "jsx": true
     }
   },
   "plugins": ["react"],
   "rules": {
     "react/prop-types": ["error"],
-    "react/sort-prop-types": ["error"]    
+    "react/sort-prop-types": ["error"],
+    "quotes": ["error", "single"],
+    "jsx-quotes": ["error", "prefer-single"]
   }
 }

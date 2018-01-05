@@ -92,7 +92,7 @@ class Supervisor extends React.Component {
     } = this.props
 
     return (
-      <div className='supervisor'>
+      <div className='supervisor width--public-page'>
         {!loading &&
           <div>
             <Breadcrumbs

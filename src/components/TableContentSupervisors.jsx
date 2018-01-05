@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
+import reactStringReplace from 'react-string-replace'
 
 const substract = moment()
   .subtract(8, 'months')
@@ -47,7 +48,7 @@ const registered = ({ columnKey, order }) => ({
   sorter: true
 })
 
-const supervisor = ({ columnKey, order }) => ({
+const supervisor = ({ columnKey, order, q }) => ({
   title: 'Supervisor',
   dataIndex: 'supervisor',
   key: 'supervisor',
@@ -55,10 +56,16 @@ const supervisor = ({ columnKey, order }) => ({
   sorter: true,
   render: (supervisor, item) => {
     const url = '/supervisor/' + item.slug
+    let finalSuperviser = supervisor
+
+    if (q) {
+      finalSuperviser = reactStringReplace(supervisor, q, (match, i) => (
+        <span key={i} className='highlight'>{match}</span>
+      ))
+    }
+
     const content = (
-      <Link key={item._id} to={url}>
-        {supervisor}
-      </Link>
+      <Link key={item._id} to={url}>{finalSuperviser}</Link>
     )
     return content
   }
