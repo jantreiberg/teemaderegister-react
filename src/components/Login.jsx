@@ -46,7 +46,7 @@ class Login extends React.Component {
       window.setTimeout(function(){
 
         window.close()
-      },1000)
+      },0)
     }
     
     this.state = {
@@ -92,11 +92,6 @@ class Login extends React.Component {
 
   startGoogleAuth () {
     const url = window.location.origin+"/api/auth/google"
-    // const h = screen.height
-    // const w = screen.width
-    // const left = (screen.width/2)-(w/2)
-    // const top = (screen.height/2)-(h/2)
-    // 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left
     const newWindow = window.open(url, "name", "height=600,width=450")
     
     
