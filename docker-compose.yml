@@ -22,12 +22,15 @@ services:
     networks:
       - main
     ports:
-      - "8080:80"
+      - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./dist:/var/www/teemaderegister-react/dist
+      - /etc/letsencrypt:/etc/letsencrypt
 
 networks:
   main:
     external: 
       name: teemaderegisterbe_main
+
 

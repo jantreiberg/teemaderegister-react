@@ -6,6 +6,8 @@ import { getToken } from '../utils/jwt'
 import Breadcrumbs from './Breadcrumbs'
 import { Row, Col, Form, Icon, Input, Button, message, Tooltip } from 'antd'
 import { setDocTitle } from '../utils/Helpers'
+import { setToken } from '../utils/jwt'
+import setUrl from '../utils/setUrl'
 
 const FormItem = Form.Item
 
@@ -32,10 +34,26 @@ const propTypes = {
 class Login extends React.Component {
   constructor (props) {
     super(props)
+    
+    console.log(props)
+
+    const {token} = queryString.parse(props.history.location.search, {
+      arrayFormat: 'bracket'
+    })
+
+    if(token){
+      setToken(token)
+      window.setTimeout(function(){
+
+        window.close()
+      },1000)
+    }
+    
     this.state = {
       loading: props.login.loading
     }
     this.submit = this.submit.bind(this)
+    this.startGoogleAuth = this.startGoogleAuth.bind(this)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -70,6 +88,26 @@ class Login extends React.Component {
         }, 1500)
       }
     })
+  }
+
+  startGoogleAuth () {
+    const url = window.location.origin+"/api/auth/google"
+    // const h = screen.height
+    // const w = screen.width
+    // const left = (screen.width/2)-(w/2)
+    // const top = (screen.height/2)-(h/2)
+    // 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left
+    const newWindow = window.open(url, "name", "height=600,width=450")
+    
+    
+    const interval = window.setInterval(()=>{
+      console.log(newWindow.closed)
+      if (newWindow.closed) {
+        window.clearInterval(interval);
+        this.setState(this.state)
+      }
+  }, 100);
+    
   }
 
   render () {
@@ -140,13 +178,14 @@ class Login extends React.Component {
                 </p>
               </FormItem>
             </Form>
-               <a href = "/api/auth/google"> <Button
+                <Button
                 type='default'
                 htmlType='submit'
                 className='login__button'
+                onClick={this.startGoogleAuth}
                 >
                 Google Sign-in
-                </Button></a>
+                </Button>
           </Col>
           <Col span={8} />
         </Row>
