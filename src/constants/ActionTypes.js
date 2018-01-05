@@ -40,3 +40,8 @@ export const TABLE_START = 'TABLE_START'
 export const TABLE_CLEAR = 'TABLE_CLEAR'
 export const TABLE_LOADED = 'TABLE_LOADED'
 export const TABLE_INIT = 'TABLE_INIT'
+
+// topic
+export const TOPIC_ADD_START = 'TOPIC_ADD_START'
+export const TOPIC_ADD_END = 'TOPIC_ADD_END'
+export const TOPIC_ADD_INIT = 'TOPIC_ADD_INIT'

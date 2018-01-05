@@ -10,7 +10,8 @@ import {
   SEARCH_PATH,
   SUPERVISOR_PATH,
   ACCOUNT_FORGOT,
-  ACCOUNT_PASSWORD
+  ACCOUNT_PASSWORD,
+  TOPIC_ADD_PATH
 } from './constants/RouterConstants'
 
 import CurriculumContainer from './containers/CurriculumContainer'
@@ -23,6 +24,7 @@ import SupervisorContainer from './containers/SupervisorContainer'
 import SearchContainer from './containers/SearchContainer'
 import AccountForgotContainer from './containers/AccountForgotContainer'
 import AccountPasswordContainer from './containers/AccountPasswordContainer'
+import TopicAddContainer from './containers/TopicAddContainer' // IGAKSJUHUKS KONTROLLI SEDA
 
 import store from './store/configureStore'
 
@@ -54,6 +56,8 @@ render(
                   component={RouteWrapContainer(LoginContainer)} />
                 <Route path={SEARCH_PATH}
                   component={RouteWrapContainer(SearchContainer)} />
+                <Route path={TOPIC_ADD_PATH}
+                  component={RouteWrapContainer(TopicAddContainer, { restrict: true })} />
                 <Route path={CURRICULUM_PATH}
                   component={RouteWrapContainer(CurriculumContainer)} />
                 <Route path={SUPERVISOR_PATH}

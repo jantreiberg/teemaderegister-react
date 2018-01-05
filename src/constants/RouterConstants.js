@@ -5,6 +5,7 @@ export const SEARCH_PATH = '/search'
 export const SUPERVISOR_PATH = '/supervisor/:slug'
 export const ACCOUNT_FORGOT = '/account/forgot'
 export const ACCOUNT_PASSWORD = '/account/password/:token'
+export const TOPIC_ADD_PATH = '/topic/add'
 
 export const INITIAL_ROUTE = {
   keys: {},
