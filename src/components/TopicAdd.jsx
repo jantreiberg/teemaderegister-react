@@ -159,7 +159,7 @@ class AddTopic extends React.Component {
                     <Select
                       showSearch
                       labelInValue
-                      notFoundContent={fetching ? <Spin size="small" /> : null}
+                      notFoundContent={fetching ? <Spin size='small' /> : null}
                       filterOption={false}
                       onSearch={this.fetchUsers}
                       style={{ width: '100%' }}

@@ -42,7 +42,7 @@ class TableContent extends React.Component {
     const {
       data,
       count,
-      query: { sub, page, columnKey, order, types, curriculums }
+      query: { sub, page, columnKey, order, types, curriculums, q }
     } = tableContent[tableKey]
 
     const { meta: { names, type } } = curriculum || { meta: {} }
@@ -75,7 +75,10 @@ class TableContent extends React.Component {
 
           // filters
           types,
-          curriculums
+          curriculums,
+
+          // search highliht
+          q
         })}
         dataSource={data}
         expandedRowRender={

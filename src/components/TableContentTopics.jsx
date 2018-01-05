@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import moment from 'moment'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import queryString from 'query-string'
+import reactStringReplace from 'react-string-replace'
 
 import { message, Badge, Tooltip, Icon } from 'antd'
 
@@ -30,7 +31,7 @@ const accepted = ({ columnKey, order }) => ({
   sortOrder: columnKey === 'accepted' && order
 })
 
-const author = ({ columnKey, order }) => ({
+const author = ({ columnKey, order, q }) => ({
   title: 'Author',
   dataIndex: 'author',
   key: 'author',
@@ -38,7 +39,16 @@ const author = ({ columnKey, order }) => ({
   sorter: true,
   render: author => {
     if (!author) return '-'
-    return author.firstName + ' ' + author.lastName
+
+    const fullName = author.firstName + ' ' + author.lastName
+
+    if (q) {
+      return reactStringReplace(fullName, q, (match, i) => (
+        <span key={i} className='highlight'>{match}</span>
+      ))
+    }
+
+    return fullName
   }
 })
 
@@ -84,7 +94,7 @@ const detailCurriculums = () => ({
   render: curriculums => {
     if (curriculums.length === 0) return null
     return curriculums.map((c, i) => {
-      const url = '/curriculum/' + c.slugs.et
+      const url = '/curriculum/s/' + c.slugs.et
       const abbr = c.abbreviation
       const content =
         i < curriculums.length - 1 && curriculums.length > 1
@@ -132,10 +142,12 @@ const file = ({ columnKey, order }) => ({
   key: 'file',
   sortOrder: columnKey === 'file' && order,
   render: file => {
-    let content = (
+    const content = (
       <span>
-        <a className='link--pdf' href={file} target='_blank'>
-          <Icon type='file-pdf' className='icon-15' />
+        <a href={file}>
+          <Tooltip title='Download .pdf'>
+            <Icon type='download' className='icon--download' />
+          </Tooltip>
         </a>
       </span>
     )
@@ -176,24 +188,43 @@ const supervisors = () => ({
   }
 })
 
-const title = ({ columnKey, order, sub }) => ({
+const title = ({ columnKey, order, sub, q }) => ({
   title: 'Title',
   dataIndex: 'title',
   key: 'title',
   sorter: true,
   sortOrder: columnKey === 'title' && order,
   render: (title, row) => {
-    const url = window.location.host + '/search?' + queryString.stringify({ q: row.slug, sub })
+    let finalTitle = title
+
+    if (q) {
+      finalTitle = reactStringReplace(title, q, (match, i) => (
+        <span key={i} className='highlight'>{match}</span>
+      ))
+    }
+
+    const { starred, file: fileUrl, slug } = row
+    const fileInViewerUrl = <a href={'https://docs.google.com/gview?url=' + fileUrl} target='_blank'>{finalTitle}</a>
+    const topicTitle = sub === 'defended'
+      ? fileInViewerUrl
+      : finalTitle
+    const shareUrl = window.location.host + '/search?' + queryString.stringify({ q: slug, sub })
+
     const content = (
       <span>
-        {title}
-        <CopyToClipboard text={url} onCopy={() => message.success('Link copied to clipboard')}>
+        {topicTitle}
+        {starred &&
+          <Tooltip title='Esiletõstetud töö'>
+            {' '}<Icon style={{color: 'gold'}} type='star' />
+          </Tooltip>}
+        <CopyToClipboard text={shareUrl} onCopy={() => message.success('Link copied to clipboard')}>
           <Tooltip title='Copy link to clipboard'>
-            <Icon className='link--copy' type="share-alt" />
+            <Icon type='copy' className='icon--copy' />
           </Tooltip>
         </CopyToClipboard>
       </span>
     )
+
     return content
   }
 })
