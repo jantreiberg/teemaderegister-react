@@ -127,20 +127,6 @@ class SettingsAccount extends React.Component {
     })
   }
 
-  startGoogleAuth () {
-    const url = window.location.origin+"/api/auth/google?token="+getToken()
-    const newWindow = window.open(url, "name", "height=600,width=450")
-    
-    
-    const interval = window.setInterval(()=>{
-      console.log(newWindow.closed)
-      if (newWindow.closed) {
-        window.clearInterval(interval);
-        this.setState(this.state)
-      }
-  }, 100); 
-}
-
   render () {
     const crumbs = [{ url: null, name: 'Settings' }]
     const {
@@ -276,14 +262,6 @@ class SettingsAccount extends React.Component {
                   </Button>
                 </FormItem>
               </Form>
-              <Button
-                type='default'
-                htmlType='submit'
-                className='login__button'
-                onClick={this.startGoogleAuth}
-                >
-                Google Sign-in
-                </Button>
             </Col>
             <Col span={8} />
           </Row>

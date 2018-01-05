@@ -2,12 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import queryString from 'query-string'
 import { Redirect, Link } from 'react-router-dom'
-import { getToken } from '../utils/jwt'
 import Breadcrumbs from './Breadcrumbs'
 import { Row, Col, Form, Icon, Input, Button, message, Tooltip } from 'antd'
 import { setDocTitle } from '../utils/Helpers'
-import { setToken } from '../utils/jwt'
-import setUrl from '../utils/setUrl'
+import { getToken, setToken } from '../utils/jwt'
 
 const FormItem = Form.Item
 
@@ -18,6 +16,11 @@ const propTypes = {
     getFieldDecorator: func.isRequired,
     getFieldInstance: func.isRequired,
     validateFields: func.isRequired
+  }).isRequired,
+  history: shape({
+    location: shape({
+      search: string.isRequired
+    })
   }).isRequired,
   initLogin: func.isRequired,
   location: object.isRequired,
@@ -34,26 +37,26 @@ const propTypes = {
 class Login extends React.Component {
   constructor (props) {
     super(props)
-    
-    console.log(props)
 
-    const {token} = queryString.parse(props.history.location.search, {
-      arrayFormat: 'bracket'
-    })
-
-    if(token){
-      setToken(token)
-      window.setTimeout(function(){
-
-        window.close()
-      },0)
-    }
-    
     this.state = {
       loading: props.login.loading
     }
     this.submit = this.submit.bind(this)
     this.startGoogleAuth = this.startGoogleAuth.bind(this)
+  }
+
+  componentWillMount () {
+    const { token } = queryString.parse(this.props.history.location.search, {
+      arrayFormat: 'bracket'
+    })
+
+    if (token) {
+      setToken(token)
+      window.setTimeout(() => {
+        window.opener.location.reload(true) // reload parent
+        window.close() // close login popup
+      }, 1500)
+    }
   }
 
   componentWillReceiveProps (nextProps) {
@@ -91,18 +94,8 @@ class Login extends React.Component {
   }
 
   startGoogleAuth () {
-    const url = window.location.origin+"/api/auth/google"
-    const newWindow = window.open(url, "name", "height=600,width=450")
-    
-    
-    const interval = window.setInterval(()=>{
-      console.log(newWindow.closed)
-      if (newWindow.closed) {
-        window.clearInterval(interval);
-        this.setState(this.state)
-      }
-  }, 100);
-    
+    const url = window.location.origin + '/api/auth/google'
+    window.open(url, 'name', 'height=600,width=450')
   }
 
   render () {
@@ -173,14 +166,14 @@ class Login extends React.Component {
                 </p>
               </FormItem>
             </Form>
-                <Button
-                type='default'
-                htmlType='submit'
-                className='login__button'
-                onClick={this.startGoogleAuth}
-                >
+            <Button
+              type='default'
+              htmlType='submit'
+              className='login__button'
+              onClick={this.startGoogleAuth}
+            >
                 Google Sign-in
-                </Button>
+            </Button>
           </Col>
           <Col span={8} />
         </Row>
