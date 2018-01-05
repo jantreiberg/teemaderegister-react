@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import queryString from 'query-string'
 
 import setUrl from '../utils/setUrl'
+import { UPLOAD_PATH } from 'config'
 import { Menu, Dropdown, Form, Input, Layout } from 'antd'
 
 const Search = Input.Search
@@ -150,7 +151,7 @@ class HeaderWrap extends Component {
     } = this.props
 
     const userImage = image
-      ? `url(/uploads${image.thumb}?updatedAt=${updatedAt})`
+      ? `url(${UPLOAD_PATH + image.thumb}?updatedAt=${updatedAt})`
       : 'none'
 
     return (

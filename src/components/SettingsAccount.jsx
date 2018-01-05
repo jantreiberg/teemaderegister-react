@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Breadcrumbs from './Breadcrumbs'
 import { Link } from 'react-router-dom'
-import { PROFILE_PIC_MAX_SIZE_IN_MB } from 'config'
+import { PROFILE_PIC_MAX_SIZE_IN_MB, UPLOAD_PATH } from 'config'
 import { USER_PICTURE_UPLOAD_URL } from '../constants/ApiConstants'
 import { getToken } from '../utils/jwt'
 
@@ -57,7 +57,7 @@ class SettingsAccount extends React.Component {
   constructor (props) {
     super(props)
 
-    this.defaultAvatarSrc = '/profile/full/default.jpg'
+    this.defaultAvatarSrc = 'profile/full/default.jpg'
 
     this.submitUpdateProfile = this.submitUpdateProfile.bind(this)
     this.resetPictureConfirm = this.resetPictureConfirm.bind(this)
@@ -143,7 +143,7 @@ class SettingsAccount extends React.Component {
     } = this.props
 
     const avatarSrc = image
-      ? `/uploads${image.full}?updatedAt=${updatedAt}`
+      ? `${UPLOAD_PATH + image.full}?updatedAt=${updatedAt}`
       : null
 
     return (
