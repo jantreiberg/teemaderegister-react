@@ -14,7 +14,8 @@ import {
   ACCOUNT_FORGOT,
   ACCOUNT_PASSWORD,
   SETTINGS_ACCOUNT_PATH,
-  SETTINGS_PASSWORD_PATH
+  SETTINGS_PASSWORD_PATH,
+  PAGES_PATH
 } from './constants/RouterConstants'
 
 import CurriculumContainer from './containers/CurriculumContainer'
@@ -31,6 +32,7 @@ import AccountPasswordContainer from './containers/AccountPasswordContainer'
 import SettingsAccountContainer from './containers/SettingsAccountContainer'
 import SettingsPasswordContainer from './containers/SettingsPasswordContainer'
 import CurriculumAddContainer from './containers/CurriculumAddContainer'
+import PagesContainer from './containers/PagesContainer'
 
 import store from './store/configureStore'
 import { initAnalytics } from './utils/Analytics'
@@ -84,6 +86,8 @@ render(
                   component={RouteWrapContainer(AccountForgotContainer)} />
                 <Route path={ACCOUNT_PASSWORD}
                   component={RouteWrapContainer(AccountPasswordContainer)} />
+                <Route path={PAGES_PATH}
+                  component={RouteWrapContainer(PagesContainer)} />
                 <Route
                   component={RouteWrapContainer(NotFound)} />
               </Switch>
@@ -93,6 +97,7 @@ render(
             <a href={links.project}><Icon type='github' /> Teemaderegister</a>{' · '}
             Created by <a href={links.creator}>Romil Rõbtšenkov</a><br/>
             Code licensed under <a href={links.license}>MIT License</a><br/>
+            <a href='/pages/contacts'>Contact</a><br/>
             Content © 2010-{new Date().getFullYear()} <a href={links.contet}>Tallinn University</a>
           </Footer>
         </Layout>

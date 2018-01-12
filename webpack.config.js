@@ -184,6 +184,15 @@ module.exports = {
   devServer: {
     // host: 'localhost',
     port: 3446, // preferred port
+    /*
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000/api',
+        pathRewrite: {'^/api': ''}
+      }
+    },
+
+    */
     contentBase: BUILD_DIR,
     compress: true,
     historyApiFallback: true,
