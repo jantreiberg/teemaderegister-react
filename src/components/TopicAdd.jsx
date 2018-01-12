@@ -19,6 +19,7 @@ class TopicAdd extends React.Component {
     this.state = {
       curriculums: [],
       topics: [],
+      supervisors: [],
       topicDisablement: true
     }
     this.handleCurriculumChange = this.handleCurriculumChange.bind(this)
@@ -38,11 +39,22 @@ class TopicAdd extends React.Component {
       .catch(error => {
         console.error(error)
       })
+    Api('GET', 'api/supervisors?all=true', {})
+      .then(results => {
+        // console.log(results)
+        const { supervisors } = results
+        this.setState({
+          supervisors
+        })
+      })
+      .catch(error => {
+        console.error(error)
+      })
   }
 
   handleCurriculumChange (value) {
     console.log(value)
-    Api('GET', 'api/topics?curriculumId=' + value + '&tab=topics&sub=registered&order=ascend&all=true', {})
+    Api('GET', 'api/topics?curriculumId=' + value + '&tab=topics&sub=defended&order=ascend&all=true', {})
       .then(results => {
         console.log(results)
         const { topics } = results
@@ -91,14 +103,21 @@ class TopicAdd extends React.Component {
             }
           })
           for (let i = 0; i < this.state.topics[this.state.topicIds.indexOf(value)].supervisors.length; i++) {
+            // console.log(this.state.topics[this.state.topicIds.indexOf(value)].supervisors[i].supervisor)
             if (this.state.topics[this.state.topicIds.indexOf(value)].supervisors[i].type === 'Main') {
-              console.log(this.state.topics[this.state.topicIds.indexOf(value)].supervisors[i].supervisor)
+              // console.log(this.state.topics[this.state.topicIds.indexOf(value)].supervisors[i].supervisor)
               this.props.form.setFields({
                 mainSupervisor: {
                   value: (this.state.topics[this.state.topicIds.indexOf(value)].supervisors[i].supervisor.profile.firstName + ' ' + this.state.topics[this.state.topicIds.indexOf(value)].supervisors[i].supervisor.profile.lastName)
                 }
               })
-            }
+            }/*  else if (this.state.topics[this.state.topicIds.indexOf(value)].supervisors[i].type === 'Co') {
+              this.props.form.setFields({
+                coSupervisors: {
+                  value: this.props.form.getFieldValue('coSupervisor') + (this.state.topics[this.state.topicIds.indexOf(value)].supervisors[i].supervisor.profile.firstName + ' ' + this.state.topics[this.state.topicIds.indexOf(value)].supervisors[i].supervisor.profile.lastName)
+                }
+              })
+            } */
           }
         } else {
           this.props.form.setFields({
@@ -117,7 +136,13 @@ class TopicAdd extends React.Component {
                   value: (this.state.topics[this.state.topicNames.indexOf(value)].supervisors[i].supervisor.profile.firstName + ' ' + this.state.topics[this.state.topicNames.indexOf(value)].supervisors[i].supervisor.profile.lastName)
                 }
               })
-            }
+            }/*  else if (this.state.topics[this.state.topicNames.indexOf(value)].supervisors[i].type === 'Co') {
+              this.props.form.setFields({
+                coSupervisors: {
+                  value: this.props.form.getFieldValue('coSupervisor') + ',' + (this.state.topics[this.state.topicNames.indexOf(value)].supervisors[i].supervisor.profile.firstName + ' ' + this.state.topics[this.state.topicNames.indexOf(value)].supervisors[i].supervisor.profile.lastName)
+                }
+              })
+            } */
           }
         }
         /*
@@ -139,11 +164,12 @@ class TopicAdd extends React.Component {
 
   render () {
     const curriculumsByType = (this.state.curriculums)
+    const supervisors = (this.state.supervisors)
     const topics = (this.state.topics)
     let topicDisablement = (this.state.topicDisablement)
-    // console.log(topicDisablement)
+    // console.log(this.state.supervisors)
 
-    const selectOptions = curriculumsByType.map(
+    const CurriculumOptions = curriculumsByType.map(
       types => {
         let options = types.collection.map(curriculum => {
           return (
@@ -153,6 +179,15 @@ class TopicAdd extends React.Component {
         return options
       }
     )
+
+    const SupervisorOptions = supervisors.map(
+      supervisor => {
+        return (
+          <Select.Option value={supervisor._id} key={supervisor._id}>{supervisor.supervisor}</Select.Option>
+        )
+      }
+    )
+    // console.log(SupervisorOptions)
 
     const {
       form: { getFieldDecorator },
@@ -176,7 +211,7 @@ class TopicAdd extends React.Component {
               rules: [{ required: true, message: 'Choose curriculum!' }]
             })(
               <Select placeholder="Choose curriculum" onChange={this.handleCurriculumChange}>
-                {selectOptions}
+                {CurriculumOptions}
               </Select>
             )}
           </FormItem>
@@ -209,8 +244,22 @@ class TopicAdd extends React.Component {
 
           <FormItem label="Juhendaja" labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
             {getFieldDecorator('mainSupervisor', {
-              rules: [{ required: false, message: 'Insert a main supervisor for chosen topic!' }]
-            })(<Input placeholder='Main Supervisor'/>)}
+              rules: [{ required: true, message: 'Insert a main supervisor for chosen topic!' }]
+            })(
+              <Select placeholder='Supervisor'>
+                {SupervisorOptions}
+              </Select>
+            )}
+          </FormItem>
+
+          <FormItem label="Kaasjuhendajad" labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
+            {getFieldDecorator('coSupervisors', {
+              rules: [{ required: false, message: 'Insert cosupervisors for chosen topic!', type: 'array' }]
+            })(
+              <Select mode='multiple' placeholder='Cosupervisors'>
+                {SupervisorOptions}
+              </Select>
+            )}
           </FormItem>
 
           <FormItem label="TLU email" labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
