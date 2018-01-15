@@ -1,5 +1,4 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
 // import Breadcrumbs from './Breadcrumbs'
 
 import PropTypes from 'prop-types'
@@ -18,7 +17,6 @@ class Page extends React.Component {
   }
 
   render () {
-    console.log(this.props.page)
     if (this.props.loading) return null
 
     return (
