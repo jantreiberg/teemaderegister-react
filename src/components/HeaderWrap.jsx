@@ -4,16 +4,31 @@ import { Link } from 'react-router-dom'
 import queryString from 'query-string'
 
 import setUrl from '../utils/setUrl'
-import { Form, Input, Layout, Button } from 'antd'
+import { UPLOAD_PATH } from 'config'
+import { Menu, Dropdown, Form, Input, Layout } from 'antd'
 
 const Search = Input.Search
 const { Header } = Layout
 
-const { bool, func, object, shape } = PropTypes
+const { arr, bool, func, object, shape, string } = PropTypes
 
 const propTypes = {
   auth: shape({
-    isAuthenticated: bool.isRequired
+    isAuthenticated: bool.isRequired,
+    user: shape({
+      profile: shape({
+        firstName: string,
+        lastName: string,
+        slug: string,
+        image: shape({
+          full: string
+        })
+      }).isRequired,
+      login: shape({
+        roles: arr
+      }).isRequired,
+      updatedAt: string.isRequired
+    }).isRequired
   }).isRequired,
   form: shape({
     getFieldDecorator: func.isRequired,
@@ -37,6 +52,15 @@ class HeaderWrap extends Component {
     if (q) {
       props.setSearch(q)
       this.defaultSearch = q
+    }
+
+    this.rolesMap = {
+      'admin': 'Admin',
+      'curriculum-manager': 'Curriculum manager',
+      'head-of-study': 'Head of study',
+      'student': 'Student',
+      'study-assistant': 'Study assistant',
+      'supervisor': 'Supervisor'
     }
   }
 
@@ -73,17 +97,68 @@ class HeaderWrap extends Component {
     )
   }
 
+  dropdownMenu ({ roles, slug, fullName }) {
+    const isSupervisor = roles && roles.includes('supervisor')
+
+    return (
+      <Menu className='headerWrapDropdownMenu'>
+        <Menu.Item className='noHover user-info'>
+          <span className='user-name'>{fullName}</span>
+          <ul className='user-roles'>
+            {roles.map((role, index) => (
+              <li key={index} >{this.rolesMap[role]}</li>
+            ))}
+          </ul>
+        </Menu.Item>
+        <Menu.Divider />
+        <Menu.Item>
+          <Link className='dashboard-link' to='/admin'>
+            <i className='anticon anticon-pie-chart icon--15'></i> Dashboard
+          </Link>
+        </Menu.Item>
+        <Menu.Divider />
+        {isSupervisor &&
+          <Menu.Item>
+            <Link to={ '/supervisor/' + slug }>
+              <i className='anticon anticon-user icon--15'></i> Profile
+            </Link>
+          </Menu.Item>}
+        <Menu.Item>
+          <Link to='/settings/account'>
+            <i className='anticon anticon-setting icon--15'></i> Settings
+          </Link>
+        </Menu.Item>
+        <Menu.Item>
+          <span className='link' onClick={this.props.logout}>
+            <i className='anticon anticon-logout icon--15'></i> Logout
+          </span>
+        </Menu.Item>
+      </Menu>
+    )
+  }
+
   render () {
     const {
-      auth: { isAuthenticated },
+      auth: {
+        isAuthenticated,
+        user: {
+          profile: { firstName, lastName, slug, image },
+          login: { roles },
+          updatedAt
+        }
+      },
       form: { getFieldDecorator }
     } = this.props
+
+    const userImage = image
+      ? `url(${UPLOAD_PATH + image.thumb}?updatedAt=${updatedAt})`
+      : 'none'
 
     return (
       <Header className='headerWrap'>
         <div className='headerWrap__wrapper'>
           <Link to='/'>
-            <div className='logo'>Te</div>
+            <div className='logo'>T</div>
           </Link>
           <div className='content'>
             <Form className='search'>
@@ -96,14 +171,25 @@ class HeaderWrap extends Component {
                 />
               )}
             </Form>
+            {isAuthenticated &&
+              <div className='navigationWrap'>
+                <Dropdown
+                  className='userDropdown'
+                  placement='bottomRight'
+                  trigger={['click']}
+                  overlay={this.dropdownMenu({
+                    roles,
+                    slug,
+                    fullName: firstName + ' ' + lastName
+                  })}
+                >
+                  <div className='userDropdown--icon' style={{backgroundImage: userImage}} />
+                </Dropdown>
+              </div>}
             {!isAuthenticated &&
               <div className='login'>
                 <Link to='/login'>Sign in</Link>
               </div>}
-            {isAuthenticated &&
-            <div className='login'>
-              <Button onClick={this.props.logout} ghost icon='logout' title='logout' />
-            </div>}
           </div>
         </div>
       </Header>

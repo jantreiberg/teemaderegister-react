@@ -1,6 +1,7 @@
 const CompressionPlugin = require('compression-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ContextReplacementPlugin = require('webpack/lib/ContextReplacementPlugin')
 const path = require('path')
 const webpack = require('webpack')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
@@ -79,7 +80,9 @@ const plugins = [
         test: /\.js$|\.css$|\.html$/,
         threshold: 10240, // only if file size > 10.24 kb
         minRatio: 0.8
-      }))
+      }),
+      new ContextReplacementPlugin(/moment[\/\\]locale$/, /et/)
+    )
     : null
 ].filter(p => p)
 
@@ -100,11 +103,20 @@ const rules = [
     }
   },
   {
-    test: /media\/([^/]*)\.(jpe?g|png|gif|svg)$/i,
+    test: /media\/(background|brand|personal)\/([^/]*)\.(jpe?g|png|gif|svg)$/i,
     use: [
       {
         loader: 'url-loader',
         options: { limit: 1024, name: 'media/[hash:10].[ext]' } // embed images size < 10kb
+      }
+    ]
+  },
+  {
+    test: /media\/favicons\/([^/]*)\.(png|svg|ico|json|xml)$/i,
+    use: [
+      {
+        loader: 'url-loader',
+        options: { limit: 1, name: '[name].[ext]' } // // do not embed favicons > 1b
       }
     ]
   },
@@ -154,7 +166,9 @@ module.exports = {
     app: [SRC_DIR + '/index.jsx']
   },
   plugins: plugins,
-  // externals: { jquery: "jQuery" }, jquery is external and available at the global variable jQuery
+  externals: {
+    config: JSON.stringify(require('./config.json'))
+  },
   module: {
     rules
   },

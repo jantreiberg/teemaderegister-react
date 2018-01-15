@@ -1,5 +1,5 @@
 .text-align {
-  
+
   &--center {
     text-align: center;
   }
@@ -19,3 +19,13 @@
   }
 }
 
+.width {
+  &--public-page {
+    margin: 0 auto;
+    max-width: 980px;
+    padding: 0 16px;
+  }
+  &--admin-page {
+    width: 100%;
+  }
+}

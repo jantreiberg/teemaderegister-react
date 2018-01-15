@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { PropTypes } from 'prop-types'
 import { Row, Col, Icon, Popover, Card } from 'antd'
-import { ResponsiveContainer, Tooltip, AreaChart, Area, XAxis } from 'recharts'
+import { ResponsiveContainer, Tooltip, AreaChart, PieChart, Area, Pie, XAxis, Cell, Legend } from 'recharts'
 
 const { object, shape, string } = PropTypes
 
@@ -19,6 +19,16 @@ const propTypes = {
 }
 
 class SupervisorMeta extends PureComponent {
+  componentWillMount () {
+    this.curriculumsChartColors = []
+    const abbreviations = Object.keys(this.props.count.abbreviations.chartData)
+    const mainRGB = '107,202,186'
+    abbreviations.map((key, index) => {
+      const opacity = 1 - (1 / abbreviations.length * index)
+      this.curriculumsChartColors.push(`rgba(${mainRGB}, ${opacity})`)
+    })
+  }
+
   renderTooltip (data) {
     if (!data.payload || !data.payload[0]) return null
     const { name, counts } = data.payload[0].payload
@@ -60,7 +70,8 @@ class SupervisorMeta extends PureComponent {
     const {
       count: {
         registered,
-        defended
+        defended,
+        abbreviations
       },
       data: {
         profile: {
@@ -74,7 +85,7 @@ class SupervisorMeta extends PureComponent {
     const imgSrc = `http://via.placeholder.com/150/b1e3da/ffffff/?text=${firstName[0]} ${lastName[0]}`
 
     return (
-      <div className='supervisorMeta'>
+      <div className='supervisorMeta width--public-page'>
         <Row className='supervisorMeta__row' gutter={24} type='flex'>
 
           <Col sm={13} md={12} className='profile'>
@@ -109,80 +120,123 @@ class SupervisorMeta extends PureComponent {
         </Row>
 
         <div className='supervisorMeta__chart'>
-          <Card className='card card--supervising'>
-            <span className='card__title'>
-              Supervising <br /> today
-            </span>
 
-            <span className='card__count'>
-              <Popover
-                content={this.renderPopover(registered.types)}
-                placement='right'
-              >
-                {registered.all}
-                <Icon className='card__count__icon' type='info-circle-o' />
-              </Popover>
-            </span>
-            <br />
-          </Card>
+          <Row>
+            <Col xs={12} sm={4} md={3}>
+              <Card className='card card--supervising'>
+                <span className='card__title'>
+                  Supervising <br /> today
+                </span>
 
-          <Card className='card card--chart'>
-            <ResponsiveContainer height={103}>
-              <AreaChart
-                data={defended.chartData}
-                margin={{ top: 5, right: 5, bottom: 5, left: 120 }}
-              >
-                <defs>
-                  <linearGradient id='colorPv' x1='0' y1='0' x2='0' y2='1'>
-                    <stop
-                      offset='05%'
-                      stopColor='rgb(107,202,186)'
-                      stopOpacity={0.8}
+                <span className='card__count'>
+                  <Popover
+                    content={this.renderPopover(registered.types)}
+                    placement='right'
+                  >
+                    {registered.all}
+                    <Icon className='card__count__icon' type='info-circle-o' />
+                  </Popover>
+                </span>
+                <br />
+              </Card>
+            </Col>
+            <Col xs={12} sm={4} md={3}>
+              <Card className='card card--supervised'>
+                <span className='card__title'>
+                  Total <br />supervised
+                </span>
+                <span className='card__count'>
+                  <Popover
+                    content={this.renderPopover(defended.types)}
+                    placement='right'
+                  >
+                    {defended.all}
+                    <Icon className='card__count__icon' type='info-circle-o' />
+                  </Popover>
+                </span>
+                <br />
+              </Card>
+            </Col>
+            <Col xs={24} sm={8} md={12}>
+              <Card className='card card--chart'>
+                <ResponsiveContainer height={103}>
+                  <AreaChart
+                    data={defended.chartData}
+                    margin={{ top: 5, right: 5, bottom: 5, left: 5 }}
+                  >
+                    <defs>
+                      <linearGradient id='colorPv' x1='0' y1='0' x2='0' y2='1'>
+                        <stop
+                          offset='05%'
+                          stopColor='rgb(107,202,186)'
+                          stopOpacity={0.8}
+                        />
+                        <stop
+                          offset='95%'
+                          stopColor='rgb(107,202,186)'
+                          stopOpacity={0}
+                        />
+                      </linearGradient>
+                    </defs>
+                    <Tooltip
+                      content={this.renderTooltip}
+                      cursor={false}
+                      active
                     />
-                    <stop
-                      offset='95%'
-                      stopColor='rgb(107,202,186)'
-                      stopOpacity={0}
+                    <Area
+                      type='monotone'
+                      dataKey='counts.all'
+                      stroke='rgb(107,202,186)'
+                      fillOpacity={1}
+                      fill='url(#colorPv)'
+                      animationDuration={500}
+                      animationEasing='ease-out'
                     />
-                  </linearGradient>
-                </defs>
-                <Tooltip
-                  content={this.renderTooltip}
-                  cursor={false}
-                  active
-                />
-                <Area
-                  type='monotone'
-                  dataKey='counts.all'
-                  stroke='rgb(107,202,186)'
-                  fillOpacity={1}
-                  fill='url(#colorPv)'
-                />
-                <XAxis
-                  dataKey='name'
-                  tickSize={8}
-                  tickLine={false}
-                  axisLine={false}
-                  tick={{ color: '#6BCABA' }}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
+                    <XAxis
+                      dataKey='name'
+                      tickSize={8}
+                      tickLine={false}
+                      axisLine={false}
+                      tick={{ color: '#6BCABA' }}
+                    />
+                  </AreaChart>
 
-            <div className='card card--supervised'>
-              <span className='card__title'>
-                Total <br />supervised
-              </span>
-              <span className='card__count'>
-                <Popover
-                  content={this.renderPopover(defended.types)}
-                  placement='right'
-                >
-                  {defended.all}
-                  <Icon className='card__count__icon' type='info-circle-o' />
-                </Popover>
-              </span>
-            </div>
-          </Card>
+                </ResponsiveContainer>
+              </Card>
+            </Col>
+            <Col xs={24} sm={8} md={6}>
+              <Card className='card card--curriculums'>
+                <ResponsiveContainer height={118}>
+                  <Row>
+                    <Col xs={{span: 16, offset: 3}} sm={{span: 24, offset: 0}}>
+                      <PieChart width={235} height={118} className='pie-chart'>
+                        <Pie
+                          startAngle={90}
+                          endAngle={-360}
+                          data={abbreviations.chartData}
+                          dataKey='counts'
+                          cx={70}
+                          cy={55}
+                          innerRadius={25}
+                          outerRadius={50}
+                          animationDuration={500}
+                          animationEasing='ease-out'
+                        >
+                          { abbreviations.chartData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={this.curriculumsChartColors[index]}/>
+                          )) }
+                        </Pie>
+                        <Legend layout='vertical' verticalAlign='middle' align='right' />
+                        <Tooltip/>
+                      </PieChart>
+                    </Col>
+                  </Row>
+
+                </ResponsiveContainer>
+              </Card>
+            </Col>
+          </Row>
+
         </div>
       </div>
     )
