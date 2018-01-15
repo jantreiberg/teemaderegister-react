@@ -12,9 +12,9 @@ const propTypes = {
   page: object.isRequired
 }
 
-class Page extends React.Component {
+class Tos extends React.Component {
   componentDidMount () {
-    this.props.getPage('page')
+    this.props.getPage('tos')
   }
 
   render () {
@@ -26,6 +26,6 @@ class Page extends React.Component {
   }
 }
 
-Page.propTypes = propTypes
+Tos.propTypes = propTypes
 
-export default Page
+export default Tos

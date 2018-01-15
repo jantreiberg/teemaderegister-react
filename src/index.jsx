@@ -97,7 +97,7 @@ render(
             <a href={links.project}><Icon type='github' /> Teemaderegister</a>{' · '}
             Created by <a href={links.creator}>Romil Rõbtšenkov</a><br/>
             Code licensed under <a href={links.license}>MIT License</a><br/>
-            <a href='/pages/contacts'>Contact</a><br/>
+            <a href='/pages/contacts'>Contacts</a> <a href='/pages/tos'> Terms of Service</a><br/>
             Content © 2010-{new Date().getFullYear()} <a href={links.contet}>Tallinn University</a>
           </Footer>
         </Layout>
