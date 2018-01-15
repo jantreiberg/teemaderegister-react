@@ -12,20 +12,20 @@ const propTypes = {
   page: object.isRequired
 }
 
-class Page extends React.Component {
+class Contact extends React.Component {
   componentDidMount () {
-    this.props.getPage('page')
+    this.props.getPage('contacts')
   }
 
   render () {
-    // if (this.props.loading) return null
+    if (this.props.loading) return null
     const html = this.props.page.page.content
     return (
-      <body>{ ReactHtmlParser(html) }</body>
+      <div>{ ReactHtmlParser(html) }</div>
     )
   }
 }
 
-Page.propTypes = propTypes
+Contact.propTypes = propTypes
 
-export default Page
+export default Contact
