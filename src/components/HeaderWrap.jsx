@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { Link } from 'react-router-dom'
 import queryString from 'query-string'
+import {FormattedMessage} from 'react-intl'
 
 import setUrl from '../utils/setUrl'
 import { UPLOAD_PATH } from 'config'
@@ -188,7 +189,11 @@ class HeaderWrap extends Component {
               </div>}
             {!isAuthenticated &&
               <div className='login'>
-                <Link to='/login'>Sign in</Link>
+                <Link to='/login'>
+                  <FormattedMessage
+                    id='loginDetail'
+                    defaultMessage='Sign in' />
+                </Link>
               </div>}
           </div>
         </div>

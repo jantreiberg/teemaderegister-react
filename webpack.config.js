@@ -6,6 +6,7 @@ const path = require('path')
 const webpack = require('webpack')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin
+const ReactIntlPlugin = require('react-intl-webpack-plugin')
 
 const BUILD_DIR = path.resolve(__dirname, './dist')
 const SRC_DIR = path.resolve(__dirname, './src')
@@ -40,6 +41,7 @@ const themeVariables = lessToJs(
 themeVariables['@icon-url'] = '\'/fonts/iconfont\''
 
 const plugins = [
+  new ReactIntlPlugin(),
   VISUALIZE
     ? new BundleAnalyzerPlugin({
       analyzerMode: 'static'
@@ -91,13 +93,20 @@ const rules = [
     test: /\.jsx?$/,
     exclude: /node_modules/,
     use: {
-      loader: 'babel-loader',
+      loader: 'babel-loader?cacheDirectory&cacheIdentifier=' + Math.random(),
       options: {
-        presets: ['latest', 'react', 'stage-0'],
+        'cacheDirectory': false,
+        'metadataSubscribers': [ReactIntlPlugin.metadataContextFunctionName],
+        presets: ['latest', 'react', 'es2015', 'stage-0'],
         plugins: [
+          'transform-runtime',
           'transform-object-rest-spread',
           'transform-do-expressions',
-          ['import', { libraryName: 'antd', style: true }]
+          ['import', { libraryName: 'antd', style: true }],
+          ['react-intl', {
+            'messagesDir': 'dist/intl/extractedMessages',
+            'enforceDescriptions': false
+          }]
         ]
       }
     }

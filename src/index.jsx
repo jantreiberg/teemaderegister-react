@@ -2,6 +2,9 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { Route, Switch, BrowserRouter, browserHistory } from 'react-router-dom'
+import {IntlProvider, addLocaleData} from 'react-intl'
+import etLocaleData from 'react-intl/locale-data/et'
+// import etMessages from './intl/HeaderWrap-en-et_ee-C.json'
 
 import {
   INDEX_PATH,
@@ -51,53 +54,61 @@ const links = {
   contet: 'https://www.tlu.ee'
 }
 
+let messages = {}
+// messages.et = etMessages
+const currentLang = navigator.language
+console.log('currentLang: ', currentLang)
+addLocaleData(etLocaleData)
+
 initAnalytics()
 
 render(
   <Provider store={store}>
-    <BrowserRouter history={browserHistory}>
-      <LocaleProvider locale={etEE}>
-        <Layout className='layout'>
-          <Route component={HeaderWrapContainer} />
-          <Content>
-            <div className='layout__content'>
-              <Switch>
-                <Route exact path={INDEX_PATH}
-                  component={RouteWrapContainer(HomeContainer)} />
-                <Route exact path={LOGIN_PATH}
-                  component={RouteWrapContainer(LoginContainer)} />
-                <Route path={SEARCH_PATH}
-                  component={RouteWrapContainer(SearchContainer)} />
-                <Route path={CURRICULUM_ADD_PATH}
-                  component={RouteWrapContainer(CurriculumAddContainer, { restrict: true })} />
-                <Route path={CURRICULUM_PATH}
-                  component={RouteWrapContainer(CurriculumContainer)} />
-                <Route path={SUPERVISOR_PATH}
-                  component={RouteWrapContainer(SupervisorContainer)} />
-                <Route path={ADMIN_PATH}
-                  component={RouteWrapContainer(AdminContainer, {restrict: true})} />
-                <Route path={SETTINGS_ACCOUNT_PATH}
-                  component={RouteWrapContainer(SettingsAccountContainer, {restrict: true})} />
-                <Route path={SETTINGS_PASSWORD_PATH}
-                  component={RouteWrapContainer(SettingsPasswordContainer, {restrict: true})} />
-                <Route path={ACCOUNT_FORGOT}
-                  component={RouteWrapContainer(AccountForgotContainer)} />
-                <Route path={ACCOUNT_PASSWORD}
-                  component={RouteWrapContainer(AccountPasswordContainer)} />
-                <Route
-                  component={RouteWrapContainer(NotFound)} />
-              </Switch>
-            </div>
-          </Content>
-          <Footer className='layout__footer'>
-            <a href={links.project}><Icon type='github' /> Teemaderegister</a>{' · '}
+    <IntlProvider locale={currentLang} messages={messages[currentLang]}>
+      <BrowserRouter history={browserHistory}>
+        <LocaleProvider locale={etEE}>
+          <Layout className='layout'>
+            <Route component={HeaderWrapContainer} />
+            <Content>
+              <div className='layout__content'>
+                <Switch>
+                  <Route exact path={INDEX_PATH}
+                    component={RouteWrapContainer(HomeContainer)} />
+                  <Route exact path={LOGIN_PATH}
+                    component={RouteWrapContainer(LoginContainer)} />
+                  <Route path={SEARCH_PATH}
+                    component={RouteWrapContainer(SearchContainer)} />
+                  <Route path={CURRICULUM_ADD_PATH}
+                    component={RouteWrapContainer(CurriculumAddContainer, { restrict: true })} />
+                  <Route path={CURRICULUM_PATH}
+                    component={RouteWrapContainer(CurriculumContainer)} />
+                  <Route path={SUPERVISOR_PATH}
+                    component={RouteWrapContainer(SupervisorContainer)} />
+                  <Route path={ADMIN_PATH}
+                    component={RouteWrapContainer(AdminContainer, {restrict: true})} />
+                  <Route path={SETTINGS_ACCOUNT_PATH}
+                    component={RouteWrapContainer(SettingsAccountContainer, {restrict: true})} />
+                  <Route path={SETTINGS_PASSWORD_PATH}
+                    component={RouteWrapContainer(SettingsPasswordContainer, {restrict: true})} />
+                  <Route path={ACCOUNT_FORGOT}
+                    component={RouteWrapContainer(AccountForgotContainer)} />
+                  <Route path={ACCOUNT_PASSWORD}
+                    component={RouteWrapContainer(AccountPasswordContainer)} />
+                  <Route
+                    component={RouteWrapContainer(NotFound)} />
+                </Switch>
+              </div>
+            </Content>
+            <Footer className='layout__footer'>
+              <a href={links.project}><Icon type='github' /> Teemaderegister</a>{' · '}
             Created by <a href={links.creator}>Romil Rõbtšenkov</a><br/>
             Code licensed under <a href={links.license}>MIT License</a><br/>
             Content © 2010-{new Date().getFullYear()} <a href={links.contet}>Tallinn University</a>
-          </Footer>
-        </Layout>
-      </LocaleProvider>
-    </BrowserRouter>
+            </Footer>
+          </Layout>
+        </LocaleProvider>
+      </BrowserRouter>
+    </IntlProvider>
   </Provider>,
   document.getElementById('main')
 )
