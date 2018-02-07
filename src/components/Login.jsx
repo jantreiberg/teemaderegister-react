@@ -90,13 +90,13 @@ class Login extends React.Component {
     }
 
     return (
-      <div className='login'>
+      <div className='login width--public-page'>
         <Breadcrumbs crumbs={crumbs} />
         <Row gutter={8}>
           <Col span={8} />
           <Col xs={24} sm={8}>
             <Form onSubmit={this.submit} className='form--narrow'>
-              <h2 className='text-align-center'>
+              <h2 className='text-align--center'>
                 Sign in to <span className='emphisize'>Te</span>
               </h2>
               <FormItem>

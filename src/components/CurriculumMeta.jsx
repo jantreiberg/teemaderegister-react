@@ -57,7 +57,7 @@ class CurriculumMeta extends PureComponent {
     const metaBackGround = { backgroundImage: `url(${this.colorMap[type]})` }
 
     return (
-      <div className='curriculumMeta' style={metaBackGround}>
+      <div className='curriculumMeta width--public-page' style={metaBackGround}>
         <h1>{names.et}</h1>
         <h3>{abbreviation} | {names.en}</h3>
         <h4>{this.typeMap[type]} - {languageList}</h4>

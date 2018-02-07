@@ -4,19 +4,31 @@ import { Link } from 'react-router-dom'
 import queryString from 'query-string'
 
 import setUrl from '../utils/setUrl'
+import { UPLOAD_PATH } from 'config'
 import { Menu, Dropdown, Form, Input, Layout } from 'antd'
-
-import personalCenter from '../media/personal/personal-center.svg'
 
 const Search = Input.Search
 const { Header } = Layout
 
-const { bool, func, object, shape } = PropTypes
+const { arr, bool, func, object, shape, string } = PropTypes
 
 const propTypes = {
   auth: shape({
     isAuthenticated: bool.isRequired,
-    user: object.isRequired
+    user: shape({
+      profile: shape({
+        firstName: string,
+        lastName: string,
+        slug: string,
+        image: shape({
+          full: string
+        })
+      }).isRequired,
+      login: shape({
+        roles: arr
+      }).isRequired,
+      updatedAt: string.isRequired
+    }).isRequired
   }).isRequired,
   form: shape({
     getFieldDecorator: func.isRequired,
@@ -86,6 +98,8 @@ class HeaderWrap extends Component {
   }
 
   dropdownMenu ({ roles, slug, fullName }) {
+    const isSupervisor = roles && roles.includes('supervisor')
+
     return (
       <Menu className='headerWrapDropdownMenu'>
         <Menu.Item className='noHover user-info'>
@@ -103,20 +117,20 @@ class HeaderWrap extends Component {
           </Link>
         </Menu.Item>
         <Menu.Divider />
-        {roles.includes('supervisor') &&
+        {isSupervisor &&
           <Menu.Item>
             <Link to={ '/supervisor/' + slug }>
-              <i className="anticon anticon-user icon--15"></i> Profile
+              <i className='anticon anticon-user icon--15'></i> Profile
             </Link>
           </Menu.Item>}
         <Menu.Item>
           <Link to='/settings/account'>
-            <i className="anticon anticon-setting icon--15"></i> Settings
+            <i className='anticon anticon-setting icon--15'></i> Settings
           </Link>
         </Menu.Item>
         <Menu.Item>
           <span className='link' onClick={this.props.logout}>
-            <i className="anticon anticon-logout icon--15"></i> Logout
+            <i className='anticon anticon-logout icon--15'></i> Logout
           </span>
         </Menu.Item>
       </Menu>
@@ -125,11 +139,20 @@ class HeaderWrap extends Component {
 
   render () {
     const {
-      auth: { isAuthenticated, user: { roles, slug, fullName } },
+      auth: {
+        isAuthenticated,
+        user: {
+          profile: { firstName, lastName, slug, image },
+          login: { roles },
+          updatedAt
+        }
+      },
       form: { getFieldDecorator }
     } = this.props
 
-    const userImage = { backgroundImage: `url(${personalCenter})` }
+    const userImage = image
+      ? `url(${UPLOAD_PATH + image.thumb}?updatedAt=${updatedAt})`
+      : 'none'
 
     return (
       <Header className='headerWrap'>
@@ -154,9 +177,13 @@ class HeaderWrap extends Component {
                   className='userDropdown'
                   placement='bottomRight'
                   trigger={['click']}
-                  overlay={this.dropdownMenu({ roles, slug, fullName })}
+                  overlay={this.dropdownMenu({
+                    roles,
+                    slug,
+                    fullName: firstName + ' ' + lastName
+                  })}
                 >
-                  <div className='userDropdown--icon' style={userImage} />
+                  <div className='userDropdown--icon' style={{backgroundImage: userImage}} />
                 </Dropdown>
               </div>}
             {!isAuthenticated &&

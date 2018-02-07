@@ -122,13 +122,13 @@ class AddCurriculum extends React.Component {
     const { representatives, fetching } = this.state
 
     return (
-      <div className='curriculumAdd'>
+      <div className='curriculumAdd width--public-page'>
         <Breadcrumbs crumbs={crumbs} />
         <Row gutter={8}>
           <Col span={8} />
           <Col xs={24} sm={8}>
             <Form onSubmit={this.submit} className='form--narrow'>
-              <h2 className='text-align-center'>Lisa õppekava</h2>
+              <h2 className='text-align--center'>Lisa õppekava</h2>
               <FormItem label='Abbreviation'>
                 {getFieldDecorator('abbreviation', {
                   rules: [{ required: true, message: 'Please input your abbreviation!' }]
@@ -159,7 +159,7 @@ class AddCurriculum extends React.Component {
                     <Select
                       showSearch
                       labelInValue
-                      notFoundContent={fetching ? <Spin size="small" /> : null}
+                      notFoundContent={fetching ? <Spin size='small' /> : null}
                       filterOption={false}
                       onSearch={this.fetchUsers}
                       style={{ width: '100%' }}

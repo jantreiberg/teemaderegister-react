@@ -4,7 +4,7 @@ const INITIAL_STATE = {
   meta: {},
   loading: true,
   hasError: false,
-  err: {}
+  err: {},
   form: {
     loading: false,
     curriculum: {},

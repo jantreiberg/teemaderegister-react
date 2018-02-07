@@ -204,7 +204,7 @@ class TableWrap extends React.Component {
     } = this.props
 
     return (
-      <div className='tableWrap'>
+      <div className='tableWrap width--public-page'>
         <TabsWrap
           activeSub={sub}
           activeTab={tab}

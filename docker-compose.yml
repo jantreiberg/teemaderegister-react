@@ -25,6 +25,7 @@ services:
       - "8080:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ../teemaderegister-be/data/uploads:/var/www/teemaderegister-be/data/uploads
 
 networks:
   main:

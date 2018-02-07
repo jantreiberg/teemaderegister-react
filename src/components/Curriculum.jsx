@@ -56,7 +56,7 @@ class Curriculum extends React.Component {
     } = this.props
 
     return (
-      <div className='curriculum'>
+      <div className='curriculum width--public-page'>
         {hasError &&
           <div style={{
             textAlign: 'center',

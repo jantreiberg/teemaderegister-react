@@ -1,17 +1,13 @@
 .layout {
   background-color: #fff;
 
-  &__content { 
+  &__content {
     background: #fff;
-    max-width: 980px;
-    min-height: 280;
-    margin: 0 auto;
-    padding: 0 16px;
+    min-height: 280px;
   }
 
   &__footer {
     background-color: #fff;
-    text-align: center;    
+    text-align: center;
   }
-
 }

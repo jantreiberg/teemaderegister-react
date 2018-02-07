@@ -1,7 +1,11 @@
 import * as types from '../constants/ActionTypes'
 
 const INITIAL_STATE = {
-  user: {},
+  user: {
+    profile: {},
+    login: {},
+    updatedAt: ''
+  },
   isAuthenticated: false,
   authInProgress: false
 }
@@ -19,7 +23,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isAuthenticated: true,
-        user: user,
+        user,
         authInProgress: false
       }
 

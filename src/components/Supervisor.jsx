@@ -95,7 +95,7 @@ class Supervisor extends React.Component {
 
     console.log(err)
     return (
-      <div className='supervisor'>
+      <div className='supervisor width--public-page'>
 
         {hasError &&
         <div style={{
@@ -120,7 +120,7 @@ class Supervisor extends React.Component {
             fontFamily: 'Helvetica Neue For Number'
           }}>
               Please check the address or contact the administrator
-            </h3>
+          </h3>
         </div>
         }
 
