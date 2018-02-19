@@ -3,11 +3,21 @@ import * as types from '../constants/ActionTypes'
 const INITIAL_STATE = {
   loading: false,
   hasError: false,
+  curriculums: [],
   error: {}
 }
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case types.CURRICULUMSNAMES_LOADED: {
+      const { curriculums } = action
+      return {
+        ...state,
+        curriculums,
+        loading: false
+      }
+    }
+
     case types.TOPIC_ADD_START:
       return {
         ...state,

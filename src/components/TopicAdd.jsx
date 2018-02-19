@@ -1,40 +1,46 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Breadcrumbs from './Breadcrumbs'
-import { Row, Col, Form, Input, Button, message, Select, Spin, Checkbox, Tooltip } from 'antd'
+import { Row, Col, Form, Input, Button, Select, Spin, Tooltip } from 'antd'
 import debounce from 'lodash.debounce'
 import { setDocTitle } from '../utils/Helpers'
 
-import { FACULTY } from 'config'
 import { TOPIC_TYPES } from '../constants/TopicTypes'
 
 import Api from '../utils/Api'
-import { SUPERVISOR_TOPICFORM_URL } from '../constants/ApiConstants'
+import { SUPERVISOR_CURRICULUMFORM_URL } from '../constants/ApiConstants'
 
 const Option = Select.Option
 const FormItem = Form.Item
-const CheckboxGroup = Checkbox.Group
 
 const { bool, func, object, shape, string } = PropTypes
 
-const propTypes = {
+const children = []
+for (let i = 10; i < 36; i++) {
+  children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>)
+}
 
+function handleChange (value) {
+  console.log(`selected ${value}`)
+}
+
+const propTypes = {
   form: shape({
     getFieldDecorator: func.isRequired,
     getFieldInstance: func.isRequired,
     validateFields: func.isRequired
   }).isRequired,
-  initTopic: func.isRequired,
+  getCurriculums: func.isRequired,
   location: shape({
     pathname: string.isRequired
   }).isRequired,
-  topicForm: shape({
-    topic: object.isRequired,
+  topic: shape({
     error: object.isRequired,
     loading: bool.isRequired,
     hasError: bool.isRequired
   }).isRequired,
   triggerAddTopic: func.isRequired
+
 }
 
 class AddTopic extends React.Component {
@@ -47,14 +53,14 @@ class AddTopic extends React.Component {
     this.fetchUsers = debounce(this.fetchUsers.bind(this), 500)
     this.submit = this.submit.bind(this)
     this.languagesChanged = this.languagesChanged.bind(this)
-
+    console.log(props)
     this.state = {
-      representatives: [],
+      supervisors: [],
       fetching: false
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  /*  componentWillReceiveProps (nextProps) {
     const { topicForm } = this.props
     const { topic, error, loading, hasError } = nextProps.topicForm
 
@@ -68,13 +74,11 @@ class AddTopic extends React.Component {
       }
     }
   }
+  */
 
   componentDidMount () {
+    this.props.getCurriculums()
     setDocTitle('Add Topic')
-  }
-
-  componentWillUnmount () {
-    this.props.initTopic()
   }
 
   languagesChanged (values) {
@@ -85,13 +89,13 @@ class AddTopic extends React.Component {
     if (!value) return
 
     this.setState({ fetching: true }, () => {
-      Api('GET', SUPERVISOR_TOPICFORM_URL, { params: { q: value } })
+      Api('GET', SUPERVISOR_CURRICULUMFORM_URL, { params: { q: value } })
         .then(body => {
-          const representatives = body.supervisors.map(user => ({
+          const supervisors = body.supervisors.map(user => ({
             text: user.fullName,
             value: user._id
           }))
-          this.setState({ representatives, fetching: false })
+          this.setState({ supervisors, fetching: false })
         })
     })
   }
@@ -104,7 +108,7 @@ class AddTopic extends React.Component {
       this.props.triggerAddTopic({
         ...values,
         languages: this.languagesValues,
-        representative: values.representative.key,
+        supervisor: values.supervisor.key,
         names: { et: values.nameEt, en: values.nameEn },
         nameEt: undefined,
         nameEn: undefined
@@ -115,11 +119,11 @@ class AddTopic extends React.Component {
   render () {
     const {
       form: { getFieldDecorator },
-      topicForm: { loading }
+      topic: { loading }
     } = this.props
 
     const crumbs = [{ url: null, name: 'Lisa teema' }]
-    const { representatives, fetching } = this.state
+    const { supervisors, fetching } = this.state
 
     return (
       <div className='topicAdd'>
@@ -128,33 +132,38 @@ class AddTopic extends React.Component {
           <Col span={8} />
           <Col xs={24} sm={8}>
             <Form onSubmit={this.submit} className='form--narrow'>
-              <h2 className='text-align-center'>Lisa õppekava</h2>
-              <FormItem label='Abbreviation'>
-                {getFieldDecorator('abbreviation', {
-                  rules: [{ required: true, message: 'Please input your abbreviation!' }]
+              <h2 className='text-align-center'>Lisa teema</h2>
+              <FormItem label='Title'>
+                {getFieldDecorator('title', {
+                  rules: [{ required: true, message: 'Please input your title!' }]
                 })(
-                  <Input id='abbreviation' />
+                  <Input id='title' />
                 )}
               </FormItem>
-              <FormItem label='Type'>
-                {getFieldDecorator('type', {
-                  rules: [{ required: true, message: 'Please select type!' }]
+              <FormItem label='Title Eng'>
+                {getFieldDecorator('titleEng', {
+                  rules: [{ required: true, message: 'Please input your title!' }]
                 })(
-                  <Select>
-                    {TOPIC_TYPES.map(function (type) {
-                      return <Option key={type} value={type}>{type}</Option>
-                    })}
-                  </Select>
+                  <Input id='titleEng' />
                 )}
               </FormItem>
-              <FormItem label='Representative'>
+              <FormItem label='Description'>
+                {getFieldDecorator('description', {
+                  rules: [{ required: true, message: 'Please input your description!' }]
+                })(
+                  <div>
+                    <Input id='description' />
+                  </div>
+                )}
+              </FormItem>
+              <FormItem label='Supervisor'>
                 <Tooltip
                   placement='topLeft'
                   title='Start typing name'
                   trigger='focus'
                 >
-                  {getFieldDecorator('representative', {
-                    rules: [{ required: true, message: 'Please select represantive!' }]
+                  {getFieldDecorator('supervisor', {
+                    rules: [{ required: true, message: 'Please select supervisor!' }]
                   })(
                     <Select
                       showSearch
@@ -164,47 +173,42 @@ class AddTopic extends React.Component {
                       onSearch={this.fetchUsers}
                       style={{ width: '100%' }}
                     >
-                      {representatives.map(d => <Option key={d.value}>{d.text}</Option>)}
+                      {supervisors.map(d => <Option key={d.value}>{d.text}</Option>)}
                     </Select>
                   )}
                 </Tooltip>
               </FormItem>
-              <FormItem label='Faculty'>
-                {getFieldDecorator('faculty', {
-                  rules: [{ required: true, message: 'Please input faculty!' }],
-                  initialValue: FACULTY
+              <FormItem label='Curriculums'>
+                {getFieldDecorator('curriculums', {
+                  rules: [{ required: true, message: 'Please select curriculums!' }]
                 })(
-                  <Input disabled/>
+                  <Select
+                    mode='multiple'
+                    style={{ width: '100%' }}
+                    placeholder='Please select'
+                    onChange={handleChange}
+                  >
+                    {this.props.topic.curriculums.map(function (c) {
+                      return <Option key={c._id} value={c._id}>{c.names.et}</Option>
+                    })}
+                  </Select>
                 )}
               </FormItem>
-              <FormItem label='Languages'>
-                {getFieldDecorator('languages', {
-                  rules: [{ required: true, message: 'Please select language!' }]
+              <FormItem label='Type'>
+                {getFieldDecorator('types', {
+                  rules: [{ required: true, message: 'Please select type!' }]
                 })(
-                  <CheckboxGroup
-                    options={this.languages}
-                    onChange={this.languagesChanged}
-                  />
-                )}
-              </FormItem>
-              <FormItem label='Name ET'>
-                {getFieldDecorator('nameEt', {
-                  rules: [
-                    { required: true, message: 'Please input name!' },
-                    { min: 3, message: 'Name has to be atleast 3 chars long!' }
-                  ]
-                })(
-                  <Input/>
-                )}
-              </FormItem>
-              <FormItem label='Name EN'>
-                {getFieldDecorator('nameEn', {
-                  rules: [
-                    { required: true, message: 'Please input name!' },
-                    { min: 3, message: 'Name has to be atleast 3 chars long!' }
-                  ]
-                })(
-                  <Input/>
+                  <Select
+                    mode='multiple'
+                    style={{ width: '100%' }}
+                    placeholder='Please select'
+                    initialValue={['a10', 'c12']}
+                    onChange={handleChange}
+                  >
+                    {TOPIC_TYPES.map(function (types) {
+                      return <Option key={types} value={types}>{types}</Option>
+                    })}
+                  </Select>
                 )}
               </FormItem>
               <FormItem>
