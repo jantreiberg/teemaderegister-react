@@ -9,6 +9,8 @@ import {
 export const triggerAddTopic = (values) => dispatch => {
   dispatch({ type: types.TOPIC_ADD_START })
 
+  console.log('topicactions rida 12', values)
+
   return Api('POST', TOPICS_URL, { data: values })
     .then(data => {
       const { topic } = data

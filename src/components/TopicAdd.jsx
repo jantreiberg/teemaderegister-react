@@ -103,6 +103,8 @@ class AddTopic extends React.Component {
   submit (e) {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
+      console.log('tere', values)
+
       if (err) return
 
       this.props.triggerAddTopic({
