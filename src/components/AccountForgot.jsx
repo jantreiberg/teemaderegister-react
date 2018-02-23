@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Breadcrumbs from './Breadcrumbs'
 import { Row, Col, Form, Icon, Input, Button, message } from 'antd'
 import { setDocTitle } from '../utils/Helpers'
+import {FormattedMessage} from 'react-intl'
 const FormItem = Form.Item
 
 const { func, object, shape, bool, string } = PropTypes
@@ -84,7 +85,11 @@ class AccountForgot extends React.Component {
           <Col span={8} />
           <Col xs={24} sm={8}>
             <Form onSubmit={this.submit} className='form--narrow'>
-              <h2 className='text-align--center'>Request password reset</h2>
+              <h2 className='text-align--center'>
+                <FormattedMessage
+                  id='passReset'
+                  defaultMessage='Request password reset' />
+              </h2>
               <FormItem>
                 {getFieldDecorator('email', {
                   rules: [

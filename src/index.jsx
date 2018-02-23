@@ -4,6 +4,8 @@ import { Provider } from 'react-redux'
 import { Route, Switch, BrowserRouter, browserHistory } from 'react-router-dom'
 import {IntlProvider, addLocaleData} from 'react-intl'
 import etLocaleData from 'react-intl/locale-data/et'
+import en from 'react-intl/locale-data/en'
+import etMessages from './intl./..'
 // import etMessages from './intl/HeaderWrap-en-et_ee-C.json'
 
 import {
@@ -55,10 +57,10 @@ const links = {
 }
 
 let messages = {}
-// messages.et = etMessages
+messages.et = etMessages
 const currentLang = navigator.language
 console.log('currentLang: ', currentLang)
-addLocaleData(etLocaleData)
+addLocaleData([etLocaleData, ...en])
 
 initAnalytics()
 

@@ -4,6 +4,7 @@ import moment from 'moment'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import queryString from 'query-string'
 import reactStringReplace from 'react-string-replace'
+import {FormattedMessage} from 'react-intl'
 
 import { message, Badge, Tooltip, Icon } from 'antd'
 
@@ -22,7 +23,9 @@ const typesMap = {
 }
 
 const accepted = ({ columnKey, order }) => ({
-  title: 'Added',
+  title: <FormattedMessage
+    id='tableHeaderAdded'
+    defaultMessage='Added1 ' />,
   className: 'text-align--right',
   dataIndex: 'accepted',
   key: 'accepted',
@@ -32,7 +35,9 @@ const accepted = ({ columnKey, order }) => ({
 })
 
 const author = ({ columnKey, order, q }) => ({
-  title: 'Author',
+  title: <FormattedMessage
+    id='tableHeaderAuthor'
+    defaultMessage='Author1 ' />,
   dataIndex: 'author',
   key: 'author',
   sortOrder: columnKey === 'author' && order,
@@ -77,7 +82,9 @@ const curriculums = ({ curriculums }) => ({
 })
 
 const defended = ({ columnKey, order }) => ({
-  title: 'Defended',
+  title: <FormattedMessage
+    id='tableHeaderDefended'
+    defaultMessage='Defended1 ' />,
   className: 'text-align--right',
   dataIndex: 'defended',
   key: 'defended',
@@ -90,7 +97,9 @@ const detailCurriculums = () => ({
   className: 'text-align--left',
   dataIndex: 'curriculums',
   key: 'curriculums',
-  title: 'Curriculum',
+  title: <FormattedMessage
+    id='tableHeaderCurriculum'
+    defaultMessage='Curriculum1 ' />,
   render: curriculums => {
     if (curriculums.length === 0) return null
     return curriculums.map((c, i) => {
@@ -120,7 +129,9 @@ const detailTypes = () => ({
   className: 'text-align--left',
   dataIndex: 'types',
   key: 'types',
-  title: 'Types',
+  title: <FormattedMessage
+    id='tableHeaderTypes'
+    defaultMessage='Types1 ' />,
   render: types => {
     if (types.length === 0) return null
     return types.map((t, i) => {
@@ -156,7 +167,9 @@ const file = ({ columnKey, order }) => ({
 })
 
 const registered = ({ columnKey, order }) => ({
-  title: 'Registered',
+  title: <FormattedMessage
+    id='tableHeaderRegistered'
+    defaultMessage='Registered1 ' />,
   dataIndex: 'registered',
   key: 'registered',
   className: 'text-align--right',
@@ -166,7 +179,9 @@ const registered = ({ columnKey, order }) => ({
 })
 
 const supervisors = () => ({
-  title: 'Supervisor(s)',
+  title: <FormattedMessage
+    id='tableHeaderSupervisor'
+    defaultMessage='Supervisor(s)1 ' />,
   dataIndex: 'supervisors',
   key: 'supervisors',
   render: arr => {
@@ -189,7 +204,9 @@ const supervisors = () => ({
 })
 
 const title = ({ columnKey, order, sub, q }) => ({
-  title: 'Title',
+  title: <FormattedMessage
+    id='tableHeaderTitle'
+    defaultMessage='Title1 ' />,
   dataIndex: 'title',
   key: 'title',
   sorter: true,

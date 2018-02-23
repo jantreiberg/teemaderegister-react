@@ -114,24 +114,36 @@ class HeaderWrap extends Component {
         <Menu.Divider />
         <Menu.Item>
           <Link className='dashboard-link' to='/admin'>
-            <i className='anticon anticon-pie-chart icon--15'></i> Dashboard
+            <i className='anticon anticon-pie-chart icon--15'></i>
+            <FormattedMessage
+              id='userDashboard'
+              defaultMessage='Dashboard1' />
           </Link>
         </Menu.Item>
         <Menu.Divider />
         {isSupervisor &&
           <Menu.Item>
             <Link to={ '/supervisor/' + slug }>
-              <i className='anticon anticon-user icon--15'></i> Profile
+              <i className='anticon anticon-user icon--15'></i>
+              <FormattedMessage
+                id='userProfile'
+                defaultMessage='Profile1' />
             </Link>
           </Menu.Item>}
         <Menu.Item>
           <Link to='/settings/account'>
-            <i className='anticon anticon-setting icon--15'></i> Settings
+            <i className='anticon anticon-setting icon--15'></i>
+            <FormattedMessage
+              id='userSettings'
+              defaultMessage='Settings1' />
           </Link>
         </Menu.Item>
         <Menu.Item>
           <span className='link' onClick={this.props.logout}>
-            <i className='anticon anticon-logout icon--15'></i> Logout
+            <i className='anticon anticon-logout icon--15'></i>
+            <FormattedMessage
+              id='userLogout'
+              defaultMessage='Logout1' />
           </span>
         </Menu.Item>
       </Menu>

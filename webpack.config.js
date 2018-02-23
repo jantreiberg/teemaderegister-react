@@ -104,7 +104,7 @@ const rules = [
           'transform-do-expressions',
           ['import', { libraryName: 'antd', style: true }],
           ['react-intl', {
-            'messagesDir': 'dist/intl/extractedMessages',
+            // 'messagesDir': 'dist/intl/extractedMessages',
             'enforceDescriptions': false
           }]
         ]
