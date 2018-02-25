@@ -97,7 +97,6 @@ const rules = [
       options: {
         'cacheDirectory': false,
         'metadataSubscribers': [ReactIntlPlugin.metadataContextFunctionName],
-        presets: ['latest', 'react', 'es2015', 'stage-0'],
         plugins: [
           'transform-runtime',
           'transform-object-rest-spread',
@@ -107,7 +106,8 @@ const rules = [
             // 'messagesDir': 'dist/intl/extractedMessages',
             'enforceDescriptions': false
           }]
-        ]
+        ],
+        presets: ['latest', 'react', 'es2015', 'stage-0']
       }
     }
   },
