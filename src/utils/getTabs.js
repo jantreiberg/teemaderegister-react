@@ -1,23 +1,16 @@
 import { removeEmpty } from './Helpers'
-import { FormattedMessage } from 'react-intl'
-import React from 'react'
 
-/* onst translate = (string) =>
-  <FormattedMessage id= {string} defaultMessage= {string} /> */
-
-const title = <FormattedMessage id='tabsTitleRegistered' defaultMessage='Registered1' />
-
-export default ({ topics, supervisors }) => {
+export default ({ topics, supervisors, intl }) => {
   const tabs = {
     topics: topics
       ? {
         icon: 'file-text',
-        title: 'Topics1',
+        title: intl.formatMessage({ id: 'Topics', defaultMessage: 'Topics1' }),
         sub: 'registered',
         count: topics.count.all,
         subs: {
           registered: {
-            title,
+            title: 'Registered1',
             columnKey: 'registered',
             order: 'descend',
             count: topics.count.registered

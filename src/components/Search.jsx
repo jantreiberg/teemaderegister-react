@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { injectIntl, intlShape } from 'react-intl'
 
 import Breadcrumbs from './Breadcrumbs'
 import TableWrap from '../components/TableWrap'
@@ -13,6 +14,7 @@ const propTypes = {
   history: object.isRequired,
   initSearch: func.isRequired,
   initTableContent: func.isRequired,
+  intl: intlShape.isRequired,
   search: shape({
     loading: bool.isRequired
   }).isRequired,
@@ -37,6 +39,7 @@ class Search extends React.Component {
       clearTableContent,
       getTableContent,
       history,
+      intl,
       search,
       search: { loading },
       supervisors,
@@ -50,7 +53,7 @@ class Search extends React.Component {
           <div>
             <Breadcrumbs crumbs={this.getCrumbs()} />
             <TableWrap
-              tabs={getTabs({ topics, supervisors })}
+              tabs={getTabs({ topics, supervisors, intl })}
               history={history}
               search={search}
               getTableContent={getTableContent}
@@ -65,4 +68,4 @@ class Search extends React.Component {
 
 Search.propTypes = propTypes
 
-export default Search
+export default injectIntl(Search)
