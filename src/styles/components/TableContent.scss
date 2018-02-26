@@ -29,15 +29,23 @@
   }
 
   .ant-table-thead {
-    &-small{
+    &--xsmall {
       min-width: 70px;
     }
-    &-medium{
+    &--small {
       min-width: 85px;
     }
-    &-large{
+    &--medium {
       min-width: 100px;
     }
+    &--large {
+      min-width: 120px;
+    }
+    &--xlarge {
+      min-width: 170px;
+    }
+
+
     tr {
       th {
         background: #f7f7f7;

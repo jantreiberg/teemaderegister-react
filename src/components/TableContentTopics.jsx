@@ -22,7 +22,7 @@ const typesMap = {
 
 const accepted = ({ columnKey, order }) => ({
   title: 'Added',
-  className: 'text-align--right ant-table-thead-medium',
+  className: 'text-align--right ant-table-thead--small',
   dataIndex: 'accepted',
   key: 'accepted',
   render: renderDate,
@@ -34,6 +34,7 @@ const author = ({ columnKey, order }) => ({
   title: 'Author',
   dataIndex: 'author',
   key: 'author',
+  className: 'ant-table-thead--xlarge',
   sortOrder: columnKey === 'author' && order,
   sorter: true,
   render: author => {
@@ -43,7 +44,7 @@ const author = ({ columnKey, order }) => ({
 })
 
 const curriculums = ({ curriculums }) => ({
-  className: 'text-align--center ant-table-thead-small',
+  className: 'text-align--center ant-table-thead--xsmall',
   filters: [{ text: 'Sobib teistele õppekavadele', value: 'others' }],
   filterMultiple: false,
   title: (
@@ -68,7 +69,7 @@ const curriculums = ({ curriculums }) => ({
 
 const defended = ({ columnKey, order }) => ({
   title: 'Defended',
-  className: 'text-align--right ant-table-thead-large',
+  className: 'text-align--right ant-table-thead--medium',
   dataIndex: 'defended',
   key: 'defended',
   render: renderDate,
@@ -147,7 +148,7 @@ const registered = ({ columnKey, order }) => ({
   title: 'Registered',
   dataIndex: 'registered',
   key: 'registered',
-  className: 'text-align--right ant-table-thead-large',
+  className: 'text-align--right ant-table-thead--medium',
   render: renderDate,
   sorter: true,
   sortOrder: columnKey === 'registered' && order
@@ -157,6 +158,7 @@ const supervisors = () => ({
   title: 'Supervisor(s)',
   dataIndex: 'supervisors',
   key: 'supervisors',
+  className: 'ant-table-thead--xlarge',
   render: arr => {
     return arr.map((o, i) => {
       const { _id, profile } = o.supervisor
@@ -199,7 +201,7 @@ const title = ({ columnKey, order, sub }) => ({
 })
 
 const types = ({ columnKey, order, sub, types }) => ({
-  className: 'text-align--center ant-table-thead-small',
+  className: 'text-align--center ant-table-thead--xsmall',
   filterMultiple: false,
   filters: [
     {
