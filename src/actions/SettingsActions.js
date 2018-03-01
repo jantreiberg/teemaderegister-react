@@ -52,6 +52,10 @@ export const uploadPictureError = (error) => dispatch => {
   dispatch({ type: types.USER_PICTURE_SET_END, error })
 }
 
+export const setLanguage = ({ locale, messages }) => dispatch => {
+  dispatch({ type: types.USER_SETTINGS_SET_LANGUAGE, locale, messages })
+}
+
 export const resetPicture = () => dispatch => {
   dispatch({ type: types.USER_PICTURE_SET_START })
 

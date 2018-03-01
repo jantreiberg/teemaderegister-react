@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { injectIntl, intlShape } from 'react-intl'
 
 import Breadcrumbs from './Breadcrumbs'
 import TableWrap from '../components/TableWrap'
@@ -19,6 +20,7 @@ const propTypes = {
   history: object.isRequired,
   initCurriculum: func.isRequired,
   initTableContent: func.isRequired,
+  intl: intlShape.isRequired,
   location: object.isRequired,
   match: object.isRequired,
   supervisors: object.isRequired,
@@ -52,7 +54,8 @@ class Curriculum extends React.Component {
       getTableContent,
       supervisors,
       tableContent,
-      topics
+      topics,
+      intl
     } = this.props
 
     return (
@@ -67,7 +70,7 @@ class Curriculum extends React.Component {
               getTableContent={getTableContent}
               history={this.props.history}
               queryExtend={{ curriculumId: meta._id }}
-              tabs={getTabs({ topics, supervisors })}
+              tabs={getTabs({ topics, supervisors, intl })}
               tableContent={tableContent}
             />
           </div>}
@@ -78,4 +81,4 @@ class Curriculum extends React.Component {
 
 Curriculum.propTypes = propTypes
 
-export default Curriculum
+export default injectIntl(Curriculum)

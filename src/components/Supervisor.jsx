@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { injectIntl, intlShape } from 'react-intl'
 
 import Breadcrumbs from './Breadcrumbs'
 import SupervisorMeta from './SupervisorMeta'
@@ -27,6 +28,7 @@ const propTypes = {
   history: object.isRequired,
   initSupervisor: func.isRequired,
   initTableContent: func.isRequired,
+  intl: intlShape.isRequired,
   location: shape({
     pathname: string.isRequired
   }).isRequired,
@@ -77,6 +79,7 @@ class Supervisor extends React.Component {
     const {
       clearTableContent,
       getTableContent,
+      intl,
       supervisor,
       supervisor: {
         loading,
@@ -105,7 +108,7 @@ class Supervisor extends React.Component {
               history={this.props.history}
               supervisor={supervisor}
               tableContent={tableContent}
-              tabs={getTabs({ topics })}
+              tabs={getTabs({ topics, intl })}
               queryExtend={{ supervisorId: _id }}
             />
           </div>}
@@ -116,4 +119,4 @@ class Supervisor extends React.Component {
 
 Supervisor.propTypes = propTypes
 
-export default Supervisor
+export default injectIntl(Supervisor)

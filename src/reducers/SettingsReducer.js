@@ -7,6 +7,8 @@ const INITIAL_STATE = {
     profile: {},
     updatedAt: ''
   },
+  locale: 'en',
+  messages: {},
   formLoading: {
     picture: false,
     account: false,
@@ -101,6 +103,13 @@ export default (state = INITIAL_STATE, action) => {
         message: action.message || INITIAL_STATE.message,
         hasError: !!action.error,
         error: action.error || {}
+      }
+
+    case types.USER_SETTINGS_SET_LANGUAGE:
+      return {
+        ...state,
+        locale: action.locale || 'en',
+        messages: action.messages || {}
       }
 
     case types.USER_SETTINGS_INIT:

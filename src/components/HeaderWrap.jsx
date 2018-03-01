@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { Link } from 'react-router-dom'
 import queryString from 'query-string'
-import {FormattedMessage} from 'react-intl'
+import { FormattedMessage } from 'react-intl'
 
 import setUrl from '../utils/setUrl'
 import { UPLOAD_PATH } from 'config'
@@ -39,6 +39,7 @@ const propTypes = {
   history: object.isRequired,
   logout: func.isRequired,
   search: object.isRequired,
+  setLanguage: func.isRequired,
   setSearch: func.isRequired
 }
 
@@ -87,6 +88,34 @@ class HeaderWrap extends Component {
     }
   }
 
+  changeLanguage (langKey) {
+    console.log(this)
+    if (langKey === 'en') {
+      this.props.setLanguage({
+        locale: 'en'
+      })
+    }
+    if (langKey === 'et') {
+      this.props.setLanguage({
+        locale: 'et'
+      })
+    }
+    console.log(langKey)
+  }
+
+  menu () {
+    return (
+      <Menu>
+        <Menu.Item key='en'>
+          <a onClick={() => { this.changeLanguage('en') }}><img style={{verticalAlign: 'middle'}} src='/en.png'/> English </a>
+        </Menu.Item>
+        <Menu.Item key='et'>
+          <a onClick={() => { this.changeLanguage('et') }}><img style={{verticalAlign: 'middle'}} src='/et.png'/> Eesti keel </a>
+        </Menu.Item>
+      </Menu>
+    )
+  }
+
   handleSearch (value) {
     this.props.getSearchCounts(value)
     setUrl(
@@ -117,7 +146,7 @@ class HeaderWrap extends Component {
             <i className='anticon anticon-pie-chart icon--15'></i>
             <FormattedMessage
               id='userDashboard'
-              defaultMessage='Dashboard1' />
+              defaultMessage='Dashboard' />
           </Link>
         </Menu.Item>
         <Menu.Divider />
@@ -127,7 +156,7 @@ class HeaderWrap extends Component {
               <i className='anticon anticon-user icon--15'></i>
               <FormattedMessage
                 id='userProfile'
-                defaultMessage='Profile1' />
+                defaultMessage='Profile' />
             </Link>
           </Menu.Item>}
         <Menu.Item>
@@ -135,7 +164,7 @@ class HeaderWrap extends Component {
             <i className='anticon anticon-setting icon--15'></i>
             <FormattedMessage
               id='userSettings'
-              defaultMessage='Settings1' />
+              defaultMessage='Settings' />
           </Link>
         </Menu.Item>
         <Menu.Item>
@@ -143,7 +172,7 @@ class HeaderWrap extends Component {
             <i className='anticon anticon-logout icon--15'></i>
             <FormattedMessage
               id='userLogout'
-              defaultMessage='Logout1' />
+              defaultMessage='Logout' />
           </span>
         </Menu.Item>
       </Menu>
@@ -184,6 +213,13 @@ class HeaderWrap extends Component {
                 />
               )}
             </Form>
+            <div className='login'>
+              <Dropdown overlay={this.menu()} trigger={['click']}>
+                <a className='ant-dropdown-link' href='#'>
+                  <img style={{verticalAlign: 'middle'}} src='/en.png'/>
+                </a>
+              </Dropdown>
+            </div>
             {isAuthenticated &&
               <div className='navigationWrap'>
                 <Dropdown

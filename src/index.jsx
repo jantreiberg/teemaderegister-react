@@ -2,11 +2,10 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { Route, Switch, BrowserRouter, browserHistory } from 'react-router-dom'
-import {IntlProvider, addLocaleData} from 'react-intl'
+import { addLocaleData } from 'react-intl'
 import etLocaleData from 'react-intl/locale-data/et'
 import en from 'react-intl/locale-data/en'
-import etMessages from './intl./..'
-// import etMessages from './intl/HeaderWrap-en-et_ee-C.json'
+import etMessages from '../intl/reactIntlMessages-en-et_ee-C.json'
 
 import {
   INDEX_PATH,
@@ -36,6 +35,7 @@ import AccountPasswordContainer from './containers/AccountPasswordContainer'
 import SettingsAccountContainer from './containers/SettingsAccountContainer'
 import SettingsPasswordContainer from './containers/SettingsPasswordContainer'
 import CurriculumAddContainer from './containers/CurriculumAddContainer'
+import IntlContainer from './containers/IntlContainer'
 
 import store from './store/configureStore'
 import { initAnalytics } from './utils/Analytics'
@@ -56,17 +56,18 @@ const links = {
   contet: 'https://www.tlu.ee'
 }
 
-let messages = {}
-messages.et = etMessages
+let messages = {
+  et: etMessages
+}
+console.log(messages)
 const currentLang = navigator.language
 console.log('currentLang: ', currentLang)
 addLocaleData([etLocaleData, ...en])
-
 initAnalytics()
 
 render(
   <Provider store={store}>
-    <IntlProvider locale={currentLang} messages={messages[currentLang]}>
+    <IntlContainer locale={currentLang} messages={messages}>
       <BrowserRouter history={browserHistory}>
         <LocaleProvider locale={etEE}>
           <Layout className='layout'>
@@ -110,7 +111,7 @@ render(
           </Layout>
         </LocaleProvider>
       </BrowserRouter>
-    </IntlProvider>
+    </IntlContainer>
   </Provider>,
   document.getElementById('main')
 )

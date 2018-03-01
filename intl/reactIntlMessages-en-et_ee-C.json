@@ -1,0 +1,58 @@
+[
+  {
+    "id": "passReset",
+    "defaultMessage": "Taotle parooli lähtestamist"
+  },
+  {
+    "id": "userDashboard",
+    "defaultMessage": "Töölaud"
+  },
+  {
+    "id": "userProfile",
+    "defaultMessage": "Profiili"
+  },
+  {
+    "id": "userSettings",
+    "defaultMessage": "Seaded"
+  },
+  {
+    "id": "userLogout",
+    "defaultMessage": "Logi välja"
+  },
+  {
+    "id": "loginDetail",
+    "defaultMessage": "Logi sisse"
+  },
+  {
+    "id": "tableHeaderAdded",
+    "defaultMessage": "Lisatud"
+  },
+  {
+    "id": "tableHeaderAuthor",
+    "defaultMessage": "Autor"
+  },
+  {
+    "id": "tableHeaderDefended",
+    "defaultMessage": "Kaitstud"
+  },
+  {
+    "id": "tableHeaderCurriculum",
+    "defaultMessage": "Õppekava"
+  },
+  {
+    "id": "tableHeaderTypes",
+    "defaultMessage": "Tüübid"
+  },
+  {
+    "id": "tableHeaderRegistered",
+    "defaultMessage": "Registreeritud"
+  },
+  {
+    "id": "tableHeaderSupervisor",
+    "defaultMessage": "Juhendaja(d)"
+  },
+  {
+    "id": "tableHeaderTitle",
+    "defaultMessage": "Pealkiri"
+  }
+]

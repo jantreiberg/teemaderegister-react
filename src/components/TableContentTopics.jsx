@@ -25,7 +25,7 @@ const typesMap = {
 const accepted = ({ columnKey, order }) => ({
   title: <FormattedMessage
     id='tableHeaderAdded'
-    defaultMessage='Added1 ' />,
+    defaultMessage='Added ' />,
   className: 'text-align--right',
   dataIndex: 'accepted',
   key: 'accepted',
@@ -37,7 +37,7 @@ const accepted = ({ columnKey, order }) => ({
 const author = ({ columnKey, order, q }) => ({
   title: <FormattedMessage
     id='tableHeaderAuthor'
-    defaultMessage='Author1 ' />,
+    defaultMessage='Author ' />,
   dataIndex: 'author',
   key: 'author',
   sortOrder: columnKey === 'author' && order,
@@ -84,7 +84,7 @@ const curriculums = ({ curriculums }) => ({
 const defended = ({ columnKey, order }) => ({
   title: <FormattedMessage
     id='tableHeaderDefended'
-    defaultMessage='Defended1 ' />,
+    defaultMessage='Defended ' />,
   className: 'text-align--right',
   dataIndex: 'defended',
   key: 'defended',
@@ -99,7 +99,7 @@ const detailCurriculums = () => ({
   key: 'curriculums',
   title: <FormattedMessage
     id='tableHeaderCurriculum'
-    defaultMessage='Curriculum1 ' />,
+    defaultMessage='Curriculum ' />,
   render: curriculums => {
     if (curriculums.length === 0) return null
     return curriculums.map((c, i) => {
@@ -131,7 +131,7 @@ const detailTypes = () => ({
   key: 'types',
   title: <FormattedMessage
     id='tableHeaderTypes'
-    defaultMessage='Types1 ' />,
+    defaultMessage='Types ' />,
   render: types => {
     if (types.length === 0) return null
     return types.map((t, i) => {
@@ -169,7 +169,7 @@ const file = ({ columnKey, order }) => ({
 const registered = ({ columnKey, order }) => ({
   title: <FormattedMessage
     id='tableHeaderRegistered'
-    defaultMessage='Registered1 ' />,
+    defaultMessage='Registered ' />,
   dataIndex: 'registered',
   key: 'registered',
   className: 'text-align--right',
@@ -181,7 +181,7 @@ const registered = ({ columnKey, order }) => ({
 const supervisors = () => ({
   title: <FormattedMessage
     id='tableHeaderSupervisor'
-    defaultMessage='Supervisor(s)1 ' />,
+    defaultMessage='Supervisor(s) ' />,
   dataIndex: 'supervisors',
   key: 'supervisors',
   render: arr => {
@@ -206,7 +206,7 @@ const supervisors = () => ({
 const title = ({ columnKey, order, sub, q }) => ({
   title: <FormattedMessage
     id='tableHeaderTitle'
-    defaultMessage='Title1 ' />,
+    defaultMessage='Title ' />,
   dataIndex: 'title',
   key: 'title',
   sorter: true,

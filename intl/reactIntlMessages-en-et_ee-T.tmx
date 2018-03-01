@@ -1,0 +1,452 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<tmx version="1.4">
+  <header creationtool="memsource_tool" creationtoolversion="2.0" segtype="sentence" o-tmf="memsourceTM" adminlang="en" srclang="en" datatype="unknown" creationdate="20180227T175306Z"/>
+  <body>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_next">Request password reset</prop>
+        <seg>passReset</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174653Z" changedate="20180227T174653Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753613000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753613000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>passReset</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">passReset</prop>
+        <prop type="context_next">userDashboard</prop>
+        <seg>Request password reset</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174200Z" changedate="20180227T174200Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753320000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753320000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>Taotle parooli lähtestamist</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">Request password reset</prop>
+        <prop type="context_next">Dashboard</prop>
+        <seg>userDashboard</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174205Z" changedate="20180227T174656Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753325000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753616000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>userDashboard</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">userDashboard</prop>
+        <prop type="context_next">userProfile</prop>
+        <seg>Dashboard</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174342Z" changedate="20180227T174346Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753422000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753426000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>Töölaud</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">Dashboard</prop>
+        <prop type="context_next">Profile</prop>
+        <seg>userProfile</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174353Z" changedate="20180227T175051Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753433000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753851000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>userProfile</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">userProfile</prop>
+        <prop type="context_next">userSettings</prop>
+        <seg>Profile</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174404Z" changedate="20180227T174404Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753444000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753444000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>Profiili</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">Profile</prop>
+        <prop type="context_next">Settings</prop>
+        <seg>userSettings</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174411Z" changedate="20180227T175036Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753451000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753836000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>userSettings</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">userSettings</prop>
+        <prop type="context_next">userLogout</prop>
+        <seg>Settings</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174416Z" changedate="20180227T174416Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753456000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753456000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>Seaded</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">Settings</prop>
+        <prop type="context_next">Logout</prop>
+        <seg>userLogout</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174418Z" changedate="20180227T174418Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753458000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753458000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>userLogout</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">userLogout</prop>
+        <prop type="context_next">loginDetail</prop>
+        <seg>Logout</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174421Z" changedate="20180227T174421Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753461000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753461000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>Logi välja</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">Logout</prop>
+        <prop type="context_next">Sign in</prop>
+        <seg>loginDetail</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174422Z" changedate="20180227T174422Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753462000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753462000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>loginDetail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">loginDetail</prop>
+        <prop type="context_next">tableHeaderAdded</prop>
+        <seg>Sign in</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174423Z" changedate="20180227T174430Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753463000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753470000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>Logi sisse</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">Sign in</prop>
+        <prop type="context_next">Added</prop>
+        <seg>tableHeaderAdded</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174429Z" changedate="20180227T174452Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753469000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753492000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>tableHeaderAdded</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">tableHeaderAdded</prop>
+        <prop type="context_next">tableHeaderAuthor</prop>
+        <seg>Added</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174455Z" changedate="20180227T174455Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753495000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753495000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>Lisatud</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">Added</prop>
+        <prop type="context_next">Author</prop>
+        <seg>tableHeaderAuthor</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174458Z" changedate="20180227T174458Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753498000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753498000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>tableHeaderAuthor</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">tableHeaderAuthor</prop>
+        <prop type="context_next">tableHeaderDefended</prop>
+        <seg>Author</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174500Z" changedate="20180227T174500Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753500000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753500000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>Autor</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">Author</prop>
+        <prop type="context_next">Defended</prop>
+        <seg>tableHeaderDefended</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174501Z" changedate="20180227T174501Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753501000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753501000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>tableHeaderDefended</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">tableHeaderDefended</prop>
+        <prop type="context_next">tableHeaderCurriculum</prop>
+        <seg>Defended</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174513Z" changedate="20180227T174513Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753513000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753513000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>Kaitstud</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">Defended</prop>
+        <prop type="context_next">Curriculum</prop>
+        <seg>tableHeaderCurriculum</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174514Z" changedate="20180227T174514Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753514000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753514000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>tableHeaderCurriculum</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">tableHeaderCurriculum</prop>
+        <prop type="context_next">tableHeaderTypes</prop>
+        <seg>Curriculum</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174515Z" changedate="20180227T174515Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753515000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753515000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>Õppekava</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">Curriculum</prop>
+        <prop type="context_next">Types</prop>
+        <seg>tableHeaderTypes</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174517Z" changedate="20180227T174517Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753517000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753517000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>tableHeaderTypes</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">tableHeaderTypes</prop>
+        <prop type="context_next">tableHeaderRegistered</prop>
+        <seg>Types</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174520Z" changedate="20180227T174520Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753520000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753520000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>Tüübid</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">Types</prop>
+        <prop type="context_next">Registered</prop>
+        <seg>tableHeaderRegistered</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174521Z" changedate="20180227T174521Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753521000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753521000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>tableHeaderRegistered</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">tableHeaderRegistered</prop>
+        <prop type="context_next">tableHeaderSupervisor</prop>
+        <seg>Registered</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174523Z" changedate="20180227T174523Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753523000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753523000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>Registreeritud</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">Registered</prop>
+        <prop type="context_next">Supervisor(s)</prop>
+        <seg>tableHeaderSupervisor</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174524Z" changedate="20180227T174524Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753524000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753524000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>tableHeaderSupervisor</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">tableHeaderSupervisor</prop>
+        <prop type="context_next">tableHeaderTitle</prop>
+        <seg>Supervisor(s)</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174643Z" changedate="20180227T174643Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753603000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753603000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>Juhendaja(d)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">Supervisor(s)</prop>
+        <prop type="context_next">Title</prop>
+        <seg>tableHeaderTitle</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174645Z" changedate="20180227T174645Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753605000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753605000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>tableHeaderTitle</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <prop type="context_prev">tableHeaderTitle</prop>
+        <seg>Title</seg>
+      </tuv>
+      <tuv xml:lang="et-ee" creationdate="20180227T174647Z" changedate="20180227T174647Z">
+        <prop type="project">Teemaderegister</prop>
+        <prop type="created_at">1519753607000</prop>
+        <prop type="created_by">jlaas@tlu.ee</prop>
+        <prop type="modified_at">1519753607000</prop>
+        <prop type="modified_by">jlaas@tlu.ee</prop>
+        <prop type="filename">reactIntlMessages.json</prop>
+        <seg>Pealkiri</seg>
+      </tuv>
+    </tu>
+  </body>
+</tmx>

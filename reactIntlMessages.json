@@ -1,0 +1,58 @@
+[
+  {
+    "id": "passReset",
+    "defaultMessage": "Request password reset"
+  },
+  {
+    "id": "userDashboard",
+    "defaultMessage": "Dashboard"
+  },
+  {
+    "id": "userProfile",
+    "defaultMessage": "Profile"
+  },
+  {
+    "id": "userSettings",
+    "defaultMessage": "Settings"
+  },
+  {
+    "id": "userLogout",
+    "defaultMessage": "Logout"
+  },
+  {
+    "id": "loginDetail",
+    "defaultMessage": "Sign in"
+  },
+  {
+    "id": "tableHeaderAdded",
+    "defaultMessage": "Added"
+  },
+  {
+    "id": "tableHeaderAuthor",
+    "defaultMessage": "Author"
+  },
+  {
+    "id": "tableHeaderDefended",
+    "defaultMessage": "Defended"
+  },
+  {
+    "id": "tableHeaderCurriculum",
+    "defaultMessage": "Curriculum"
+  },
+  {
+    "id": "tableHeaderTypes",
+    "defaultMessage": "Types"
+  },
+  {
+    "id": "tableHeaderRegistered",
+    "defaultMessage": "Registered"
+  },
+  {
+    "id": "tableHeaderSupervisor",
+    "defaultMessage": "Supervisor(s)"
+  },
+  {
+    "id": "tableHeaderTitle",
+    "defaultMessage": "Title"
+  }
+]

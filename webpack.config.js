@@ -150,6 +150,12 @@ const rules = [
     })
   },
   {
+    test: /intl\/.json$/,
+    use: [
+      { loader: 'reactIntlJson' }
+    ]
+  },
+  {
     // FOR ANTD1
     test: /\.less$/,
     use: extractLESS.extract({

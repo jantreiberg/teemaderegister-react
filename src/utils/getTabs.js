@@ -5,24 +5,24 @@ export default ({ topics, supervisors, intl }) => {
     topics: topics
       ? {
         icon: 'file-text',
-        title: intl.formatMessage({ id: 'Topics', defaultMessage: 'Topics1' }),
+        title: intl.formatMessage({ id: 'Topics', defaultMessage: 'Topics' }),
         sub: 'registered',
         count: topics.count.all,
         subs: {
           registered: {
-            title: 'Registered1',
+            title: intl.formatMessage({ id: 'Registered', defaultMessage: 'Registered' }),
             columnKey: 'registered',
             order: 'descend',
             count: topics.count.registered
           },
           available: {
-            title: 'Available111',
+            title: intl.formatMessage({ id: 'Available', defaultMessage: 'Available' }),
             columnKey: 'accepted',
             order: 'descend',
             count: topics.count.available
           },
           defended: {
-            title: 'Defended1',
+            title: intl.formatMessage({ id: 'Defended', defaultMessage: 'Defended' }),
             columnKey: 'defended',
             order: 'descend',
             count: topics.count.defended
@@ -33,18 +33,18 @@ export default ({ topics, supervisors, intl }) => {
     supervisors: supervisors
       ? {
         icon: 'user',
-        title: 'Supervisors1',
+        title: intl.formatMessage({ id: 'Supervisors', defaultMessage: 'Supervisor(s)' }),
         sub: 'supervised',
         count: supervisors.count.all,
         subs: {
           supervised: {
-            title: 'Supervised1',
+            title: intl.formatMessage({ id: 'Supervised', defaultMessage: 'Supervised' }),
             columnKey: 'supervisor',
             order: 'ascend',
             count: supervisors.count.supervised
           },
           all: {
-            title: 'All1',
+            title: intl.formatMessage({ id: 'All', defaultMessage: 'All' }),
             columnKey: 'supervisor',
             order: 'ascend',
             count: supervisors.count.all
