@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { Route, Switch, BrowserRouter, browserHistory } from 'react-router-dom'
 import { addLocaleData } from 'react-intl'
 import etLocaleData from 'react-intl/locale-data/et'
-import en from 'react-intl/locale-data/en'
+import enLocaleData from 'react-intl/locale-data/en'
 import etMessages from '../intl/reactIntlMessages-en-et_ee-C.json'
 
 import {
@@ -56,18 +56,25 @@ const links = {
   contet: 'https://www.tlu.ee'
 }
 
+let test = {}
+
+etMessages.forEach(el => {
+  test[el.id] = el.defaultMessage
+})
+
 let messages = {
-  et: etMessages
+  et: test
 }
+
 console.log(messages)
 const currentLang = navigator.language
 console.log('currentLang: ', currentLang)
-addLocaleData([etLocaleData, ...en])
+addLocaleData([...enLocaleData, ...etLocaleData])
 initAnalytics()
 
 render(
   <Provider store={store}>
-    <IntlContainer locale={currentLang} messages={messages}>
+    <IntlContainer locale={'et'} messages={messages}>
       <BrowserRouter history={browserHistory}>
         <LocaleProvider locale={etEE}>
           <Layout className='layout'>
