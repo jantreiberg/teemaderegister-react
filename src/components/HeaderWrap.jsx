@@ -47,7 +47,8 @@ class HeaderWrap extends Component {
   constructor (props) {
     super(props)
 
-    this.language = 'en'
+    // this.language = 'en'
+    this.state = { language: 'en' }
 
     this.handleSearch = this.handleSearch.bind(this)
 
@@ -96,25 +97,25 @@ class HeaderWrap extends Component {
       this.props.setLanguage({
         locale: 'en'
       })
-      this.language = langKey
+      this.setState({language: 'en'})
     }
     if (langKey === 'et') {
       this.props.setLanguage({
         locale: 'et'
       })
-      this.language = langKey
+      this.setState({language: 'et'})
     }
-    console.log(langKey)
+    console.log(this.state)
   }
 
   menu () {
     return (
       <Menu>
         <Menu.Item key='en'>
-          <a onClick={() => { this.changeLanguage('en') }}><img style={{verticalAlign: 'middle'}} src='/en.png'/> English </a>
+          <a onClick={() => { this.changeLanguage('en') }}><img style={{verticalAlign: 'middle'}} src='/src/media/favicons/en.png'/> English </a>
         </Menu.Item>
         <Menu.Item key='et'>
-          <a onClick={() => { this.changeLanguage('et') }}><img style={{verticalAlign: 'middle'}} src='/et.png'/> Eesti keel </a>
+          <a onClick={() => { this.changeLanguage('et') }}><img style={{verticalAlign: 'middle'}} src='/src/media/favicons/et.png'/> Eesti keel </a>
         </Menu.Item>
       </Menu>
     )
@@ -220,7 +221,7 @@ class HeaderWrap extends Component {
             <div className='login'>
               <Dropdown overlay={this.menu()} trigger={['click']}>
                 <a className='ant-dropdown-link'>
-                  <img style={{verticalAlign: 'middle'}} src={`/${this.language}.png`}/>
+                  <img style={{verticalAlign: 'middle'}} src={`/src/media/favicons/${this.state.language}.png`}/>
                 </a>
               </Dropdown>
             </div>
