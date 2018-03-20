@@ -15,11 +15,6 @@ const FormItem = Form.Item
 
 const { bool, func, object, shape, string } = PropTypes
 
-const children = []
-for (let i = 10; i < 36; i++) {
-  children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>)
-}
-
 function handleChange (value) {
   console.log(`selected ${value}`)
 }
@@ -47,34 +42,14 @@ class AddTopic extends React.Component {
   constructor (props) {
     super(props)
 
-    this.languages = ['ET', 'EN']
-    this.languagesValues = []
-
     this.fetchUsers = debounce(this.fetchUsers.bind(this), 500)
     this.submit = this.submit.bind(this)
-    this.languagesChanged = this.languagesChanged.bind(this)
     console.log(props)
     this.state = {
       supervisors: [],
       fetching: false
     }
   }
-
-  /*  componentWillReceiveProps (nextProps) {
-    const { topicForm } = this.props
-    const { topic, error, loading, hasError } = nextProps.topicForm
-
-    if (topicForm.loading && !loading) {
-      if (topic._id) {
-        message.success('Saved new topic ' + topic.names.et)
-        this.props.form.resetFields()
-      }
-      if (hasError) {
-        message.error(error.message, 10)
-      }
-    }
-  }
-  */
 
   componentDidMount () {
     this.props.getCurriculums()
@@ -103,8 +78,6 @@ class AddTopic extends React.Component {
   submit (e) {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
-      console.log('tere', values)
-
       if (err) return
 
       this.props.triggerAddTopic({
