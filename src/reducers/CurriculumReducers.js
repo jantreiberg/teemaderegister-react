@@ -8,7 +8,7 @@ const INITIAL_STATE = {
     curriculum: {},
     hasError: false,
     error: {}
-  }
+  },
   hasError: false,
   error: {}
 }
